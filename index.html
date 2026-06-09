@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Unite Group Career JD | Nhân viên Kinh doanh</title>
+  <meta name="description" content="JD Career tương tác dành riêng cho Unite Group." />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <div class="submit-toast" id="submitToast" aria-live="polite" aria-hidden="true">
+    <div class="toast-card" role="status">
+      <div class="toast-loader" id="toastLoader"></div>
+      <div class="toast-success" id="toastSuccess">
+        <div class="success-badge" aria-hidden="true"><span>✓</span></div>
+      </div>
+      <div class="toast-copy">
+        <strong id="toastTitle">Đang gửi hồ sơ</strong>
+        <p id="toastMessage">Hệ thống đang chuyển thông tin đến bộ phận tuyển dụng Unite Group.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="global-watermark" aria-hidden="true">
+    <img id="bgWatermark" alt="" />
+  </div>
+
+
+  <header class="site-header">
+    <a href="#top" class="brand" aria-label="Unite Group Career">
+      <img id="brandLogo" alt="Unite Group logo" />
+      <span>
+        <strong>UNITE GROUP</strong>
+        <small>Career JD</small>
+      </span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Điều hướng chính">
+      <a href="#job">Công việc</a>
+      <a href="#income">Thu nhập</a>
+      <a href="#growth">Lộ trình</a>
+      <a href="#workplace">Chi nhánh</a>
+      <a href="#apply">Ứng tuyển</a>
+    </nav>
+
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Đổi chế độ giao diện">
+      <span id="themeIcon">◐</span>
+      <b id="themeLabel">Auto</b>
+    </button>
+  </header>
+
+  <main id="top">
+    <section class="hero section">
+      <div class="hero-bg">
+        <div class="gold-orb orb-one"></div>
+        <div class="gold-orb orb-two"></div>
+        <div class="grid-glow"></div>
+      </div>
+
+      <div class="hero-content">
+        <p class="eyebrow">Unite Group Career</p>
+        <h1>Nhân viên Kinh doanh<br><span>Bất động sản cho thuê</span></h1>
+        <p class="hero-lead">
+          Gia nhập Unite Group – nơi người trẻ phát triển năng lực tư vấn, xây thương hiệu cá nhân
+          và tạo thu nhập từ chính kết quả thực chiến.
+        </p>
+
+        <div class="hero-badges">
+          <span>Full-time / Part-time</span>
+          <span>Không yêu cầu kinh nghiệm</span>
+          <span>Đào tạo 1:1</span>
+          <span>Thu nhập theo năng lực</span>
+        </div>
+
+        <div class="hero-actions">
+          <a class="btn primary" href="#apply">Ứng tuyển ngay</a>
+          <a class="btn ghost" href="#workplace">Xem chi nhánh</a>
+        </div>
+      </div>
+
+      <aside class="hero-card glass">
+        <div class="status-pill">Đang tuyển</div>
+        <h2>CVTV / Sales Leasing</h2>
+        <ul>
+          <li><b>Địa điểm:</b> TP.HCM</li>
+          <li><b>Đào tạo:</b> Leader kèm sát</li>
+          <li><b>Phù hợp:</b> Gen Z, sinh viên, người mới bắt đầu</li>
+          <li><b>Thiết bị:</b> Smartphone cá nhân</li>
+        </ul>
+        <div class="mini-stats">
+          <div><b>30</b><span>ngày làm quen</span></div>
+          <div><b>60</b><span>ngày thực chiến</span></div>
+          <div><b>90</b><span>ngày bứt tốc</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section intro">
+      <div class="section-title">
+        <p class="eyebrow">Unite Career DNA</p>
+        <h2>Khám phá cơ hội nghề nghiệp tại Unite Group trước khi ứng tuyển.</h2>
+      </div>
+      <div class="value-grid">
+        <article class="value-card"><span>01</span><h3>Rõ việc</h3><p>Bạn có thể hình dung rõ công việc hằng ngày, cách làm việc và kỹ năng sẽ được phát triển.</p></article>
+        <article class="value-card"><span>02</span><h3>Rõ cơ hội</h3><p>Bạn được xem lộ trình hội nhập, định hướng phát triển và cơ hội tăng trưởng tại Unite Group.</p></article>
+        <article class="value-card"><span>03</span><h3>Rõ nơi làm</h3><p>Bạn có thể chọn văn phòng phù hợp và mở chỉ đường trực tiếp bằng Google Maps.</p></article>
+      </div>
+    </section>
+
+    <section class="section fit-section" id="fit">
+      <div class="section-title narrow">
+        <p class="eyebrow">Quick Match</p>
+        <h2>Bạn có hợp với vị trí này không?</h2>
+        <p>Chọn những điều đúng với bạn. Kết quả sẽ hiển thị ngay bên dưới.</p>
+      </div>
+
+      <div class="quiz-card glass">
+        <div class="quiz-options" id="quizOptions">
+          <button type="button">Tôi thích giao tiếp và gặp gỡ khách hàng</button>
+          <button type="button">Tôi muốn thu nhập tăng theo năng lực</button>
+          <button type="button">Tôi biết sử dụng mạng xã hội cơ bản</button>
+          <button type="button">Tôi thích decor, nhà ở, căn hộ hoặc BĐS</button>
+          <button type="button">Tôi sẵn sàng học từ thực tế</button>
+        </div>
+        <div class="quiz-result" id="quizResult">
+          <b>Chọn ít nhất 3 mục để xem mức độ phù hợp.</b>
+          <span>Unite Group đào tạo từ nền tảng, quan trọng là tinh thần chủ động và thái độ học hỏi.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section job-section" id="job">
+      <div class="section-title">
+        <p class="eyebrow">What you will do</p>
+        <h2>Một ngày làm việc tại Unite Group</h2>
+      </div>
+      <div class="timeline">
+        <article><time>09:00</time><div><h3>Check-in, cập nhật nguồn hàng</h3><p>Nắm sản phẩm mới, tình trạng phòng/căn hộ, giá thuê và điểm nổi bật.</p></div></article>
+        <article><time>10:00</time><div><h3>Đăng bài, viết content, tạo nguồn khách</h3><p>Sáng tạo nội dung trên Facebook, TikTok, Threads, Instagram hoặc các kênh phù hợp.</p></div></article>
+        <article><time>13:30</time><div><h3>Tư vấn nhu cầu và đề xuất phòng</h3><p>Trao đổi ngân sách, khu vực, tiện ích, phong cách sống để gợi ý lựa chọn phù hợp.</p></div></article>
+        <article><time>15:00</time><div><h3>Hỗ trợ khách xem phòng</h3><p>Sắp lịch, dẫn khách xem dự án, ghi nhận phản hồi và xử lý câu hỏi thực tế.</p></div></article>
+        <article><time>16:30</time><div><h3>Hỗ trợ cọc, hợp đồng và chăm sóc sau thuê</h3><p>Đồng hành trong quá trình đặt cọc, ký hợp đồng và giữ trải nghiệm dịch vụ tốt.</p></div></article>
+      </div>
+    </section>
+
+    <section class="section income-section" id="income">
+      <div class="section-title"><p class="eyebrow">Income Simulator</p><h2>Thử ước tính thu nhập theo kết quả</h2><p>Ứng viên có thể tự kéo thanh để hình dung thu nhập tham khảo.</p></div>
+      <div class="calculator glass">
+        <div class="range-group"><label for="dealRange">Số giao dịch / tháng: <b id="dealValue">5</b></label><input id="dealRange" type="range" min="1" max="30" value="5" /></div>
+        <div class="range-group"><label for="avgRange">Doanh thu trung bình / giao dịch: <b id="avgValue">5.000.000đ</b></label><input id="avgRange" type="range" min="1000000" max="30000000" step="500000" value="5000000" /></div>
+        <div class="income-result"><span>Thu nhập tham khảo</span><strong id="incomeOutput">15.000.000đ</strong><small>*Chỉ mang tính minh họa. Thu nhập thực tế phụ thuộc chính sách từng thời kỳ và kết quả giao dịch.</small></div>
+      </div>
+    </section>
+
+    <section class="section growth-section" id="growth">
+      <div class="section-title"><p class="eyebrow">Growth Path</p><h2>Lộ trình 30 – 60 – 90 ngày</h2></div>
+      <div class="days-grid">
+        <article><span>30</span><h3>Làm quen hệ thống</h3><p>Hiểu nguồn hàng, quy trình tư vấn, cách đăng bài, chăm khách và tiêu chuẩn tác phong.</p></article>
+        <article><span>60</span><h3>Thực chiến có hướng dẫn</h3><p>Tự xử lý khách hàng, biết chọn sản phẩm phù hợp và được leader coaching.</p></article>
+        <article><span>90</span><h3>Bứt tốc kết quả</h3><p>Ổn định nhịp giao dịch, tăng kỹ năng chốt deal, định hướng lên nhân sự chủ lực.</p></article>
+      </div>
+      <div class="career-ladder glass"><h3>Career ladder tại Unite Group</h3><div class="ladder"><span>CVTV</span><span>Senior Consultant</span><span>Leader</span><span>Quản lý chi nhánh</span><span>Trưởng phòng / Quản lý khu vực</span></div></div>
+    </section>
+
+    <section class="section culture-section" id="culture">
+      <div class="section-title"><p class="eyebrow">Culture Gallery</p><h2>Môi trường trẻ, thực chiến và có đội nhóm đồng hành</h2><p>Tại Unite Group, bạn không chỉ làm việc với khách hàng mà còn được học hỏi, kết nối và phát triển trong một môi trường năng động.</p></div>
+      <div class="gallery" id="cultureGallery"></div>
+    </section>
+
+    <section class="section map-section" id="workplace">
+      <div class="section-title"><p class="eyebrow">Workplace</p><h2>Chọn nơi làm việc phù hợp</h2><p>Bản đồ sáng hơn, tinh gọn hơn và có chỉ đường Google Maps cho từng điểm.</p></div>
+      <div class="map-shell glass">
+        <aside class="map-panel">
+          <div class="map-panel-head"><span class="tiny-label">Branch Map</span><h3>Chi nhánh Unite Group</h3><p>Chọn một điểm để xem thông tin. Nếu chưa có địa chỉ chi tiết, hệ thống sẽ ưu tiên hiển thị tọa độ.</p></div>
+          <div class="map-actions"><button class="btn primary compact" id="locateNearest" type="button">Gợi ý gần tôi</button><button class="btn ghost compact" id="fitMap" type="button">Xem tất cả</button></div>
+          <div class="branch-list" id="branchList"></div>
+        </aside>
+        <div class="map-main">
+          <div id="uniteMap" class="leaflet-map" aria-label="Bản đồ chi nhánh Unite Group"></div>
+          <div class="selected-branch" id="selectedBranch"><span>Đang chọn</span><strong>Toàn bộ chi nhánh</strong><small>Bấm vào marker hoặc card bên trái để xem chi tiết.</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq-section">
+      <div class="section-title narrow"><p class="eyebrow">FAQ</p><h2>Ứng viên thường hỏi gì?</h2></div>
+      <div class="faq-list">
+        <details><summary>Chưa có kinh nghiệm có ứng tuyển được không?</summary><p>Có. Unite Group ưu tiên thái độ học hỏi, tinh thần chủ động và khả năng giao tiếp.</p></details>
+        <details><summary>Công ty có đào tạo không?</summary><p>Có. Nhân sự mới được đào tạo về nguồn hàng, quy trình tư vấn, cách tìm khách, chăm khách và xử lý giao dịch.</p></details>
+        <details><summary>Full-time và part-time khác nhau thế nào?</summary><p>Full-time phù hợp với ứng viên muốn phát triển lâu dài. Part-time phù hợp với sinh viên hoặc người muốn thử sức.</p></details>
+        <details><summary>Ứng tuyển xong bao lâu được liên hệ?</summary><p>Bộ phận tuyển dụng sẽ liên hệ theo thông tin ứng viên để trao đổi chi tiết và sắp lịch phỏng vấn.</p></details>
+      </div>
+    </section>
+
+    <section class="section apply-section" id="apply">
+      <div class="apply-card glass">
+        <div><p class="eyebrow">Apply Now</p><h2>Sẵn sàng bắt đầu hành trình tại Unite Group?</h2><p>Điền thông tin bên dưới để bộ phận tuyển dụng Unite Group liên hệ và tư vấn vị trí/văn phòng phù hợp.</p></div>
+        <form id="applyForm">
+          <div class="form-grid">
+            <label>Họ và tên<input name="name" type="text" placeholder="Nguyễn Văn A" required /></label>
+            <label>Số điện thoại / Zalo<input name="phone" type="tel" placeholder="09xx xxx xxx" required /></label>
+            <label>Năm sinh<input name="birthyear" type="number" placeholder="2003" min="1970" max="2010" /></label>
+            <label>Khu vực mong muốn<select name="area"><option>Gần nơi sinh sống</option><option>Quận 5 / Trung tâm</option><option>Tân Bình / Tân Phú</option><option>Bình Thạnh / Gò Vấp</option><option>Quận 7 / Quận 4</option><option>Khác</option></select></label>
+            <label>Hình thức<select name="type"><option>Full-time</option><option>Part-time</option><option>Chưa chắc, cần tư vấn thêm</option></select></label>
+            <label>Link Facebook / Portfolio nếu có<input name="profile" type="url" placeholder="https://facebook.com/..." /></label>
+            <label class="file-label">Tải CV lên nếu có
+              <input name="cvFile" id="cvFile" type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" />
+              <span class="file-hint">Hỗ trợ PDF, DOC, DOCX, JPG, PNG. Dung lượng nên dưới 5MB.</span>
+            </label>
+          </div>
+          <button class="btn primary full" type="submit">Gửi hồ sơ ứng tuyển</button>
+          <p class="form-note" id="formNote">Thông tin của bạn sẽ được gửi đến bộ phận tuyển dụng Unite Group.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><strong>UNITE GROUP CAREER</strong><span>Build your career from real action.</span><a href="#top">Lên đầu trang ↑</a></footer>
+  <div class="mobile-cta"><a class="btn primary" href="#apply">Ứng tuyển ngay</a></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="data/config.js"></script>
+  <script src="data/branches.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
