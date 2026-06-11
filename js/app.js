@@ -15,15 +15,28 @@ function initBrand(){
   }
 }
 function initScrollProgress(){const bar=$('#scrollProgress'); window.addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-window.innerHeight; bar.style.width=`${max>0?(window.scrollY/max)*100:0}%`;},{passive:true})}
-function initQuiz(){const buttons=$$('#quizOptions button'); const result=$('#quizResult'); buttons.forEach(btn=>btn.addEventListener('click',()=>{btn.classList.toggle('active'); const score=buttons.filter(b=>b.classList.contains('active')).length; if(score>=4) result.innerHTML=`<b>Bạn rất phù hợp với vị trí này.</b><span>Bạn có nhiều điểm đúng với chân dung ứng viên Unite Group đang tìm: chủ động, thích giao tiếp, muốn phát triển thu nhập và sẵn sàng học từ thực chiến.</span>`; else if(score===3) result.innerHTML=`<b>Bạn khá phù hợp.</b><span>Chỉ cần thêm sự kiên trì và tinh thần học hỏi, bạn có thể bắt nhịp tốt trong 30 ngày đầu.</span>`; else result.innerHTML=`<b>Chọn ít nhất 3 mục để xem mức độ phù hợp.</b><span>Unite Group đào tạo từ nền tảng, quan trọng là tinh thần chủ động và thái độ học hỏi.</span>`;}))}
+function initQuiz(){
+  const buttons=$$('#quizOptions button');
+  const result=$('#quizResult');
+  buttons.forEach(btn=>btn.addEventListener('click',()=>{
+    btn.classList.toggle('active');
+    const score=buttons.filter(b=>b.classList.contains('active')).length;
+    if(score>=4){
+      result.innerHTML=`<b>Bạn rất phù hợp với vị trí này.</b><span>Bạn có nhiều điểm phù hợp với môi trường tư vấn tại Unite Group: thích giao tiếp, có tinh thần chủ động, mong muốn tăng thu nhập và sẵn sàng học hỏi từ thực tế.</span>`;
+    }else if(score===3){
+      result.innerHTML=`<b>Bạn khá phù hợp.</b><span>Tại Unite Group, ứng viên sẽ được đào tạo bài bản từ nền tảng, từng bước làm quen với công việc và phát triển kỹ năng thực tế.</span>`;
+    }else{
+      result.innerHTML=`<b>Chọn ít nhất 3 mục để xem mức độ phù hợp.</b><span>Tại Unite Group, ứng viên sẽ được đào tạo bài bản từ nền tảng, từng bước làm quen với công việc và phát triển kỹ năng thực tế. Chúng tôi đánh giá cao tinh thần chủ động, thái độ cầu tiến và sự sẵn sàng học hỏi trong quá trình đồng hành cùng đội ngũ.</span>`;
+    }
+  }))
+}
 function initIncome(){const deal=$('#dealRange'), avg=$('#avgRange'), dVal=$('#dealValue'), aVal=$('#avgValue'), out=$('#incomeOutput'); if(!deal||!avg) return; const update=()=>{const deals=Number(deal.value), av=Number(avg.value), rate=.6, bonus=deals>=10?2000000:deals>=5?1000000:0; dVal.textContent=deals; aVal.textContent=formatVND(av); out.textContent=formatVND(Math.round(deals*av*rate+bonus));}; deal.addEventListener('input',update); avg.addEventListener('input',update); update();}
 function pointFeatures(){return (window.UNITE_BRANCHES_GEOJSON?.features||[]).filter(f=>f.geometry?.type==='Point')}
 function asBranch(feature){const [lng,lat]=feature.geometry.coordinates; const p=feature.properties||{}; return {id:p.id||`${lat}-${lng}`, name:p.name||'Unite Branch', lat, lng, coordsText:p.coordsText||`${lat.toFixed(6)}, ${lng.toFixed(6)}`, address:p.address||'', note:p.note||'', isHQ:!!p.isHQ, googleMaps:p.googleMaps||`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, directions:p.directions||`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`, image:p.image||''}}
 function popupHtml(b){
   const addressLine = b.address ? escapeHtml(b.address) : 'Đang cập nhật địa chỉ';
-  const noteLine = b.note ? `<br>${escapeHtml(b.note)}` : '';
   return `<div class="popup-title">${escapeHtml(b.name)}</div>
-    <div class="popup-note">${addressLine}${noteLine}</div>
+    <div class="popup-note">${addressLine}</div>
     <div class="popup-actions">
       <a href="${b.directions}" target="_blank" rel="noopener">Chỉ đường</a>
       <a class="secondary" href="${b.googleMaps}" target="_blank" rel="noopener">Mở Maps</a>
@@ -35,10 +48,9 @@ function updateSelectedBranch(branch, distance=null){
 
   if(branch){
     const addressText = branch.address ? escapeHtml(branch.address) : 'Đang cập nhật địa chỉ';
-    const noteText = branch.note ? ` • ${escapeHtml(branch.note)}` : '';
     box.innerHTML=`<span>${distance!=null?`Gần bạn khoảng ${distance.toFixed(1)} km`:'Đang chọn'}</span>
       <strong>${escapeHtml(branch.name)}</strong>
-      <small>${addressText}${noteText}</small>`;
+      <small>${addressText}</small>`;
   } else {
     box.innerHTML=`<span>Đang chọn</span><strong>Toàn bộ chi nhánh</strong><small>Bấm vào marker hoặc card bên trái để xem chi tiết.</small>`;
   }
@@ -60,7 +72,7 @@ function renderBranchList(branches, userPosition=null){
   list.innerHTML=sorted.map(({branch,km})=>`<article class="branch-card ${branch.isHQ?'active-hq':''}" data-branch-id="${escapeHtml(branch.id)}">
     <h4>${escapeHtml(branch.name)}</h4>
     ${km!=null?`<span class="coord">Cách bạn khoảng ${km.toFixed(1)} km</span>`:''}
-    <p>${branch.address?escapeHtml(branch.address):'Đang cập nhật địa chỉ'}${branch.note?'<br>'+escapeHtml(branch.note):''}</p>
+    <p>${branch.address?escapeHtml(branch.address):'Đang cập nhật địa chỉ'}</p>
     <div class="branch-links">
       <a href="${branch.directions}" target="_blank" rel="noopener">Chỉ đường</a>
       <a class="secondary" href="${branch.googleMaps}" target="_blank" rel="noopener">Maps</a>
@@ -241,4 +253,45 @@ function initApplyForm(){
 function wrapText(ctx,text,x,y,maxWidth,lineHeight,maxLines=4){const words=text.split(' '); let line='', lines=0; for(let n=0;n<words.length;n++){const test=line+words[n]+' '; if(ctx.measureText(test).width>maxWidth && n>0){ctx.fillText(line,x,y); line=words[n]+' '; y+=lineHeight; lines++; if(lines>=maxLines-1) break;} else line=test;} ctx.fillText(line.trim(),x,y)}
 function roundRect(ctx,x,y,w,h,r,fill,stroke){ctx.beginPath(); ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r); ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h); ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r); ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y); ctx.closePath(); if(fill) ctx.fill(); if(stroke) ctx.stroke();}
 function initPosterDownload(){const btn=$('#downloadPoster'), canvas=$('#posterCanvas'); if(!btn||!canvas) return; const ctx=canvas.getContext('2d'); btn.addEventListener('click',()=>{const w=canvas.width,h=canvas.height,dark=activeTheme()==='dark'; const bg=ctx.createLinearGradient(0,0,w,h); bg.addColorStop(0,dark?'#0E0E10':'#FFFDF5'); bg.addColorStop(.56,dark?'#191919':'#FFF8D8'); bg.addColorStop(1,dark?'#0E0E10':'#FFFFFF'); ctx.fillStyle=bg; ctx.fillRect(0,0,w,h); const orb=ctx.createRadialGradient(840,160,20,840,160,430); orb.addColorStop(0,'rgba(255,215,0,.48)'); orb.addColorStop(1,'rgba(255,215,0,0)'); ctx.fillStyle=orb; ctx.fillRect(0,0,w,h); ctx.fillStyle='#FFD700'; ctx.font='900 42px Be Vietnam Pro, Arial'; ctx.fillText('UNITE GROUP CAREER',76,110); ctx.fillStyle=dark?'#FFFDF5':'#111111'; ctx.font='900 92px Be Vietnam Pro, Arial'; wrapText(ctx,'NHÂN VIÊN KINH DOANH',76,250,860,102,2); ctx.fillStyle='#FFD700'; ctx.font='800 44px Be Vietnam Pro, Arial'; ctx.fillText('Bất động sản cho thuê',76,450); ctx.fillStyle=dark?'#C9BD8B':'#6B5E3A'; ctx.font='500 32px Be Vietnam Pro, Arial'; wrapText(ctx,'Không yêu cầu kinh nghiệm • Đào tạo 1:1 • Thu nhập theo năng lực • Full-time/Part-time',76,530,900,46,3); let y=690; [['Bạn sẽ làm gì?','Đăng bài, tư vấn nhu cầu, hỗ trợ xem phòng, cọc/hợp đồng và chăm sóc sau thuê.'],['Lộ trình','30 ngày làm quen • 60 ngày thực chiến • 90 ngày bứt tốc kết quả.'],['Ứng tuyển','Để lại thông tin để HR Unite Group liên hệ và tư vấn chi nhánh phù hợp.']].forEach(([title,body])=>{ctx.fillStyle=dark?'rgba(255,255,255,.07)':'rgba(255,255,255,.80)'; roundRect(ctx,76,y,928,150,28,true,false); ctx.strokeStyle='rgba(255,215,0,.35)'; ctx.lineWidth=2; roundRect(ctx,76,y,928,150,28,false,true); ctx.fillStyle='#FFD700'; ctx.font='900 32px Be Vietnam Pro, Arial'; ctx.fillText(title,110,y+52); ctx.fillStyle=dark?'#FFFDF5':'#111111'; ctx.font='500 26px Be Vietnam Pro, Arial'; wrapText(ctx,body,110,y+96,835,36,2); y+=180;}); ctx.fillStyle='#FFD700'; roundRect(ctx,76,1220,360,72,36,true,false); ctx.fillStyle='#111111'; ctx.font='900 28px Be Vietnam Pro, Arial'; ctx.fillText('ỨNG TUYỂN NGAY',122,1267); ctx.fillStyle=dark?'#C9BD8B':'#6B5E3A'; ctx.font='600 24px Be Vietnam Pro, Arial'; ctx.fillText('unitegroup.vn/career • HR Unite Group',470,1265); const link=document.createElement('a'); link.download='unitegroup-career-jd-poster-4x5.png'; link.href=canvas.toDataURL('image/png'); link.click();});}
+
+function initFloatingDock(){
+  const dock = document.querySelector('.desktop-floating-menu');
+  if(!dock) return;
+
+  const update = () => {
+    const trigger = Math.min(window.innerHeight * 0.45, 520);
+    const shouldShow = window.scrollY > trigger;
+    dock.classList.toggle('show', shouldShow);
+  };
+
+  update();
+  window.addEventListener('scroll', update, {passive:true});
+}
+
+
 document.addEventListener('DOMContentLoaded',()=>{initTheme(); initBrand(); initScrollProgress(); initQuiz(); initIncome(); initBranches(); loadSheetData(); initApplyForm();});
+
+
+/* Candidate V14 - reliable floating dock trigger */
+(function(){
+  function bindFloatingDockV14(){
+    const dock = document.querySelector('.desktop-floating-menu');
+    if(!dock) return;
+
+    const update = () => {
+      // Hiện sớm sau khi lướt khỏi phần đầu một chút, không cần đợi quá sâu.
+      const shouldShow = window.scrollY > 140;
+      dock.classList.toggle('show', shouldShow);
+    };
+
+    update();
+    window.addEventListener('scroll', update, {passive:true});
+    window.addEventListener('resize', update, {passive:true});
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', bindFloatingDockV14);
+  }else{
+    bindFloatingDockV14();
+  }
+})();

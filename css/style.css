@@ -690,3 +690,344 @@ html[data-theme='dark'] .global-watermark img{
     font-size:1.7rem;
   }
 }
+
+
+/* Candidate V11 - Content fit from JD document */
+.value-grid-four{
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+}
+
+.career-ladder-content{
+  max-width:980px;
+  margin:0 auto;
+}
+
+.career-ladder-content .ladder{
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+}
+
+.hero-card h2{
+  line-height:1.22;
+}
+
+@media (max-width:1180px){
+  .value-grid-four{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+}
+
+@media (max-width:760px){
+  .value-grid-four{
+    grid-template-columns:1fr !important;
+  }
+
+  .career-ladder-content .ladder{
+    grid-template-columns:1fr !important;
+  }
+
+  .hero-card h2{
+    font-size:1.25rem !important;
+  }
+}
+
+
+/* Candidate V12 - Smart word grouping + persistent desktop menu/CTA */
+.keep{
+  white-space:nowrap;
+}
+
+.hero-title{
+  display:grid;
+  gap:.08em;
+  max-width:min(1180px, 96vw);
+  font-size:clamp(3.2rem, 7.35vw, 7.6rem) !important;
+  line-height:.94 !important;
+  letter-spacing:-.072em !important;
+  text-wrap:balance;
+}
+
+.hero-title .title-line{
+  display:block;
+}
+
+.hero-title .gold-title{
+  color:transparent;
+  background:linear-gradient(135deg,var(--gold-deep),var(--gold) 46%,#fff2a0);
+  -webkit-background-clip:text;
+  background-clip:text;
+}
+
+html[data-theme="dark"] .hero-title .gold-title{
+  background:linear-gradient(135deg,var(--gold),#fff6b0 48%,var(--gold));
+  -webkit-background-clip:text;
+  background-clip:text;
+}
+
+.section-title h2,
+.value-card h3,
+.timeline h3,
+.career-ladder h3,
+.faq-list summary,
+.apply-card h2{
+  text-wrap:balance;
+}
+
+.header-apply-cta{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:42px;
+  padding:0 1rem;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--gold),#fff2a0);
+  color:#111;
+  font-weight:900;
+  box-shadow:0 14px 34px rgba(255,215,0,.18);
+  white-space:nowrap;
+}
+
+.desktop-floating-menu{
+  position:fixed;
+  left:50%;
+  bottom:22px;
+  z-index:1200;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  gap:.45rem;
+  padding:.48rem;
+  border-radius:999px;
+  background:color-mix(in srgb,var(--surface) 76%, transparent);
+  border:1px solid var(--line);
+  box-shadow:0 22px 70px rgba(0,0,0,.18), 0 0 0 1px rgba(255,255,255,.04) inset;
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+
+.desktop-floating-menu a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:38px;
+  padding:0 .88rem;
+  border-radius:999px;
+  color:var(--muted);
+  font-size:.82rem;
+  font-weight:900;
+  white-space:nowrap;
+  transition:transform .16s ease, background .16s ease, color .16s ease;
+}
+
+.desktop-floating-menu a:hover{
+  transform:translateY(-1px);
+  background:rgba(255,215,0,.10);
+  color:var(--text);
+}
+
+.desktop-floating-menu .dock-apply{
+  background:linear-gradient(135deg,var(--gold),#fff2a0);
+  color:#111;
+  padding:0 1.05rem;
+  box-shadow:0 12px 30px rgba(255,215,0,.18);
+}
+
+@media (max-width:1180px){
+  .hero-title{
+    font-size:clamp(3rem, 8.6vw, 6.4rem) !important;
+    max-width:100%;
+  }
+
+  .header-apply-cta{
+    display:none;
+  }
+}
+
+@media (max-width:760px){
+  .desktop-floating-menu{
+    display:none;
+  }
+
+  .hero-title{
+    display:block;
+    font-size:clamp(2.72rem, 13vw, 3.72rem) !important;
+    line-height:1.02 !important;
+    letter-spacing:-.055em !important;
+  }
+
+  .hero-title .title-line{
+    display:block;
+  }
+
+  .hero-title .keep{
+    white-space:normal;
+  }
+
+  .hero-title .gold-title .keep:last-child{
+    white-space:nowrap;
+  }
+}
+
+
+/* Candidate V13 - Clean header + dock appears after scroll */
+.site-header{
+  display:grid !important;
+  grid-template-columns:auto 1fr auto auto !important;
+  align-items:center !important;
+  gap:1rem !important;
+}
+
+.site-header .brand{
+  justify-self:start !important;
+}
+
+.site-header .desktop-nav{
+  justify-self:center !important;
+  gap:1.25rem !important;
+}
+
+/* Tránh menu trên bị lệch/rối khi đã có menu nổi sau scroll */
+@media (min-width:1181px){
+  .site-header .desktop-nav{
+    display:none !important;
+  }
+
+  .site-header{
+    grid-template-columns:auto 1fr auto auto !important;
+  }
+
+  .header-apply-cta{
+    justify-self:end !important;
+  }
+}
+
+.desktop-floating-menu{
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+  transform:translate(-50%, 22px) scale(.96) !important;
+  transition:
+    opacity .26s ease,
+    visibility .26s ease,
+    transform .34s cubic-bezier(.22,1,.36,1) !important;
+}
+
+.desktop-floating-menu.show{
+  opacity:1 !important;
+  visibility:visible !important;
+  pointer-events:auto !important;
+  transform:translate(-50%, 0) scale(1) !important;
+}
+
+.desktop-floating-menu::before{
+  content:"";
+  position:absolute;
+  inset:-10px;
+  border-radius:999px;
+  background:radial-gradient(circle at center, rgba(255,215,0,.16), transparent 70%);
+  z-index:-1;
+  opacity:.9;
+}
+
+@media (max-width:1180px){
+  .site-header{
+    display:flex !important;
+  }
+}
+
+@media (max-width:760px){
+  .site-header{
+    display:flex !important;
+  }
+
+  .desktop-floating-menu{
+    display:none !important;
+  }
+}
+
+
+/* Candidate V14 - Restore top menu + reliable scroll dock */
+@media (min-width:1181px){
+  .site-header{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+    gap:1.2rem !important;
+    padding-left:clamp(16px, 3.2vw, 64px) !important;
+    padding-right:clamp(16px, 3.2vw, 64px) !important;
+  }
+
+  .site-header .brand{
+    flex:0 0 auto !important;
+    min-width:290px !important;
+    justify-self:auto !important;
+  }
+
+  .site-header .desktop-nav{
+    display:flex !important;
+    position:absolute !important;
+    left:50% !important;
+    top:50% !important;
+    transform:translate(-50%, -50%) !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:1.35rem !important;
+    margin:0 !important;
+    padding:0 !important;
+    white-space:nowrap !important;
+  }
+
+  .site-header .desktop-nav a{
+    font-size:.9rem !important;
+    font-weight:900 !important;
+    color:var(--muted) !important;
+  }
+
+  .site-header .desktop-nav a:hover{
+    color:var(--gold) !important;
+  }
+
+  .header-apply-cta{
+    display:inline-flex !important;
+    margin-left:auto !important;
+    margin-right:.75rem !important;
+    flex:0 0 auto !important;
+  }
+
+  .theme-toggle{
+    flex:0 0 auto !important;
+  }
+}
+
+/* Menu nổi: ban đầu ẩn, lướt xuống mới bay lên */
+.desktop-floating-menu{
+  display:flex !important;
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+  transform:translate(-50%, 26px) scale(.96) !important;
+  transition:
+    opacity .24s ease,
+    visibility .24s ease,
+    transform .34s cubic-bezier(.22,1,.36,1) !important;
+}
+
+.desktop-floating-menu.show{
+  opacity:1 !important;
+  visibility:visible !important;
+  pointer-events:auto !important;
+  transform:translate(-50%, 0) scale(1) !important;
+}
+
+@media (max-width:1180px){
+  .site-header .desktop-nav,
+  .desktop-floating-menu,
+  .header-apply-cta{
+    display:none !important;
+  }
+}
+
+@media (max-width:760px){
+  .desktop-floating-menu{
+    display:none !important;
+  }
+}

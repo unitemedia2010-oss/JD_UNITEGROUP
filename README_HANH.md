@@ -67,3 +67,49 @@ Xem hướng dẫn tại `HUONG_DAN_SHEET_TIENg_VIET.md`.
 - Trình duyệt sẽ không còn hỏi quyền “See text and images copied to the clipboard”.
 - Form vẫn gửi ứng viên và CV như trước.
 - Nội dung ứng viên không còn bị tự động sao chép vào clipboard, tránh gây khó hiểu cho ứng viên.
+
+
+## Candidate V10 - Sửa ảnh GitHub không hiện
+
+- Đã đổi đường dẫn gallery từ `img/01.jpg` sang `img/01.JPG` để khớp với file Hạnh upload trên GitHub.
+- GitHub Pages phân biệt chữ hoa/thường nên `.jpg` khác `.JPG`.
+- Xem thêm `HUONG_DAN_FIX_ANH_GITHUB.md`.
+
+
+## Candidate V11 - Cập nhật content theo file JD website
+
+- Đã thay nội dung web theo file `Bản sửa JD website.docx`.
+- Thay phần giới thiệu thành "Tại sao bạn nên lựa chọn Unite Group?" gồm 4 lý do.
+- Cập nhật Quick Match, phần công việc, Career Path, Culture Gallery, Workplace, FAQ và Apply Now.
+- Cập nhật danh sách chi nhánh theo nội dung mới: DFC, KSC & MVC, EVO, DOC 1, CTC, TBC & TSC, PNC, BTC 1.
+- Giữ các chức năng đã có: upload CV, lưu link CV vào Sheet/Drive, popup loading/success, bỏ clipboard, ảnh GitHub `.JPG`.
+
+
+## Candidate V12 - Tối ưu xuống dòng + nút ứng tuyển xuyên suốt PC
+
+- Đã chỉnh hero title để các cụm có nghĩa đi cùng nhau:
+  - "Kinh doanh"
+  - "Bất động sản"
+  - "cho thuê"
+- Thêm `text-wrap: balance` cho heading để xuống dòng tự nhiên hơn.
+- Thêm nút `Ứng tuyển ngay` trên header desktop.
+- Thêm thanh menu nổi xuyên suốt màn hình PC: Công việc, Thu nhập, Lộ trình, Chi nhánh, Ứng tuyển ngay.
+- Mobile vẫn giữ CTA riêng ở dưới màn hình, không hiện dock PC để tránh rối.
+
+
+## Candidate V13 - Menu nổi chỉ hiện sau khi lướt
+
+- Đã làm gọn header trên PC để không bị lệch/rối.
+- Ẩn menu chữ trên header desktop, chỉ giữ logo, nút Ứng tuyển ngay và đổi mode.
+- Menu nổi phía dưới sẽ không hiện ngay khi mới vào trang.
+- Khi ứng viên lướt xuống qua hero, menu nổi sẽ bay lên mượt.
+- Mobile vẫn giữ CTA dưới màn hình, không dùng menu nổi PC.
+
+
+## Candidate V14 - Sửa menu trên và menu nổi
+
+- Đã bật lại menu trên header desktop.
+- Căn menu trên vào giữa header, tránh lệch với logo và nút ứng tuyển.
+- Menu nổi phía dưới vẫn ẩn khi mới vào trang.
+- Khi ứng viên lướt xuống khoảng 140px, menu nổi sẽ bay lên.
+- Mobile vẫn ẩn menu desktop, giữ CTA mobile để giao diện gọn.

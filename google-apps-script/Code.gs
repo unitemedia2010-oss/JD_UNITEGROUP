@@ -300,13 +300,13 @@ function themDuLieuChiNhanhMau_(sheet) {
   if (sheet.getLastRow() > 1) return;
 
   const rows = [
-    ["Văn phòng chính", "125 Trần Bình Trọng, phường Chợ Quán, TP.HCM", 10.75609363585227, 106.6810910436253, "Trụ sở chính Unite Group", "", "", "", "Có", "Có"],
+    ["Văn phòng chính DFC", "125 Trần Bình Trọng, phường Chợ Quán, TP.HCM", 10.75609363585227, 106.6810910436253, "", "", "", "", "Có", "Có"],
     ["VP chi nhánh KSC & MVC", "39 Mai Văn Vĩnh, Phường Tân Hưng, TP.HCM", 10.7403398, 106.7137972, "", "", "", "", "", "Có"],
+    ["VP chi nhánh EVO", "479 Trần Xuân Soạn, Phường Tân Hưng, TP.HCM", 10.7417, 106.7199, "", "", "", "", "", "Có"],
+    ["VP chi nhánh DOC 1", "99A Dương Bá Trạc, Phường Chánh Hưng, Quận 8, TP.HCM", 10.748394, 106.688941, "", "", "", "", "", "Có"],
+    ["VP chi nhánh CTC", "457/73 Cách Mạng Tháng Tám, Phường Hòa Hưng, TP.HCM", 10.7768, 106.6707, "", "", "", "", "", "Có"],
     ["VP chi nhánh TBC & TSC", "1/17 Hoàng Việt, Phường Tân Bình Nam, Quận Tân Bình, TP.HCM", 10.7976672, 106.6601844, "", "", "", "", "", "Có"],
-    ["VP chi nhánh DEC", "63 Dương Bá Trạc, Phường Dương Bá Trạc, Quận 8, TP.HCM", 10.7490577, 106.6885216, "", "", "", "", "", "Có"],
-    ["VP chi nhánh DOC 1", "99A Dương Bá Trạc, Phường Dương Bá Trạc, Quận 8, TP.HCM", 10.748394, 106.688941, "", "", "", "", "", "Có"],
-    ["VP chi nhánh DTC 1 & DTC 2", "120A Trần Kế Xương, Phường Phú Nhuận Trung, Quận Phú Nhuận, TP.HCM", 10.7887409, 106.6753295, "", "", "", "", "", "Có"],
-    ["VP TPKD Shark", "413/8 Lê Văn Sỹ, Phường Lê Văn Sỹ, Quận 3, TP.HCM", 10.8023195, 106.6896774, "", "", "", "", "", "Có"],
+    ["VP chi nhánh PNC", "120A Trần Kế Xương, Phường Phú Nhuận Trung, Quận Phú Nhuận, TP.HCM", 10.7887409, 106.6753295, "", "", "", "", "", "Có"],
     ["VP chi nhánh BTC 1", "202/8 Nguyễn Xí, Phường Bình Thạnh Bắc, Quận Bình Thạnh, TP.HCM", 10.8168499, 106.7065796, "", "", "", "", "", "Có"]
   ];
 
