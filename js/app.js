@@ -295,3 +295,250 @@ document.addEventListener('DOMContentLoaded',()=>{initTheme(); initBrand(); init
     bindFloatingDockV14();
   }
 })();
+
+
+/* Candidate V21 - page intro and scroll reveal */
+function initPageMotion(){
+  const intro = document.getElementById('pageIntro');
+
+  window.setTimeout(()=>{
+    document.body.classList.remove('is-loading');
+    document.body.classList.add('motion-ready');
+    if(intro){
+      intro.classList.add('hide');
+      window.setTimeout(()=>intro.remove(), 700);
+    }
+  }, 520);
+}
+
+function initScrollReveal(){
+  const selector = [
+    '.section-title',
+    '.value-grid',
+    '.quiz-card',
+    '.timeline',
+    '.income-card',
+    '.career-journey',
+    '.gallery',
+    '.map-shell',
+    '.faq-list',
+    '.apply-card',
+    '.hero-card'
+  ].join(',');
+
+  document.querySelectorAll(selector).forEach(el=>{
+    el.classList.add('reveal-item');
+  });
+
+  document.querySelectorAll('.value-grid,.timeline,.gallery,.branch-list,.faq-list,.journey-track,.role-picks-grid,.quiz-options').forEach(el=>{
+    el.classList.add('reveal-stagger');
+  });
+
+  if(!('IntersectionObserver' in window)){
+    document.querySelectorAll('.reveal-item,.reveal-stagger').forEach(el=>el.classList.add('in-view'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    root:null,
+    threshold:0.12,
+    rootMargin:'0px 0px -10% 0px'
+  });
+
+  document.querySelectorAll('.reveal-item,.reveal-stagger').forEach(el=>observer.observe(el));
+}
+
+(function(){
+  const startMotion = () => {
+    initPageMotion();
+    initScrollReveal();
+  };
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', startMotion);
+  }else{
+    startMotion();
+  }
+})();
+
+
+/* Candidate V22 - Gold Shader Animation
+   Static HTML/CSS/JS version adapted from the React Three.js shader idea.
+   Gold is the dominant color for Unite Group. */
+function initGoldShader(){
+  const container = document.getElementById('goldShader');
+  if(!container || !window.THREE) return;
+
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduceMotion) return;
+
+  let renderer, scene, camera, material, mesh, animationId;
+  let isVisible = true;
+
+  try{
+    const vertexShader = `
+      void main(){
+        gl_Position = vec4(position, 1.0);
+      }
+    `;
+
+    const fragmentShader = `
+      #define TWO_PI 6.2831853072
+      precision highp float;
+
+      uniform vec2 resolution;
+      uniform float time;
+      uniform float isDark;
+
+      mat2 rot(float a){
+        float s = sin(a);
+        float c = cos(a);
+        return mat2(c, -s, s, c);
+      }
+
+      void main(void){
+        vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);
+        uv *= 1.05;
+        uv *= rot(0.28);
+
+        float t = time * 0.045;
+        float lineWidth = 0.0032;
+
+        float rings = 0.0;
+        float glow = 0.0;
+
+        for(int i = 0; i < 7; i++){
+          float fi = float(i);
+          vec2 p = uv;
+          p.x += sin(t * 1.4 + fi * 0.72) * 0.18;
+          p.y += cos(t * 1.1 + fi * 0.43) * 0.12;
+
+          float wave = fract(t + fi * 0.075) * 4.2;
+          float d = abs(wave - length(p) + mod(p.x + p.y, 0.22));
+          rings += lineWidth * (fi + 1.0) / max(d, 0.012);
+
+          float beam = abs(sin((p.x + p.y) * 5.0 + t * 6.0 + fi));
+          glow += smoothstep(0.98, 0.25, beam) * 0.018;
+        }
+
+        float vignette = smoothstep(1.65, 0.18, length(uv));
+        float intensity = clamp((rings * 0.26 + glow) * vignette, 0.0, 1.0);
+
+        vec3 deepGold = vec3(0.66, 0.47, 0.02);
+        vec3 gold = vec3(1.00, 0.78, 0.05);
+        vec3 softGold = vec3(1.00, 0.90, 0.42);
+
+        vec3 color = mix(deepGold, gold, intensity);
+        color = mix(color, softGold, smoothstep(0.45, 1.0, intensity));
+
+        float alpha = intensity * mix(0.32, 0.62, isDark);
+        gl_FragColor = vec4(color, alpha);
+      }
+    `;
+
+    camera = new THREE.Camera();
+    camera.position.z = 1;
+    scene = new THREE.Scene();
+
+    const geometry = new THREE.PlaneGeometry(2, 2);
+
+    material = new THREE.ShaderMaterial({
+      uniforms:{
+        time:{ value:1.0 },
+        resolution:{ value:new THREE.Vector2(1, 1) },
+        isDark:{ value:document.documentElement.dataset.theme === 'dark' ? 1.0 : 0.0 }
+      },
+      vertexShader,
+      fragmentShader,
+      transparent:true,
+      depthWrite:false,
+      depthTest:false
+    });
+
+    mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    renderer = new THREE.WebGLRenderer({
+      antialias:true,
+      alpha:true,
+      powerPreference:'high-performance'
+    });
+
+    renderer.setClearColor(0x000000, 0);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
+    container.appendChild(renderer.domElement);
+
+    const resize = () => {
+      const rect = container.getBoundingClientRect();
+      const parentRect = container.parentElement ? container.parentElement.getBoundingClientRect() : rect;
+      const width = Math.max(1, Math.floor(rect.width || parentRect.width || window.innerWidth));
+      const height = Math.max(1, Math.floor(rect.height || parentRect.height || window.innerHeight));
+      renderer.setSize(width, height, false);
+      material.uniforms.resolution.value.set(
+        renderer.domElement.width,
+        renderer.domElement.height
+      );
+    };
+
+    const updateTheme = () => {
+      if(material){
+        material.uniforms.isDark.value = document.documentElement.dataset.theme === 'dark' ? 1.0 : 0.0;
+      }
+    };
+
+    const animate = () => {
+      if(!isVisible){
+        animationId = requestAnimationFrame(animate);
+        return;
+      }
+      material.uniforms.time.value += 0.055;
+      renderer.render(scene, camera);
+      animationId = requestAnimationFrame(animate);
+    };
+
+    resize();
+    updateTheme();
+    animate();
+
+    window.addEventListener('resize', resize, {passive:true});
+    document.addEventListener('visibilitychange', () => {
+      isVisible = !document.hidden;
+    });
+
+    const themeObserver = new MutationObserver(updateTheme);
+    themeObserver.observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+
+    window.addEventListener('beforeunload', () => {
+      try{
+        cancelAnimationFrame(animationId);
+        themeObserver.disconnect();
+        window.removeEventListener('resize', resize);
+        if(renderer && renderer.domElement && renderer.domElement.parentNode){
+          renderer.domElement.parentNode.removeChild(renderer.domElement);
+        }
+        geometry.dispose();
+        material.dispose();
+        renderer.dispose();
+      }catch(e){}
+    });
+  }catch(error){
+    console.warn('Gold shader disabled:', error);
+    container.classList.add('shader-fallback');
+  }
+}
+
+(function(){
+  const startGoldShader = () => initGoldShader();
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', startGoldShader);
+  }else{
+    startGoldShader();
+  }
+})();

@@ -143,3 +143,60 @@ Xem hướng dẫn tại `HUONG_DAN_SHEET_TIENg_VIET.md`.
 - Thêm nhãn `Vị trí tuyển dụng` để nhìn rõ đây là 3 nhóm tuyển dụng.
 - Đã làm lại `Lộ trình phát triển` theo kiểu từng bậc thang đi lên, có mũi tên `↗` để thể hiện hướng phát triển nghề nghiệp rõ hơn.
 - Trên mobile, lộ trình tự chuyển thành dạng dọc để dễ đọc.
+
+
+## Candidate V18 - Chỉnh màu chữ hero theo ảnh mẫu
+
+- Đã chỉnh màu chữ hero theo ảnh Hạnh gửi:
+  - Dark mode: dòng chính màu trắng, dòng dưới màu vàng gold/soft gold.
+  - Light mode: dòng chính màu đen, dòng dưới màu vàng gold/soft gold.
+- Đã bỏ hiệu ứng gradient cũ trên `h1 span` để không còn bị mảng màu lạ ở cuối chữ.
+- Giữ nội dung hero hiện tại: `Chuyên viên tư vấn / cho thuê căn hộ`.
+
+
+## Candidate V19 - Sửa tràn khung phần lộ trình phát triển
+
+- Đã nới phần chứa `career-journey`.
+- Đã tăng khoảng đệm dưới của `journey-track` để card đầu tiên không còn bị tụt ra khỏi khung.
+- Giảm nhẹ độ lệch lên/xuống của từng block để bố cục vẫn có cảm giác đi lên nhưng gọn hơn.
+- Mobile/tablet vẫn tự chuyển về dạng dọc để không bị tràn.
+
+
+## Candidate V20 - Sửa mũi tên lộ trình trên giao diện điện thoại
+
+- Đã sửa mũi tên ở phần `Lộ trình phát triển` khi hiển thị dọc trên điện thoại.
+- Ở mobile/tablet dạng dọc, mũi tên chéo `↗` được đổi thành mũi tên xuống `↓`.
+- Giao diện desktop vẫn giữ mũi tên đi lên để thể hiện hướng phát triển.
+
+
+## Candidate V21 - Hiệu ứng load trang và xuất hiện khi cuộn/kéo
+
+- Thêm intro khi load/reload trang: màn hình mờ, logo gold, sau đó trang chính xuất hiện mượt.
+- Hero title, badge, CTA và card bên phải có animation xuất hiện theo từng nhịp.
+- Khi cuộn trên PC hoặc kéo trên mobile, các section/card sẽ fade-up + blur nhẹ rồi hiện ra.
+- Có stagger animation cho các nhóm card: Why, Timeline, Gallery, Branch, FAQ, Lộ trình.
+- Thêm hiệu ứng nút dạng liquid glass CSS-only, lấy cảm hứng từ component LiquidButton nhưng chạy trực tiếp trên HTML/CSS/JS.
+- Tôn trọng `prefers-reduced-motion`: người dùng tắt animation trong hệ điều hành sẽ không bị chạy hiệu ứng.
+
+
+## Candidate V22 - Gold Shader Animation
+
+- Đã thêm hiệu ứng shader animation nền hero, chuyển từ ý tưởng React/Three.js sang HTML/CSS/JS thuần.
+- Màu vàng gold là màu chủ đạo.
+- Shader chạy bằng Three.js CDN trên GitHub Pages.
+- Tối ưu nhẹ:
+  - giới hạn pixel ratio để đỡ lag
+  - tạm dừng khi tab bị ẩn
+  - tắt nếu người dùng bật `prefers-reduced-motion`
+- Light mode và dark mode có opacity/blend khác nhau để không bị chói.
+
+
+## Candidate V23 - Sửa shader làm lệch bố cục
+
+- Đã chuyển `goldShader` vào trong `.hero-bg`, tức là nó chỉ còn là lớp nền.
+- Shader không còn là child trực tiếp của layout hero nên không ảnh hưởng grid/flex/bố cục nữa.
+- Cố định z-index:
+  - shader nằm dưới cùng
+  - orb/grid nền nằm phía trên shader
+  - nội dung hero và card nằm trên cùng
+- Bổ sung CSS `contain` để canvas không làm layout bị tính sai.
