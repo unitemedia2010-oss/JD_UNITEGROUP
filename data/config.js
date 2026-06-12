@@ -1,5 +1,5 @@
 window.UNITE_CONFIG = {
-  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbyi2kzSMH_PMZkyP9E-L6FT7VztYSZy_AiNlfW-tJDM44ykNHArmrwnu_PVqZByDJfl-w/exec",
+  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzbm0aD-0IIyX2wbcs0O2wMQzpxo32nWuNMFPujWulZhmVLlHiFJDrHjEFBYSu-ZTcLZg/exec",
   LOGO_URL: "https://techbytruong.wordpress.com/wp-content/uploads/2026/01/unite-group-2.png",
   MARKER_URL: "https://techbytruong.wordpress.com/wp-content/uploads/2025/12/unite-group-gold-doc-png-1-e1767002671511.png",
   THEME_MODE: "system",

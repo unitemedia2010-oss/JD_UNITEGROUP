@@ -200,3 +200,34 @@ Xem hướng dẫn tại `HUONG_DAN_SHEET_TIENg_VIET.md`.
   - orb/grid nền nằm phía trên shader
   - nội dung hero và card nằm trên cùng
 - Bổ sung CSS `contain` để canvas không làm layout bị tính sai.
+
+
+## Candidate V24 - Sửa mất link file CV + tăng giới hạn 10MB
+
+- Đã tăng giới hạn upload CV từ 5MB lên 10MB ở frontend và Apps Script.
+- Đã sửa Apps Script ghi dữ liệu theo tên header để không còn lệch cột.
+- File CV sẽ lưu lên Google Drive, cột `Tên file CV` lưu tên file, cột `Link file CV` lưu link Drive.
+- Thêm hàm `suaLaiHeaderUngVienV24()` để chuẩn hóa lại header Sheet.
+- Sau khi dán code mới phải Deploy phiên bản mới, nếu không vẫn chạy code cũ.
+
+
+## Candidate V25 - Fix chữ trong 3 ô hero tự co giãn
+
+- Đã cập nhật `APPS_SCRIPT_URL` mới:
+  `https://script.google.com/macros/s/AKfycbzbm0aD-0IIyX2wbcs0O2wMQzpxo32nWuNMFPujWulZhmVLlHiFJDrHjEFBYSu-ZTcLZg/exec`
+- Sửa 3 ô `TP.HCM / 1-1 / Thu nhập` để chữ tự co theo khung.
+- Dùng `clamp()` cho font-size, padding và chiều cao card để hạn chế lỗi mỗi máy render font khác nhau.
+- Riêng chữ `Thu nhập` được giảm nhẹ size vì dễ tràn nhất.
+- Ở màn hình hẹp, 3 ô tự đổi layout để không bao giờ nhảy ra khỏi khung.
+
+
+## Candidate V26 - Tối ưu card thông tin tuyển dụng
+
+- Đã bỏ danh sách bullet dài trong hero card.
+- Thay bằng 4 ô thông tin ngắn gọn:
+  - Địa điểm / TP.HCM
+  - Đào tạo / Training đầu vào
+  - Phù hợp / Gen Z - Người mới
+  - Yêu cầu / Smartphone + di chuyển
+- Giữ đủ thông tin nhưng nhìn sạch hơn, gọn hơn và đỡ rối trên nhiều kích thước màn hình.
+- Chỉnh lại 3 nút vị trí tuyển dụng cho nhỏ gọn và đều hơn.

@@ -1887,3 +1887,275 @@ html[data-theme='dark'] .gold-shader-layer{
     inset:-14% !important;
   }
 }
+
+
+/* Candidate V25 - Auto-fit mini stats text in hero card */
+.hero-card{
+  min-width:0 !important;
+}
+
+.hero-card .mini-stats{
+  display:grid !important;
+  grid-template-columns:repeat(3, minmax(0, 1fr)) !important;
+  gap:clamp(.45rem, 1vw, .75rem) !important;
+  width:100% !important;
+  min-width:0 !important;
+}
+
+.hero-card .mini-stats div{
+  min-width:0 !important;
+  width:100% !important;
+  overflow:hidden !important;
+  box-sizing:border-box !important;
+  padding:clamp(.62rem, 1.1vw, .9rem) clamp(.38rem, .9vw, .75rem) !important;
+  min-height:clamp(82px, 7.3vw, 108px) !important;
+}
+
+.hero-card .mini-stats div b{
+  display:block !important;
+  max-width:100% !important;
+  overflow-wrap:normal !important;
+  word-break:keep-all !important;
+  text-wrap:balance !important;
+  white-space:normal !important;
+  text-align:center !important;
+  line-height:.96 !important;
+  letter-spacing:-.045em !important;
+  font-size:clamp(1.05rem, 2.15vw, 1.82rem) !important;
+}
+
+.hero-card .mini-stats div span{
+  display:block !important;
+  max-width:100% !important;
+  margin-top:.36rem !important;
+  text-align:center !important;
+  line-height:1.18 !important;
+  overflow-wrap:break-word !important;
+  word-break:normal !important;
+  text-wrap:balance !important;
+  font-size:clamp(.62rem, .86vw, .78rem) !important;
+}
+
+/* Riêng chữ "Thu nhập" dễ tràn ở một số font/máy, giảm nhẹ và cho wrap sạch */
+.hero-card .mini-stats div:nth-child(3) b{
+  font-size:clamp(.98rem, 1.82vw, 1.55rem) !important;
+  letter-spacing:-.055em !important;
+}
+
+/* Màn hình desktop vừa: giữ 3 ô nhưng chữ tự nhỏ lại */
+@media (min-width:981px) and (max-width:1320px){
+  .hero-card .mini-stats{
+    gap:.5rem !important;
+  }
+
+  .hero-card .mini-stats div{
+    min-height:88px !important;
+    padding:.65rem .45rem !important;
+  }
+
+  .hero-card .mini-stats div b{
+    font-size:clamp(1rem, 1.72vw, 1.42rem) !important;
+  }
+
+  .hero-card .mini-stats div:nth-child(3) b{
+    font-size:clamp(.92rem, 1.52vw, 1.28rem) !important;
+  }
+
+  .hero-card .mini-stats div span{
+    font-size:clamp(.58rem, .74vw, .7rem) !important;
+  }
+}
+
+/* Nếu khung bên phải quá hẹp, tự đổi thành 1 cột để không bao giờ vỡ layout */
+@media (min-width:761px) and (max-width:980px){
+  .hero-card .mini-stats{
+    grid-template-columns:1fr !important;
+  }
+
+  .hero-card .mini-stats div{
+    min-height:72px !important;
+  }
+
+  .hero-card .mini-stats div b{
+    font-size:1.35rem !important;
+  }
+}
+
+@media (max-width:760px){
+  .hero-card .mini-stats{
+    grid-template-columns:repeat(3, minmax(0, 1fr)) !important;
+    gap:.45rem !important;
+  }
+
+  .hero-card .mini-stats div{
+    min-height:76px !important;
+    padding:.62rem .32rem !important;
+    border-radius:16px !important;
+  }
+
+  .hero-card .mini-stats div b{
+    font-size:clamp(.9rem, 5vw, 1.22rem) !important;
+    letter-spacing:-.05em !important;
+  }
+
+  .hero-card .mini-stats div:nth-child(3) b{
+    font-size:clamp(.82rem, 4.2vw, 1.06rem) !important;
+  }
+
+  .hero-card .mini-stats div span{
+    font-size:clamp(.56rem, 2.8vw, .68rem) !important;
+    line-height:1.12 !important;
+  }
+}
+
+/* Điện thoại rất nhỏ: đổi 3 ô thành 1 cột để không tràn */
+@media (max-width:380px){
+  .hero-card .mini-stats{
+    grid-template-columns:1fr !important;
+  }
+
+  .hero-card .mini-stats div{
+    min-height:64px !important;
+  }
+}
+
+
+/* Candidate V26 - Cleaner hero recruitment card */
+.hero-card{
+  padding:clamp(1.05rem, 2vw, 1.55rem) !important;
+}
+
+.hero-card .status-pill{
+  margin-bottom:.8rem !important;
+}
+
+.role-picks{
+  margin-bottom:.95rem !important;
+}
+
+.role-picks .tiny-label{
+  margin-bottom:.58rem !important;
+  font-size:.76rem !important;
+  letter-spacing:.13em !important;
+}
+
+.role-picks-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  gap:.62rem !important;
+}
+
+.role-pill{
+  min-height:52px !important;
+  border-radius:16px !important;
+  padding:.65rem .55rem !important;
+  font-size:clamp(.76rem, .95vw, .92rem) !important;
+  line-height:1.16 !important;
+}
+
+.hero-info-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:.62rem;
+  margin:.95rem 0 1rem;
+}
+
+.hero-info-item{
+  min-width:0;
+  border:1px solid color-mix(in srgb,var(--line) 78%, transparent);
+  border-radius:18px;
+  padding:.78rem .78rem;
+  background:
+    linear-gradient(180deg,color-mix(in srgb,var(--surface) 72%, transparent),color-mix(in srgb,var(--surface-2) 82%, transparent));
+  box-shadow:0 12px 28px rgba(0,0,0,.045);
+}
+
+.hero-info-item span{
+  display:block;
+  color:var(--muted);
+  font-size:.72rem;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:.36rem;
+}
+
+.hero-info-item strong{
+  display:block;
+  color:var(--text);
+  font-size:clamp(.82rem, 1vw, .95rem);
+  line-height:1.22;
+  font-weight:900;
+  text-wrap:balance;
+}
+
+html[data-theme='dark'] .hero-info-item{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.045));
+  box-shadow:none;
+}
+
+.hero-card .mini-stats{
+  margin-top:.85rem !important;
+}
+
+@media (min-width:981px) and (max-width:1320px){
+  .role-picks-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:.48rem !important;
+  }
+
+  .role-pill{
+    min-height:50px !important;
+    font-size:clamp(.68rem,.82vw,.78rem) !important;
+    padding:.55rem .42rem !important;
+  }
+
+  .hero-info-grid{
+    gap:.48rem;
+  }
+
+  .hero-info-item{
+    padding:.66rem .62rem;
+  }
+
+  .hero-info-item strong{
+    font-size:clamp(.72rem,.83vw,.82rem);
+  }
+}
+
+@media (max-width:980px){
+  .role-picks-grid{
+    grid-template-columns:1fr !important;
+  }
+
+  .role-pill{
+    min-height:48px !important;
+  }
+}
+
+@media (max-width:760px){
+  .hero-info-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:.5rem;
+  }
+
+  .hero-info-item{
+    padding:.65rem .6rem;
+    border-radius:16px;
+  }
+
+  .hero-info-item span{
+    font-size:.62rem;
+  }
+
+  .hero-info-item strong{
+    font-size:.78rem;
+  }
+}
+
+@media (max-width:430px){
+  .hero-info-grid{
+    grid-template-columns:1fr;
+  }
+}

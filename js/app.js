@@ -153,9 +153,9 @@ function readFileAsBase64(file){
       return;
     }
 
-    const maxSize = 5 * 1024 * 1024;
+    const maxSize = 10 * 1024 * 1024;
     if(file.size > maxSize){
-      reject(new Error('File CV vượt quá 5MB. Vui lòng chọn file nhẹ hơn để gửi nhanh hơn.'));
+      reject(new Error('File CV vượt quá 10MB. Vui lòng chọn file nhẹ hơn để gửi nhanh hơn.'));
       return;
     }
 
