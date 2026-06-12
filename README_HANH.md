@@ -113,3 +113,33 @@ Xem hướng dẫn tại `HUONG_DAN_SHEET_TIENg_VIET.md`.
 - Menu nổi phía dưới vẫn ẩn khi mới vào trang.
 - Khi ứng viên lướt xuống khoảng 140px, menu nổi sẽ bay lên.
 - Mobile vẫn ẩn menu desktop, giữ CTA mobile để giao diện gọn.
+
+
+## Candidate V15 - Áp dụng góp ý mới
+
+- Hero title đổi thành: `Chuyên viên tư vấn cho thuê căn hộ`.
+- Calculator thu nhập đổi về rate `50%`.
+- Tất cả địa chỉ văn phòng thêm hậu tố `(Quận x cũ)`.
+- Section intro:
+  - Chữ vàng đổi thành `Why`
+  - Chữ trắng đổi thành `Tại sao bạn nên gia nhập Unite Group?`
+- Hero card:
+  - Đào tạo: `Tham gia training đầu vào, Leader hướng dẫn trực tiếp trong quá trình hoạt động.`
+  - Mini stat 1: `TP.HCM / 8 văn phòng làm việc`
+  - Mini stat 2: `1-1 / Leader đồng hành`
+  - Mini stat 3: `Thu nhập / theo năng lực bản thân`
+- Gallery card `Vinh danh kết quả` đổi caption thành:
+  `Ghi nhận sự cống hiến của từng cá nhân và tập thể.`
+- Timeline cập nhật:
+  1. Marketing & Tạo nguồn khách hàng tiềm năng
+  2. Tư vấn & Hỗ trợ khách xem phòng
+  3. Hỗ trợ ký kết hợp đồng & Chăm sóc khách hàng
+- Tông vàng đã giảm độ chói để dễ nhìn hơn ở cả light/dark mode.
+
+
+## Candidate V16 - 3 mục tuyển dụng + lộ trình đi lên
+
+- Đã đổi phần `Chuyên viên tư vấn / Leader Team / Quản lý chi nhánh` thành 3 ô/nút tuyển dụng riêng.
+- Thêm nhãn `Vị trí tuyển dụng` để nhìn rõ đây là 3 nhóm tuyển dụng.
+- Đã làm lại `Lộ trình phát triển` theo kiểu từng bậc thang đi lên, có mũi tên `↗` để thể hiện hướng phát triển nghề nghiệp rõ hơn.
+- Trên mobile, lộ trình tự chuyển thành dạng dọc để dễ đọc.

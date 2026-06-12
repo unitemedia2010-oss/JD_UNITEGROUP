@@ -30,7 +30,7 @@ function initQuiz(){
     }
   }))
 }
-function initIncome(){const deal=$('#dealRange'), avg=$('#avgRange'), dVal=$('#dealValue'), aVal=$('#avgValue'), out=$('#incomeOutput'); if(!deal||!avg) return; const update=()=>{const deals=Number(deal.value), av=Number(avg.value), rate=.6, bonus=deals>=10?2000000:deals>=5?1000000:0; dVal.textContent=deals; aVal.textContent=formatVND(av); out.textContent=formatVND(Math.round(deals*av*rate+bonus));}; deal.addEventListener('input',update); avg.addEventListener('input',update); update();}
+function initIncome(){const deal=$('#dealRange'), avg=$('#avgRange'), dVal=$('#dealValue'), aVal=$('#avgValue'), out=$('#incomeOutput'); if(!deal||!avg) return; const update=()=>{const deals=Number(deal.value), av=Number(avg.value), rate=.5, bonus=deals>=10?2000000:deals>=5?1000000:0; dVal.textContent=deals; aVal.textContent=formatVND(av); out.textContent=formatVND(Math.round(deals*av*rate+bonus));}; deal.addEventListener('input',update); avg.addEventListener('input',update); update();}
 function pointFeatures(){return (window.UNITE_BRANCHES_GEOJSON?.features||[]).filter(f=>f.geometry?.type==='Point')}
 function asBranch(feature){const [lng,lat]=feature.geometry.coordinates; const p=feature.properties||{}; return {id:p.id||`${lat}-${lng}`, name:p.name||'Unite Branch', lat, lng, coordsText:p.coordsText||`${lat.toFixed(6)}, ${lng.toFixed(6)}`, address:p.address||'', note:p.note||'', isHQ:!!p.isHQ, googleMaps:p.googleMaps||`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, directions:p.directions||`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`, image:p.image||''}}
 function popupHtml(b){

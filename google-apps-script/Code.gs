@@ -300,14 +300,14 @@ function themDuLieuChiNhanhMau_(sheet) {
   if (sheet.getLastRow() > 1) return;
 
   const rows = [
-    ["Văn phòng chính DFC", "125 Trần Bình Trọng, phường Chợ Quán, TP.HCM", 10.75609363585227, 106.6810910436253, "", "", "", "", "Có", "Có"],
-    ["VP chi nhánh KSC & MVC", "39 Mai Văn Vĩnh, Phường Tân Hưng, TP.HCM", 10.7403398, 106.7137972, "", "", "", "", "", "Có"],
-    ["VP chi nhánh EVO", "479 Trần Xuân Soạn, Phường Tân Hưng, TP.HCM", 10.7417, 106.7199, "", "", "", "", "", "Có"],
-    ["VP chi nhánh DOC 1", "99A Dương Bá Trạc, Phường Chánh Hưng, Quận 8, TP.HCM", 10.748394, 106.688941, "", "", "", "", "", "Có"],
-    ["VP chi nhánh CTC", "457/73 Cách Mạng Tháng Tám, Phường Hòa Hưng, TP.HCM", 10.7768, 106.6707, "", "", "", "", "", "Có"],
-    ["VP chi nhánh TBC & TSC", "1/17 Hoàng Việt, Phường Tân Bình Nam, Quận Tân Bình, TP.HCM", 10.7976672, 106.6601844, "", "", "", "", "", "Có"],
-    ["VP chi nhánh PNC", "120A Trần Kế Xương, Phường Phú Nhuận Trung, Quận Phú Nhuận, TP.HCM", 10.7887409, 106.6753295, "", "", "", "", "", "Có"],
-    ["VP chi nhánh BTC 1", "202/8 Nguyễn Xí, Phường Bình Thạnh Bắc, Quận Bình Thạnh, TP.HCM", 10.8168499, 106.7065796, "", "", "", "", "", "Có"]
+    ["Văn phòng chính DFC", "125 Trần Bình Trọng, phường Chợ Quán, TP.HCM (Quận 5 cũ)", 10.75609363585227, 106.6810910436253, "", "", "", "", "Có", "Có"],
+    ["VP chi nhánh KSC & MVC", "39 Mai Văn Vĩnh, Phường Tân Hưng, TP.HCM (Quận 7 cũ)", 10.7403398, 106.7137972, "", "", "", "", "", "Có"],
+    ["VP chi nhánh EVO", "479 Trần Xuân Soạn, Phường Tân Hưng, TP.HCM (Quận 7 cũ)", 10.7417, 106.7199, "", "", "", "", "", "Có"],
+    ["VP chi nhánh DOC 1", "99A Dương Bá Trạc, Phường Chánh Hưng, Quận 8, TP.HCM (Quận 8 cũ)", 10.748394, 106.688941, "", "", "", "", "", "Có"],
+    ["VP chi nhánh CTC", "457/73 Cách Mạng Tháng Tám, Phường Hòa Hưng, TP.HCM (Quận 10 cũ)", 10.7768, 106.6707, "", "", "", "", "", "Có"],
+    ["VP chi nhánh TBC & TSC", "1/17 Hoàng Việt, Phường Tân Bình Nam, Quận Tân Bình, TP.HCM (Quận Tân Bình cũ)", 10.7976672, 106.6601844, "", "", "", "", "", "Có"],
+    ["VP chi nhánh PNC", "120A Trần Kế Xương, Phường Phú Nhuận Trung, Quận Phú Nhuận, TP.HCM (Quận Phú Nhuận cũ)", 10.7887409, 106.6753295, "", "", "", "", "", "Có"],
+    ["VP chi nhánh BTC 1", "202/8 Nguyễn Xí, Phường Bình Thạnh Bắc, Quận Bình Thạnh, TP.HCM (Quận Bình Thạnh cũ)", 10.8168499, 106.7065796, "", "", "", "", "", "Có"]
   ];
 
   sheet.getRange(2, 1, rows.length, rows[0].length).setValues(rows);

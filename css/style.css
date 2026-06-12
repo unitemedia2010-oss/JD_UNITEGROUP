@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap');
-:root{--gold:#FFD700;--gold-soft:#fff2a3;--gold-deep:#9d7d00;--dark:#111111;--page:#fffdf5;--surface:#ffffff;--surface-2:#fff9ec;--muted:#756a44;--line:rgba(160,125,0,.18);--card:rgba(255,255,255,.76);--shadow:0 24px 80px rgba(108,85,0,.12);--radius:28px;--text:#111111}
-html[data-theme='dark']{--page:#0f1012;--surface:#17181c;--surface-2:#1f2126;--muted:#cabf8a;--line:rgba(255,215,0,.18);--card:rgba(20,20,24,.75);--shadow:0 28px 90px rgba(0,0,0,.56);--text:#fffdf5}
+:root{--gold:#e2bd49;--gold-soft:#f2e3a8;--gold-deep:#9e7e1f;--dark:#111111;--page:#fffdf5;--surface:#ffffff;--surface-2:#fff9ec;--muted:#756a44;--line:rgba(160,125,0,.18);--card:rgba(255,255,255,.76);--shadow:0 24px 80px rgba(108,85,0,.12);--radius:28px;--text:#111111}
+html[data-theme='dark']{--page:#0f1012;--surface:#17181c;--surface-2:#1f2126;--muted:#cabf8a;--line:rgba(226,189,73,.18);--card:rgba(20,20,24,.75);--shadow:0 28px 90px rgba(0,0,0,.56);--text:#fffdf5}
 *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:'Be Vietnam Pro',system-ui,sans-serif;color:var(--text);background:radial-gradient(circle at 16% -10%, rgba(255,215,0,.18), transparent 34rem),linear-gradient(180deg,var(--page),var(--page));min-height:100vh} a{color:inherit;text-decoration:none} button,input,select{font:inherit} code{background:rgba(255,215,0,.1);border:1px solid var(--line);padding:.18rem .42rem;border-radius:.55rem}
 .scroll-progress{position:fixed;left:0;top:0;height:4px;width:0%;background:linear-gradient(90deg,var(--gold),#fff5bc);z-index:1000;box-shadow:0 0 18px rgba(255,215,0,.45)}
 .site-header{position:sticky;top:0;z-index:999;height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,72px);backdrop-filter:blur(18px);background:color-mix(in srgb,var(--page) 86%,transparent);border-bottom:1px solid var(--line)}
@@ -1029,5 +1029,259 @@ html[data-theme="dark"] .hero-title .gold-title{
 @media (max-width:760px){
   .desktop-floating-menu{
     display:none !important;
+  }
+}
+
+
+/* Candidate V15 - feedback applied */
+.hero-card .mini-stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:.8rem;
+}
+
+.hero-card .mini-stats div{
+  min-height:108px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:.9rem .8rem;
+}
+
+.hero-card .mini-stats div b{
+  font-size:1.9rem;
+  line-height:1;
+  white-space:nowrap;
+}
+
+.hero-card .mini-stats div span{
+  margin-top:.38rem;
+  line-height:1.35;
+}
+
+.intro .eyebrow{
+  letter-spacing:.18em;
+}
+
+.hero-title{
+  max-width:min(1080px, 94vw);
+}
+
+.hero-title .title-line{
+  line-height:.93;
+}
+
+.hero-title .keep{
+  white-space:nowrap;
+}
+
+html[data-theme='dark'] .hero-title{
+  text-shadow:0 0 24px rgba(226,189,73,.06);
+}
+
+.value-card span,
+.status-pill,
+.tiny-label,
+.eyebrow{
+  color:var(--gold) !important;
+}
+
+.btn.primary,
+.header-apply-cta,
+.desktop-floating-menu .dock-apply{
+  background:linear-gradient(135deg,var(--gold),var(--gold-soft)) !important;
+  box-shadow:0 12px 28px rgba(226,189,73,.14) !important;
+}
+
+html[data-theme='dark'] .btn.primary,
+html[data-theme='dark'] .header-apply-cta,
+html[data-theme='dark'] .desktop-floating-menu .dock-apply{
+  box-shadow:0 12px 28px rgba(226,189,73,.12) !important;
+}
+
+@media (max-width:760px){
+  .hero-card .mini-stats{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:.55rem;
+  }
+
+  .hero-card .mini-stats div{
+    min-height:88px;
+    padding:.72rem .42rem;
+  }
+
+  .hero-card .mini-stats div b{
+    font-size:1.3rem;
+  }
+
+  .hero-card .mini-stats div span{
+    font-size:.73rem;
+  }
+}
+
+
+/* Candidate V16 - 3 role boxes + ascending growth path */
+.role-picks{
+  margin-bottom:1rem;
+}
+
+.role-picks .tiny-label{
+  margin-bottom:.72rem;
+  display:block;
+}
+
+.role-picks-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:.72rem;
+}
+
+.role-pill{
+  min-height:58px;
+  border-radius:18px;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--surface) 82%, transparent), color-mix(in srgb,var(--surface-2) 88%, transparent));
+  color:var(--text);
+  font-weight:900;
+  padding:.8rem .75rem;
+  text-align:center;
+  cursor:default;
+  box-shadow:0 10px 26px rgba(0,0,0,.06);
+}
+
+.role-pill.active{
+  border-color:color-mix(in srgb,var(--gold) 48%, var(--line));
+  background:linear-gradient(135deg,color-mix(in srgb,var(--gold) 22%, var(--surface-2)), color-mix(in srgb,var(--gold-soft) 34%, var(--surface)));
+  color:#111;
+}
+
+html[data-theme='dark'] .role-pill{
+  background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.05));
+  box-shadow:none;
+}
+
+html[data-theme='dark'] .role-pill.active{
+  color:#fff8de;
+  background:linear-gradient(135deg, rgba(226,189,73,.22), rgba(242,227,168,.10));
+}
+
+.career-journey{
+  max-width:1100px;
+  margin:0 auto;
+  padding:1.35rem;
+}
+
+.journey-head{
+  margin-bottom:1rem;
+}
+
+.journey-head h3{
+  margin:0 0 .35rem;
+  font-size:1.6rem;
+}
+
+.journey-head span{
+  color:var(--muted);
+  font-weight:700;
+}
+
+.journey-track{
+  display:grid;
+  grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;
+  align-items:end;
+  gap:1rem;
+  padding-top:.6rem;
+}
+
+.journey-step{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:1rem 1rem 1.1rem;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--surface) 84%, transparent), color-mix(in srgb,var(--surface-2) 92%, transparent));
+  min-height:120px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  box-shadow:0 12px 34px rgba(0,0,0,.05);
+}
+
+.journey-step em{
+  font-style:normal;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:42px;
+  height:42px;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-soft));
+  color:#111;
+  font-weight:900;
+  margin-bottom:.7rem;
+}
+
+.journey-step strong{
+  font-size:1.08rem;
+  line-height:1.28;
+  text-wrap:balance;
+}
+
+.level-1{ transform:translateY(42px); }
+.level-2{ transform:translateY(14px); }
+.level-3{ transform:translateY(-14px); }
+.level-4{ transform:translateY(-42px); }
+
+.journey-arrow{
+  font-size:2rem;
+  font-weight:900;
+  color:var(--gold);
+  align-self:center;
+  transform:translateY(-10px);
+  text-shadow:0 0 24px rgba(226,189,73,.16);
+}
+
+html[data-theme='dark'] .journey-step{
+  background:linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.045));
+  box-shadow:none;
+}
+
+@media (max-width:980px){
+  .role-picks-grid{
+    grid-template-columns:1fr;
+  }
+
+  .journey-track{
+    grid-template-columns:1fr;
+    gap:.85rem;
+  }
+
+  .journey-arrow{
+    transform:none;
+    justify-self:center;
+  }
+
+  .level-1,.level-2,.level-3,.level-4{
+    transform:none;
+  }
+
+  .journey-arrow{
+    content:"↓";
+  }
+}
+
+@media (max-width:760px){
+  .career-journey{
+    padding:1rem;
+  }
+
+  .journey-step{
+    min-height:unset;
+    padding:.95rem .9rem 1rem;
+  }
+
+  .journey-head h3{
+    font-size:1.35rem;
   }
 }

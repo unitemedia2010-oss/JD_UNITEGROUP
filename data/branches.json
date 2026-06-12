@@ -5,11 +5,11 @@
     "lat": 10.75609363585227,
     "lng": 106.6810910436253,
     "coordsText": "10.756094, 106.681091",
-    "address": "125 Trần Bình Trọng, phường Chợ Quán, TP.HCM",
+    "address": "125 Trần Bình Trọng, phường Chợ Quán, TP.HCM (Quận 5 cũ)",
     "note": "",
     "isHQ": true,
-    "googleMaps": "https://www.google.com/maps/search/?api=1&query=125%20Tr%E1%BA%A7n%20B%C3%ACnh%20Tr%E1%BB%8Dng%2C%20ph%C6%B0%E1%BB%9Dng%20Ch%E1%BB%A3%20Qu%C3%A1n%2C%20TP.HCM",
-    "directions": "https://www.google.com/maps/dir/?api=1&destination=125%20Tr%E1%BA%A7n%20B%C3%ACnh%20Tr%E1%BB%8Dng%2C%20ph%C6%B0%E1%BB%9Dng%20Ch%E1%BB%A3%20Qu%C3%A1n%2C%20TP.HCM&travelmode=driving",
+    "googleMaps": "https://www.google.com/maps/search/?api=1&query=125%20Tr%E1%BA%A7n%20B%C3%ACnh%20Tr%E1%BB%8Dng%2C%20ph%C6%B0%E1%BB%9Dng%20Ch%E1%BB%A3%20Qu%C3%A1n%2C%20TP.HCM%20%28Qu%E1%BA%ADn%205%20c%C5%A9%29",
+    "directions": "https://www.google.com/maps/dir/?api=1&destination=125%20Tr%E1%BA%A7n%20B%C3%ACnh%20Tr%E1%BB%8Dng%2C%20ph%C6%B0%E1%BB%9Dng%20Ch%E1%BB%A3%20Qu%C3%A1n%2C%20TP.HCM%20%28Qu%E1%BA%ADn%205%20c%C5%A9%29&travelmode=driving",
     "image": ""
   },
   {
@@ -18,11 +18,11 @@
     "lat": 10.7403398,
     "lng": 106.7137972,
     "coordsText": "10.740340, 106.713797",
-    "address": "39 Mai Văn Vĩnh, Phường Tân Hưng, TP.HCM",
+    "address": "39 Mai Văn Vĩnh, Phường Tân Hưng, TP.HCM (Quận 7 cũ)",
     "note": "",
     "isHQ": false,
-    "googleMaps": "https://www.google.com/maps/search/?api=1&query=39%20Mai%20V%C4%83n%20V%C4%A9nh%2C%20Ph%C6%B0%E1%BB%9Dng%20T%C3%A2n%20H%C6%B0ng%2C%20TP.HCM",
-    "directions": "https://www.google.com/maps/dir/?api=1&destination=39%20Mai%20V%C4%83n%20V%C4%A9nh%2C%20Ph%C6%B0%E1%BB%9Dng%20T%C3%A2n%20H%C6%B0ng%2C%20TP.HCM&travelmode=driving",
+    "googleMaps": "https://www.google.com/maps/search/?api=1&query=39%20Mai%20V%C4%83n%20V%C4%A9nh%2C%20Ph%C6%B0%E1%BB%9Dng%20T%C3%A2n%20H%C6%B0ng%2C%20TP.HCM%20%28Qu%E1%BA%ADn%207%20c%C5%A9%29",
+    "directions": "https://www.google.com/maps/dir/?api=1&destination=39%20Mai%20V%C4%83n%20V%C4%A9nh%2C%20Ph%C6%B0%E1%BB%9Dng%20T%C3%A2n%20H%C6%B0ng%2C%20TP.HCM%20%28Qu%E1%BA%ADn%207%20c%C5%A9%29&travelmode=driving",
     "image": ""
   },
   {
@@ -31,11 +31,11 @@
     "lat": 10.7417,
     "lng": 106.7199,
     "coordsText": "10.741700, 106.719900",
-    "address": "479 Trần Xuân Soạn, Phường Tân Hưng, TP.HCM",
+    "address": "479 Trần Xuân Soạn, Phường Tân Hưng, TP.HCM (Quận 7 cũ)",
     "note": "",
     "isHQ": false,
-    "googleMaps": "https://www.google.com/maps/search/?api=1&query=479%20Tr%E1%BA%A7n%20Xu%C3%A2n%20So%E1%BA%A1n%2C%20Ph%C6%B0%E1%BB%9Dng%20T%C3%A2n%20H%C6%B0ng%2C%20TP.HCM",
-    "directions": "https://www.google.com/maps/dir/?api=1&destination=479%20Tr%E1%BA%A7n%20Xu%C3%A2n%20So%E1%BA%A1n%2C%20Ph%C6%B0%E1%BB%9Dng%20T%C3%A2n%20H%C6%B0ng%2C%20TP.HCM&travelmode=driving",
+    "googleMaps": "https://www.google.com/maps/search/?api=1&query=479%20Tr%E1%BA%A7n%20Xu%C3%A2n%20So%E1%BA%A1n%2C%20Ph%C6%B0%E1%BB%9Dng%20T%C3%A2n%20H%C6%B0ng%2C%20TP.HCM%20%28Qu%E1%BA%ADn%207%20c%C5%A9%29",
+    "directions": "https://www.google.com/maps/dir/?api=1&destination=479%20Tr%E1%BA%A7n%20Xu%C3%A2n%20So%E1%BA%A1n%2C%20Ph%C6%B0%E1%BB%9Dng%20T%C3%A2n%20H%C6%B0ng%2C%20TP.HCM%20%28Qu%E1%BA%ADn%207%20c%C5%A9%29&travelmode=driving",
     "image": ""
   },
   {
@@ -44,11 +44,11 @@
     "lat": 10.748394,
     "lng": 106.688941,
     "coordsText": "10.748394, 106.688941",
-    "address": "99A Dương Bá Trạc, Phường Chánh Hưng, Quận 8, TP.HCM",
+    "address": "99A Dương Bá Trạc, Phường Chánh Hưng, Quận 8, TP.HCM (Quận 8 cũ)",
     "note": "",
     "isHQ": false,
-    "googleMaps": "https://www.google.com/maps/search/?api=1&query=99A%20D%C6%B0%C6%A1ng%20B%C3%A1%20Tr%E1%BA%A1c%2C%20Ph%C6%B0%E1%BB%9Dng%20Ch%C3%A1nh%20H%C6%B0ng%2C%20Qu%E1%BA%ADn%208%2C%20TP.HCM",
-    "directions": "https://www.google.com/maps/dir/?api=1&destination=99A%20D%C6%B0%C6%A1ng%20B%C3%A1%20Tr%E1%BA%A1c%2C%20Ph%C6%B0%E1%BB%9Dng%20Ch%C3%A1nh%20H%C6%B0ng%2C%20Qu%E1%BA%ADn%208%2C%20TP.HCM&travelmode=driving",
+    "googleMaps": "https://www.google.com/maps/search/?api=1&query=99A%20D%C6%B0%C6%A1ng%20B%C3%A1%20Tr%E1%BA%A1c%2C%20Ph%C6%B0%E1%BB%9Dng%20Ch%C3%A1nh%20H%C6%B0ng%2C%20Qu%E1%BA%ADn%208%2C%20TP.HCM%20%28Qu%E1%BA%ADn%208%20c%C5%A9%29",
+    "directions": "https://www.google.com/maps/dir/?api=1&destination=99A%20D%C6%B0%C6%A1ng%20B%C3%A1%20Tr%E1%BA%A1c%2C%20Ph%C6%B0%E1%BB%9Dng%20Ch%C3%A1nh%20H%C6%B0ng%2C%20Qu%E1%BA%ADn%208%2C%20TP.HCM%20%28Qu%E1%BA%ADn%208%20c%C5%A9%29&travelmode=driving",
     "image": ""
   },
   {
@@ -57,11 +57,11 @@
     "lat": 10.7768,
     "lng": 106.6707,
     "coordsText": "10.776800, 106.670700",
-    "address": "457/73 Cách Mạng Tháng Tám, Phường Hòa Hưng, TP.HCM",
+    "address": "457/73 Cách Mạng Tháng Tám, Phường Hòa Hưng, TP.HCM (Quận 10 cũ)",
     "note": "",
     "isHQ": false,
-    "googleMaps": "https://www.google.com/maps/search/?api=1&query=457/73%20C%C3%A1ch%20M%E1%BA%A1ng%20Th%C3%A1ng%20T%C3%A1m%2C%20Ph%C6%B0%E1%BB%9Dng%20H%C3%B2a%20H%C6%B0ng%2C%20TP.HCM",
-    "directions": "https://www.google.com/maps/dir/?api=1&destination=457/73%20C%C3%A1ch%20M%E1%BA%A1ng%20Th%C3%A1ng%20T%C3%A1m%2C%20Ph%C6%B0%E1%BB%9Dng%20H%C3%B2a%20H%C6%B0ng%2C%20TP.HCM&travelmode=driving",
+    "googleMaps": "https://www.google.com/maps/search/?api=1&query=457/73%20C%C3%A1ch%20M%E1%BA%A1ng%20Th%C3%A1ng%20T%C3%A1m%2C%20Ph%C6%B0%E1%BB%9Dng%20H%C3%B2a%20H%C6%B0ng%2C%20TP.HCM%20%28Qu%E1%BA%ADn%2010%20c%C5%A9%29",
+    "directions": "https://www.google.com/maps/dir/?api=1&destination=457/73%20C%C3%A1ch%20M%E1%BA%A1ng%20Th%C3%A1ng%20T%C3%A1m%2C%20Ph%C6%B0%E1%BB%9Dng%20H%C3%B2a%20H%C6%B0ng%2C%20TP.HCM%20%28Qu%E1%BA%ADn%2010%20c%C5%A9%29&travelmode=driving",
     "image": ""
   },
   {
@@ -70,11 +70,11 @@
     "lat": 10.7976672,
     "lng": 106.6601844,
     "coordsText": "10.797667, 106.660184",
-    "address": "1/17 Hoàng Việt, Phường Tân Bình Nam, Quận Tân Bình, TP.HCM",
+    "address": "1/17 Hoàng Việt, Phường Tân Bình Nam, Quận Tân Bình, TP.HCM (Quận Tân Bình cũ)",
     "note": "",
     "isHQ": false,
-    "googleMaps": "https://www.google.com/maps/search/?api=1&query=1/17%20Ho%C3%A0ng%20Vi%E1%BB%87t%2C%20Ph%C6%B0%E1%BB%9Dng%20T%C3%A2n%20B%C3%ACnh%20Nam%2C%20Qu%E1%BA%ADn%20T%C3%A2n%20B%C3%ACnh%2C%20TP.HCM",
-    "directions": "https://www.google.com/maps/dir/?api=1&destination=1/17%20Ho%C3%A0ng%20Vi%E1%BB%87t%2C%20Ph%C6%B0%E1%BB%9Dng%20T%C3%A2n%20B%C3%ACnh%20Nam%2C%20Qu%E1%BA%ADn%20T%C3%A2n%20B%C3%ACnh%2C%20TP.HCM&travelmode=driving",
+    "googleMaps": "https://www.google.com/maps/search/?api=1&query=1/17%20Ho%C3%A0ng%20Vi%E1%BB%87t%2C%20Ph%C6%B0%E1%BB%9Dng%20T%C3%A2n%20B%C3%ACnh%20Nam%2C%20Qu%E1%BA%ADn%20T%C3%A2n%20B%C3%ACnh%2C%20TP.HCM%20%28Qu%E1%BA%ADn%20T%C3%A2n%20B%C3%ACnh%20c%C5%A9%29",
+    "directions": "https://www.google.com/maps/dir/?api=1&destination=1/17%20Ho%C3%A0ng%20Vi%E1%BB%87t%2C%20Ph%C6%B0%E1%BB%9Dng%20T%C3%A2n%20B%C3%ACnh%20Nam%2C%20Qu%E1%BA%ADn%20T%C3%A2n%20B%C3%ACnh%2C%20TP.HCM%20%28Qu%E1%BA%ADn%20T%C3%A2n%20B%C3%ACnh%20c%C5%A9%29&travelmode=driving",
     "image": ""
   },
   {
@@ -83,11 +83,11 @@
     "lat": 10.7887409,
     "lng": 106.6753295,
     "coordsText": "10.788741, 106.675330",
-    "address": "120A Trần Kế Xương, Phường Phú Nhuận Trung, Quận Phú Nhuận, TP.HCM",
+    "address": "120A Trần Kế Xương, Phường Phú Nhuận Trung, Quận Phú Nhuận, TP.HCM (Quận Phú Nhuận cũ)",
     "note": "",
     "isHQ": false,
-    "googleMaps": "https://www.google.com/maps/search/?api=1&query=120A%20Tr%E1%BA%A7n%20K%E1%BA%BF%20X%C6%B0%C6%A1ng%2C%20Ph%C6%B0%E1%BB%9Dng%20Ph%C3%BA%20Nhu%E1%BA%ADn%20Trung%2C%20Qu%E1%BA%ADn%20Ph%C3%BA%20Nhu%E1%BA%ADn%2C%20TP.HCM",
-    "directions": "https://www.google.com/maps/dir/?api=1&destination=120A%20Tr%E1%BA%A7n%20K%E1%BA%BF%20X%C6%B0%C6%A1ng%2C%20Ph%C6%B0%E1%BB%9Dng%20Ph%C3%BA%20Nhu%E1%BA%ADn%20Trung%2C%20Qu%E1%BA%ADn%20Ph%C3%BA%20Nhu%E1%BA%ADn%2C%20TP.HCM&travelmode=driving",
+    "googleMaps": "https://www.google.com/maps/search/?api=1&query=120A%20Tr%E1%BA%A7n%20K%E1%BA%BF%20X%C6%B0%C6%A1ng%2C%20Ph%C6%B0%E1%BB%9Dng%20Ph%C3%BA%20Nhu%E1%BA%ADn%20Trung%2C%20Qu%E1%BA%ADn%20Ph%C3%BA%20Nhu%E1%BA%ADn%2C%20TP.HCM%20%28Qu%E1%BA%ADn%20Ph%C3%BA%20Nhu%E1%BA%ADn%20c%C5%A9%29",
+    "directions": "https://www.google.com/maps/dir/?api=1&destination=120A%20Tr%E1%BA%A7n%20K%E1%BA%BF%20X%C6%B0%C6%A1ng%2C%20Ph%C6%B0%E1%BB%9Dng%20Ph%C3%BA%20Nhu%E1%BA%ADn%20Trung%2C%20Qu%E1%BA%ADn%20Ph%C3%BA%20Nhu%E1%BA%ADn%2C%20TP.HCM%20%28Qu%E1%BA%ADn%20Ph%C3%BA%20Nhu%E1%BA%ADn%20c%C5%A9%29&travelmode=driving",
     "image": ""
   },
   {
@@ -96,11 +96,11 @@
     "lat": 10.8168499,
     "lng": 106.7065796,
     "coordsText": "10.816850, 106.706580",
-    "address": "202/8 Nguyễn Xí, Phường Bình Thạnh Bắc, Quận Bình Thạnh, TP.HCM",
+    "address": "202/8 Nguyễn Xí, Phường Bình Thạnh Bắc, Quận Bình Thạnh, TP.HCM (Quận Bình Thạnh cũ)",
     "note": "",
     "isHQ": false,
-    "googleMaps": "https://www.google.com/maps/search/?api=1&query=202/8%20Nguy%E1%BB%85n%20X%C3%AD%2C%20Ph%C6%B0%E1%BB%9Dng%20B%C3%ACnh%20Th%E1%BA%A1nh%20B%E1%BA%AFc%2C%20Qu%E1%BA%ADn%20B%C3%ACnh%20Th%E1%BA%A1nh%2C%20TP.HCM",
-    "directions": "https://www.google.com/maps/dir/?api=1&destination=202/8%20Nguy%E1%BB%85n%20X%C3%AD%2C%20Ph%C6%B0%E1%BB%9Dng%20B%C3%ACnh%20Th%E1%BA%A1nh%20B%E1%BA%AFc%2C%20Qu%E1%BA%ADn%20B%C3%ACnh%20Th%E1%BA%A1nh%2C%20TP.HCM&travelmode=driving",
+    "googleMaps": "https://www.google.com/maps/search/?api=1&query=202/8%20Nguy%E1%BB%85n%20X%C3%AD%2C%20Ph%C6%B0%E1%BB%9Dng%20B%C3%ACnh%20Th%E1%BA%A1nh%20B%E1%BA%AFc%2C%20Qu%E1%BA%ADn%20B%C3%ACnh%20Th%E1%BA%A1nh%2C%20TP.HCM%20%28Qu%E1%BA%ADn%20B%C3%ACnh%20Th%E1%BA%A1nh%20c%C5%A9%29",
+    "directions": "https://www.google.com/maps/dir/?api=1&destination=202/8%20Nguy%E1%BB%85n%20X%C3%AD%2C%20Ph%C6%B0%E1%BB%9Dng%20B%C3%ACnh%20Th%E1%BA%A1nh%20B%E1%BA%AFc%2C%20Qu%E1%BA%ADn%20B%C3%ACnh%20Th%E1%BA%A1nh%2C%20TP.HCM%20%28Qu%E1%BA%ADn%20B%C3%ACnh%20Th%E1%BA%A1nh%20c%C5%A9%29&travelmode=driving",
     "image": ""
   }
 ]
