@@ -4,7 +4,65 @@ function formatVND(v){return new Intl.NumberFormat('vi-VN',{style:'currency',cur
 function escapeHtml(v){return String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;')}
 function activeTheme(){if(APP_STATE.themePref==='system'){return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'} return APP_STATE.themePref||'light'}
 function applyTheme(){const theme=activeTheme(); document.documentElement.setAttribute('data-theme', theme); const label=$('#themeLabel'), icon=$('#themeIcon'); if(label&&icon){ if(APP_STATE.themePref==='system'){label.textContent='Auto'; icon.textContent='◐'} else if(APP_STATE.themePref==='dark'){label.textContent='Tối'; icon.textContent='●'} else {label.textContent='Sáng'; icon.textContent='☀'} } updateMapTheme();}
-function initTheme(){applyTheme(); window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(APP_STATE.themePref==='system') applyTheme()}); $('#themeToggle')?.addEventListener('click',()=>{const order=['system','light','dark']; APP_STATE.themePref=order[(order.indexOf(APP_STATE.themePref)+1)%order.length]; localStorage.setItem('uniteThemePref', APP_STATE.themePref); applyTheme();});}
+function initTheme(){
+  applyTheme();
+
+  const media = window.matchMedia('(prefers-color-scheme: dark)');
+  media.addEventListener('change',()=>{
+    if(APP_STATE.themePref==='system') applyTheme();
+  });
+
+  const button = $('#themeToggle');
+  if(!button) return;
+
+  button.addEventListener('click',()=>{
+    const order=['system','light','dark'];
+    const nextPref=order[(order.indexOf(APP_STATE.themePref)+1)%order.length];
+    const rect=button.getBoundingClientRect();
+    const x=rect.left+rect.width/2;
+    const y=rect.top+rect.height/2;
+    const radius=Math.hypot(
+      Math.max(x,window.innerWidth-x),
+      Math.max(y,window.innerHeight-y)
+    );
+
+    const applyNext=()=>{
+      APP_STATE.themePref=nextPref;
+      localStorage.setItem('uniteThemePref',APP_STATE.themePref);
+      applyTheme();
+    };
+
+    const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if(document.startViewTransition && !reduceMotion){
+      const transition=document.startViewTransition(applyNext);
+      transition.ready.then(()=>{
+        document.documentElement.animate(
+          {
+            clipPath:[
+              `circle(0px at ${x}px ${y}px)`,
+              `circle(${radius}px at ${x}px ${y}px)`
+            ]
+          },
+          {
+            duration:620,
+            easing:'cubic-bezier(.22,1,.36,1)',
+            pseudoElement:'::view-transition-new(root)'
+          }
+        );
+      }).catch(()=>{});
+      return;
+    }
+
+    const ripple=document.createElement('span');
+    ripple.className='theme-ripple-fallback';
+    ripple.style.left=`${x}px`;
+    ripple.style.top=`${y}px`;
+    document.body.appendChild(ripple);
+    applyNext();
+    window.setTimeout(()=>ripple.remove(),720);
+  });
+}
 function initBrand(){
   const logo=$('#brandLogo');
   if(logo){logo.src=window.UNITE_CONFIG?.LOGO_URL||'';}
@@ -89,9 +147,56 @@ function distanceKm(lat1,lon1,lat2,lon2){const R=6371; const dLat=(lat2-lat1)*Ma
 function makeMarkerIcon(isHQ=false){const cls=isHQ?'hq':'default'; const size=isHQ?44:32; return L.divIcon({className:'', html:`<div class="marker-wrap ${cls}"><img src="${window.UNITE_CONFIG?.MARKER_URL||''}" alt="marker"></div>`, iconSize:[size,size], iconAnchor:[size/2,size/2], popupAnchor:[0,-size/2]});}
 function updateMapTheme(){if(!APP_STATE.map||!APP_STATE.baseLayers.light||!APP_STATE.baseLayers.dark) return; const theme=activeTheme(); const light=APP_STATE.baseLayers.light, dark=APP_STATE.baseLayers.dark; if(theme==='dark'){if(APP_STATE.map.hasLayer(light)) APP_STATE.map.removeLayer(light); if(!APP_STATE.map.hasLayer(dark)) dark.addTo(APP_STATE.map);} else {if(APP_STATE.map.hasLayer(dark)) APP_STATE.map.removeLayer(dark); if(!APP_STATE.map.hasLayer(light)) light.addTo(APP_STATE.map);} }
 function focusBranch(branch){updateSelectedBranch(branch); if(APP_STATE.map){APP_STATE.map.flyTo([branch.lat,branch.lng], branch.isHQ?15:14, {duration:.65}); APP_STATE.markers.get(branch.id)?.openPopup();}}
-function initBranches(){const branches=pointFeatures().map(asBranch); APP_STATE.branches=branches; renderBranchList(branches); const mapEl=$('#uniteMap'); if(!window.L||!mapEl||!branches.length) return; const map=L.map(mapEl,{scrollWheelZoom:false,zoomControl:true,attributionControl:false}); APP_STATE.map=map; const light=L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:20}); const dark=L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:20}); APP_STATE.baseLayers={light,dark}; updateMapTheme(); L.control.attribution({prefix:false}).addAttribution('© OpenStreetMap © CARTO').addTo(map); const group=L.featureGroup(); branches.forEach(branch=>{const marker=L.marker([branch.lat,branch.lng], {icon:makeMarkerIcon(branch.isHQ)}).bindPopup(popupHtml(branch)).on('click',()=>updateSelectedBranch(branch)); marker.addTo(group); APP_STATE.markers.set(branch.id, marker);}); group.addTo(map); const poly=(window.UNITE_BRANCHES_GEOJSON?.features||[]).filter(f=>f.geometry?.type==='Polygon'); if(poly.length){L.geoJSON({type:'FeatureCollection',features:poly},{style:{color:'#d6b300',weight:1.2,opacity:.65,fillColor:'#ffe45b',fillOpacity:.06}}).addTo(map);} map.fitBounds(group.getBounds(),{padding:[34,34]}); setTimeout(()=>map.invalidateSize(),250); $('#fitMap')?.addEventListener('click',()=>{map.fitBounds(group.getBounds(),{padding:[34,34]}); updateSelectedBranch(null);}); $('#locateNearest')?.addEventListener('click',()=>{const btn=$('#locateNearest'); if(!navigator.geolocation){alert('Trình duyệt chưa hỗ trợ định vị. Ứng viên vẫn có thể bấm Chỉ đường ở từng chi nhánh.'); return;} btn.textContent='Đang định vị...'; navigator.geolocation.getCurrentPosition(pos=>{const user={lat:pos.coords.latitude,lng:pos.coords.longitude}; renderBranchList(branches,user); const nearest=[...branches].sort((a,b)=>distanceKm(user.lat,user.lng,a.lat,a.lng)-distanceKm(user.lat,user.lng,b.lat,b.lng))[0]; if(APP_STATE.userLayer) APP_STATE.userLayer.remove(); APP_STATE.userLayer=L.marker([user.lat,user.lng],{icon:L.divIcon({className:'',html:'<div class="user-marker"></div>',iconSize:[18,18],iconAnchor:[9,9]})}).addTo(map).bindPopup('Vị trí hiện tại của bạn'); const km=distanceKm(user.lat,user.lng,nearest.lat,nearest.lng); updateSelectedBranch(nearest,km); focusBranch(nearest); btn.textContent='Gợi ý gần tôi';},()=>{btn.textContent='Gợi ý gần tôi'; alert('Không lấy được vị trí. Cần cho phép quyền định vị trên trình duyệt, hoặc bấm Chỉ đường từng chi nhánh.');},{enableHighAccuracy:true,timeout:10000,maximumAge:120000});});}
-function renderGallery(items){const gallery=$('#cultureGallery'); if(!gallery) return; const data=(items&&items.length?items:window.UNITE_CONFIG?.LOCAL_GALLERY||[]).filter(Boolean); gallery.innerHTML=data.map((item,idx)=>`<article><div class="gallery-photo" style="${item.image?`background-image:linear-gradient(135deg,rgba(255,215,0,.16),rgba(0,0,0,.05)),url('${escapeHtml(item.image)}')`:''}"></div><div class="gallery-body"><h3>${escapeHtml(item.title||`Hình ảnh ${idx+1}`)}</h3><p>${escapeHtml(item.caption||'Khoảnh khắc văn hóa Unite Group.')}</p></div></article>`).join('')}
-async function loadSheetData(){const url=window.UNITE_CONFIG?.APPS_SCRIPT_URL; if(!url){renderGallery(); return;} try{const res=await fetch(`${url}?action=getData`); const payload=await res.json(); if(payload?.ok&&Array.isArray(payload.gallery)&&payload.gallery.length) renderGallery(payload.gallery); else renderGallery();}catch(err){console.warn(err); renderGallery();}}
+function initBranches(){const branches=pointFeatures().map(asBranch); APP_STATE.branches=branches; renderBranchList(branches); const mapEl=$('#uniteMap'); if(!window.L||!mapEl||!branches.length) return; const map=L.map(mapEl,{scrollWheelZoom:false,zoomControl:true,attributionControl:false}); APP_STATE.map=map; const light=L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:20}); const dark=L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:20}); APP_STATE.baseLayers={light,dark}; updateMapTheme(); L.control.attribution({prefix:false}).addAttribution('© OpenStreetMap © CARTO').addTo(map); const group=L.featureGroup(); branches.forEach(branch=>{const marker=L.marker([branch.lat,branch.lng], {icon:makeMarkerIcon(branch.isHQ)}).bindPopup(popupHtml(branch)).on('click',()=>updateSelectedBranch(branch)); marker.addTo(group); APP_STATE.markers.set(branch.id, marker);}); group.addTo(map); const poly=(window.UNITE_BRANCHES_GEOJSON?.features||[]).filter(f=>f.geometry?.type==='Polygon'); if(poly.length){L.geoJSON({type:'FeatureCollection',features:poly},{style:{color:'#d6b300',weight:1.2,opacity:.65,fillColor:'#ffe45b',fillOpacity:.06}}).addTo(map);} map.fitBounds(group.getBounds(),{padding:[34,34]}); setTimeout(()=>map.invalidateSize(),250); $('#fitMap')?.addEventListener('click',()=>{map.fitBounds(group.getBounds(),{padding:[34,34]}); updateSelectedBranch(null);}); $('#locateNearest')?.addEventListener('click',()=>{const btn=$('#locateNearest'); if(!navigator.geolocation){if(!window.__autoLocateRequest) alert('Trình duyệt chưa hỗ trợ định vị. Ứng viên vẫn có thể bấm Chỉ đường ở từng chi nhánh.'); return;} btn.textContent='Đang định vị...'; navigator.geolocation.getCurrentPosition(pos=>{const user={lat:pos.coords.latitude,lng:pos.coords.longitude}; renderBranchList(branches,user); const nearest=[...branches].sort((a,b)=>distanceKm(user.lat,user.lng,a.lat,a.lng)-distanceKm(user.lat,user.lng,b.lat,b.lng))[0]; if(APP_STATE.userLayer) APP_STATE.userLayer.remove(); APP_STATE.userLayer=L.marker([user.lat,user.lng],{icon:L.divIcon({className:'',html:'<div class="user-marker"></div>',iconSize:[18,18],iconAnchor:[9,9]})}).addTo(map).bindPopup('Vị trí hiện tại của bạn'); const km=distanceKm(user.lat,user.lng,nearest.lat,nearest.lng); updateSelectedBranch(nearest,km); focusBranch(nearest); btn.textContent='Gợi ý gần tôi'; window.__autoLocateRequest=false;},()=>{btn.textContent='Gợi ý gần tôi'; if(!window.__autoLocateRequest) alert('Không lấy được vị trí. Cần cho phép quyền định vị trên trình duyệt, hoặc bấm Chỉ đường từng chi nhánh.'); window.__autoLocateRequest=false;},{enableHighAccuracy:true,timeout:10000,maximumAge:120000});});}
+
+function initAutoNearestOffice(){
+  const locateButton=document.getElementById('locateNearest');
+  const mapPanel=document.querySelector('.map-panel');
+
+  if(!locateButton || !navigator.geolocation) return;
+
+  if(mapPanel && !mapPanel.querySelector('.location-auto-note')){
+    const note=document.createElement('div');
+    note.className='location-auto-note';
+    note.textContent='Cho phép vị trí để hệ thống tự đề xuất văn phòng gần bạn.';
+    const actions=mapPanel.querySelector('.map-actions');
+    if(actions) actions.insertAdjacentElement('afterend',note);
+  }
+
+  const request=()=>{
+    window.__autoLocateRequest=true;
+    locateButton.click();
+    window.setTimeout(()=>{window.__autoLocateRequest=false;},12000);
+  };
+
+  if(navigator.permissions?.query){
+    navigator.permissions.query({name:'geolocation'}).then(status=>{
+      if(status.state==='denied') return;
+      window.setTimeout(request,850);
+    }).catch(()=>window.setTimeout(request,850));
+  }else{
+    window.setTimeout(request,850);
+  }
+}
+
+function renderGallery(items){const gallery=$('#cultureGallery'); if(!gallery) return; const data=(items&&items.length?items:window.UNITE_CONFIG?.LOCAL_GALLERY||[]).filter(Boolean); gallery.innerHTML=data.map((item,idx)=>`<article><div class="gallery-photo" style="${item.image?`background-image:url('${escapeHtml(item.image)}')`:''}"></div><div class="gallery-body"><h3>${escapeHtml(item.title||`Hình ảnh ${idx+1}`)}</h3><p>${escapeHtml(item.caption||'Khoảnh khắc văn hóa Unite Group.')}</p></div></article>`).join('')}
+async function loadSheetData(){
+  if(window.UNITE_CONFIG?.PREFER_LOCAL_GALLERY){
+    renderGallery();
+    return;
+  }
+  const url=window.UNITE_CONFIG?.APPS_SCRIPT_URL;
+  if(!url){renderGallery(); return;}
+  try{
+    const res=await fetch(`${url}?action=getData`);
+    const payload=await res.json();
+    if(payload?.ok&&Array.isArray(payload.gallery)&&payload.gallery.length) renderGallery(payload.gallery);
+    else renderGallery();
+  }catch(err){
+    console.warn(err);
+    renderGallery();
+  }
+}
 
 
 
@@ -172,6 +277,29 @@ function readFileAsBase64(file){
     };
     reader.onerror = () => reject(new Error('Không đọc được file CV.'));
     reader.readAsDataURL(file);
+  });
+}
+
+
+function initFileUpload(){
+  document.querySelectorAll('#cvFile').forEach(input=>{
+    const card=input.closest('.file-upload-card');
+    const fileName=card?.querySelector('#cvFileName');
+
+    const update=()=>{
+      const file=input.files?.[0];
+      if(file){
+        card?.classList.add('has-file');
+        if(fileName) fileName.textContent=`Đã chọn: ${file.name}`;
+      }else{
+        card?.classList.remove('has-file');
+        if(fileName) fileName.textContent='Chưa chọn tệp';
+      }
+    };
+
+    input.addEventListener('change',update);
+    input.form?.addEventListener('reset',()=>window.setTimeout(update,0));
+    update();
   });
 }
 
@@ -269,7 +397,7 @@ function initFloatingDock(){
 }
 
 
-document.addEventListener('DOMContentLoaded',()=>{initTheme(); initBrand(); initScrollProgress(); initQuiz(); initIncome(); initBranches(); loadSheetData(); initApplyForm();});
+document.addEventListener('DOMContentLoaded',()=>{initTheme(); initBrand(); initScrollProgress(); initQuiz(); initIncome(); initBranches(); initAutoNearestOffice(); loadSheetData(); initFileUpload(); initApplyForm();});
 
 
 /* Candidate V14 - reliable floating dock trigger */

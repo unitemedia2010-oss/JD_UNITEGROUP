@@ -231,3 +231,75 @@ Xem hướng dẫn tại `HUONG_DAN_SHEET_TIENg_VIET.md`.
   - Yêu cầu / Smartphone + di chuyển
 - Giữ đủ thông tin nhưng nhìn sạch hơn, gọn hơn và đỡ rối trên nhiều kích thước màn hình.
 - Chỉnh lại 3 nút vị trí tuyển dụng cho nhỏ gọn và đều hơn.
+
+
+## Candidate V27 - Nền shader động toàn trang
+
+- Đã chuyển Gold Shader từ riêng phần Hero sang lớp nền cố định toàn trang.
+- Shader không tham gia layout nên không làm lệch bố cục.
+- Nền động chạy xuyên suốt khi cuộn trang PC/mobile.
+- Giảm opacity ở light mode và mobile để không chói/rối nội dung.
+- Nội dung, header, menu, form và popup luôn nằm trên lớp shader.
+
+
+## Candidate V28 - Thêm trang Nhà nguyên căn
+
+- Giữ nguyên `index.html` cho Chuyên viên tư vấn cho thuê căn hộ.
+- Thêm `nha-nguyen-can.html` cho Chuyên viên tư vấn cho thuê nhà nguyên căn.
+- Trang mới dùng logo UCR riêng.
+- Nội dung Why, Quick Match, công việc, FAQ, form và nơi làm việc đã được viết lại cho nhóm Nhà nguyên căn.
+- Bộ phận Nhà nguyên căn chỉ hiển thị văn phòng 125 Trần Bình Trọng, không hiển thị danh sách nhiều chi nhánh.
+- Hai trang có thanh chuyển nhanh Căn hộ / Nhà nguyên căn.
+
+
+## Candidate V29 - Tách riêng Sheet Unite Central Real
+
+- `index.html` → lưu hồ sơ vào `Ứng viên Căn hộ`.
+- `nha-nguyen-can.html` → lưu hồ sơ vào `Ứng viên UCR`.
+- CV Căn hộ lưu trong thư mục Drive `Unite Group - CV Căn hộ`.
+- CV UCR lưu trong thư mục Drive `Unite Central Real - CV ứng viên`.
+- Link CV trong Sheet hiển thị thành nút chữ `Mở CV`.
+- Có hàm chuyển dữ liệu từ sheet `Ứng viên` cũ sang hai sheet mới.
+- Xem hướng dẫn đầy đủ tại `HUONG_DAN_TACH_SHEET_UCR_V29.md`.
+
+
+## Candidate V30 - Đồng bộ theo bộ file và 4 ảnh mới Hạnh gửi
+
+- Frontend Căn hộ đã được cập nhật theo `index(25).html`, `style(16).css`, `app(10).js`, `config(10).js`.
+- Dữ liệu bản đồ được cập nhật theo bộ `branches(3)`.
+- Đã đưa trực tiếp 4 ảnh mới vào:
+  - `img/01.JPG` – Training
+  - `img/02.JPG` – Môi trường làm việc
+  - `img/03.JPG` – Vinh danh
+  - `img/04.JPG` – Team building
+- Web ưu tiên 4 ảnh local mới, tránh bị dữ liệu Gallery cũ trong Sheet ghi đè.
+- Giữ nguyên hai trang:
+  - `index.html` – Căn hộ
+  - `nha-nguyen-can.html` – Unite Central Real
+- Giữ Apps Script V29 tách riêng:
+  - `Ứng viên Căn hộ`
+  - `Ứng viên UCR`
+- File Apps Script V24 Hạnh upload được lưu làm bản backup, không dùng làm backend chính để tránh quay lại một Sheet chung.
+
+
+## Candidate V31 - Tối ưu UI hero, chuyển mode và vị trí tự động
+
+- Giảm mạnh số lượng nút/thẻ trong phần Hero:
+  - 4 badge chuyển thành danh sách thông tin không viền.
+  - 3 vị trí tuyển dụng chuyển thành danh sách gọn.
+  - 4 ô thông tin chuyển thành bảng facts không dùng card riêng.
+  - 3 chỉ số chuyển thành một dải thống nhất.
+  - `Xem chi nhánh` chuyển thành text link.
+- Mode mặc định vẫn là `Auto`.
+- Khi đổi Auto/Sáng/Tối, màu giao diện lan ra từ chính nút chuyển mode.
+- Trang Căn hộ tự yêu cầu quyền vị trí sau khi load và đề xuất văn phòng gần nhất.
+- Nếu ứng viên từ chối định vị, web không hiện alert gây khó chịu; nút `Gợi ý gần tôi` vẫn dùng thủ công.
+- Nút upload CV được đổi thành thẻ upload cao cấp, hiển thị tên file đã chọn.
+- Không thay đổi Apps Script hoặc cấu trúc hai Sheet Căn hộ/UCR.
+
+
+## Candidate V32 - Fix ảnh gallery và watermark nền
+
+- Đã bỏ lớp phủ vàng trên ảnh gallery để ảnh hiển thị đúng màu gốc.
+- Giữ watermark nền blur nhưng tăng độ rõ nhẹ để nổi hơn.
+- Không thay đổi Apps Script.

@@ -1,18 +1,33 @@
 /**
- * UNITE GROUP CAREER JD - APPS SCRIPT BACKEND
- * V24: sửa đúng cột CV, lưu file lên Drive, lưu link file CV vào sheet "Ứng viên".
- * Lưu ý: sau khi dán code này phải Deploy phiên bản mới.
+ * UNITE GROUP / UNITE CENTRAL REAL CAREER JD
+ * V29 - TÁCH RIÊNG SHEET ỨNG VIÊN
+ *
+ * Phân luồng tự động:
+ * - Trang Căn hộ          -> sheet "Ứng viên Căn hộ"
+ * - Trang Nhà nguyên căn -> sheet "Ứng viên UCR"
+ *
+ * File CV cũng được tách vào 2 thư mục Google Drive riêng.
+ *
+ * Sau khi dán code:
+ * 1) Chạy setupCareerSheetsV29()
+ * 2) Deploy phiên bản mới
  */
 
 const SHEET_ID = "13syUfCyNPcvKcQI8xi5or_Uq-CbYoCbzfuiuPOwYs1o";
-const CV_FOLDER_NAME = "Unite Group - CV ứng viên";
 const MAX_CV_MB = 10;
 
 const TEN_SHEET = {
-  ungVien: "Ứng viên",
+  ungVienCanHo: "Ứng viên Căn hộ",
+  ungVienUcr: "Ứng viên UCR",
+  ungVienCu: "Ứng viên",
   chiNhanh: "Chi nhánh",
   hinhAnh: "Hình ảnh văn hóa",
   cauHinh: "Cấu hình JD"
+};
+
+const TEN_THU_MUC_CV = {
+  canHo: "Unite Group - CV Căn hộ",
+  ucr: "Unite Central Real - CV ứng viên"
 };
 
 const UNG_VIEN_HEADERS = [
@@ -43,13 +58,15 @@ const CHI_NHANH_HEADERS = [
   "Hiển thị"
 ];
 
-function setupSheets() {
-  return taoBangMau();
-}
-
-function taoBangMau() {
+/**
+ * Hàm Hạnh cần chạy đầu tiên.
+ */
+function setupCareerSheetsV29() {
   const ss = SpreadsheetApp.openById(SHEET_ID);
-  taoHoacLaySheet_(ss, TEN_SHEET.ungVien, UNG_VIEN_HEADERS);
+
+  taoHoacLaySheet_(ss, TEN_SHEET.ungVienCanHo, UNG_VIEN_HEADERS);
+  taoHoacLaySheet_(ss, TEN_SHEET.ungVienUcr, UNG_VIEN_HEADERS);
+
   const sheetChiNhanh = taoHoacLaySheet_(ss, TEN_SHEET.chiNhanh, CHI_NHANH_HEADERS);
 
   taoHoacLaySheet_(ss, TEN_SHEET.hinhAnh, [
@@ -65,12 +82,27 @@ function taoBangMau() {
   ]);
 
   themDuLieuChiNhanhMau_(sheetChiNhanh);
+  dinhDangSheetUngVien_(ss.getSheetByName(TEN_SHEET.ungVienCanHo));
+  dinhDangSheetUngVien_(ss.getSheetByName(TEN_SHEET.ungVienUcr));
 
   return traJson_({
     ok: true,
-    message: "Đã tạo/cập nhật bảng Unite Group Career JD.",
-    version: "V24_CV_LINK_FIXED_10MB"
+    version: "V29_SEPARATE_UCR_SHEET",
+    message: "Đã tạo 2 sheet riêng: Ứng viên Căn hộ và Ứng viên UCR.",
+    sheets: [TEN_SHEET.ungVienCanHo, TEN_SHEET.ungVienUcr],
+    maxCvMb: MAX_CV_MB
   });
+}
+
+/**
+ * Giữ tương thích với tên hàm cũ.
+ */
+function setupSheets() {
+  return setupCareerSheetsV29();
+}
+
+function taoBangMau() {
+  return setupCareerSheetsV29();
 }
 
 function doGet(e) {
@@ -79,8 +111,12 @@ function doGet(e) {
   if (action === "health") {
     return traJson_({
       ok: true,
-      message: "Unite Group Career JD Apps Script đang hoạt động.",
-      version: "V24_CV_LINK_FIXED_10MB",
+      message: "Career JD Apps Script đang hoạt động.",
+      version: "V29_SEPARATE_UCR_SHEET",
+      sheets: {
+        canHo: TEN_SHEET.ungVienCanHo,
+        ucr: TEN_SHEET.ungVienUcr
+      },
       maxCvMb: MAX_CV_MB
     });
   }
@@ -96,7 +132,7 @@ function doGet(e) {
 
   return traJson_({
     ok: true,
-    message: "Unite Group Career JD API",
+    message: "Unite Group / Unite Central Real Career JD API",
     actions: ["health", "getData"]
   });
 }
@@ -114,7 +150,9 @@ function doPost(e) {
 
     return traJson_({
       ok: true,
-      message: "Đã lưu thông tin ứng viên vào sheet Ứng viên.",
+      message: "Đã lưu hồ sơ vào " + result.sheetName + ".",
+      sheetName: result.sheetName,
+      brand: result.brand,
       cvName: result.cvName || "",
       cvUrl: result.cvUrl || ""
     });
@@ -127,15 +165,51 @@ function doPost(e) {
   }
 }
 
+/**
+ * Tự nhận diện ứng viên thuộc Căn hộ hay UCR.
+ */
+function xacDinhKenhTuyenDung_(data) {
+  const source = String(data.source || "").trim().toLowerCase();
+  const position = String(data.position || "").trim().toLowerCase();
+
+  const isUcr =
+    source === "career-jd-nha-nguyen-can" ||
+    source === "career-jd-ucr" ||
+    source.includes("ucr") ||
+    source.includes("nha-nguyen-can") ||
+    position.includes("nhà nguyên căn") ||
+    position.includes("nha nguyen can") ||
+    position.includes("unite central real");
+
+  if (isUcr) {
+    return {
+      brand: "Unite Central Real",
+      sheetName: TEN_SHEET.ungVienUcr,
+      cvFolderName: TEN_THU_MUC_CV.ucr
+    };
+  }
+
+  return {
+    brand: "Unite Group - Căn hộ",
+    sheetName: TEN_SHEET.ungVienCanHo,
+    cvFolderName: TEN_THU_MUC_CV.canHo
+  };
+}
+
 function luuUngVien_(data) {
   const ss = SpreadsheetApp.openById(SHEET_ID);
-  const sheet = taoHoacLaySheet_(ss, TEN_SHEET.ungVien, UNG_VIEN_HEADERS);
+  const channel = xacDinhKenhTuyenDung_(data);
+  const sheet = taoHoacLaySheet_(ss, channel.sheetName, UNG_VIEN_HEADERS);
 
   let cvName = "";
   let cvUrl = "";
 
   if (data.cvFile && data.cvFile.data) {
-    const saved = luuFileCvLenDrive_(data.cvFile, data.name || "Ung vien");
+    const saved = luuFileCvLenDrive_(
+      data.cvFile,
+      data.name || "Ung vien",
+      channel.cvFolderName
+    );
     cvName = saved.name;
     cvUrl = saved.url;
   }
@@ -156,38 +230,73 @@ function luuUngVien_(data) {
   };
 
   const headers = layHeaders_(sheet);
-  const row = headers.map(header => rowObject[header] !== undefined ? rowObject[header] : "");
+  const row = headers.map(header =>
+    rowObject[header] !== undefined ? rowObject[header] : ""
+  );
 
   const lock = LockService.getScriptLock();
-  lock.waitLock(10000);
+  lock.waitLock(15000);
 
   try {
     sheet.appendRow(row);
+
+    const lastRow = sheet.getLastRow();
+    if (cvUrl) {
+      const cvUrlCol = headers.indexOf("Link file CV") + 1;
+      if (cvUrlCol > 0) {
+        sheet.getRange(lastRow, cvUrlCol)
+          .setFormula('=HYPERLINK("' + cvUrl.replace(/"/g, '""') + '","Mở CV")');
+      }
+    }
   } finally {
     lock.releaseLock();
   }
 
-  return { cvName, cvUrl };
+  dinhDangSheetUngVien_(sheet);
+
+  return {
+    sheetName: channel.sheetName,
+    brand: channel.brand,
+    cvName,
+    cvUrl
+  };
 }
 
-function luuFileCvLenDrive_(fileData, candidateName) {
+function luuFileCvLenDrive_(fileData, candidateName, folderName) {
   const sizeBytes = Number(fileData.size || 0);
+
   if (sizeBytes > MAX_CV_MB * 1024 * 1024) {
-    throw new Error("File CV vượt quá " + MAX_CV_MB + "MB. Vui lòng chọn file nhẹ hơn.");
+    throw new Error(
+      "File CV vượt quá " + MAX_CV_MB + "MB. Vui lòng chọn file nhẹ hơn."
+    );
   }
 
-  const folder = layHoacTaoThuMucCv_();
+  const folder = layHoacTaoThuMuc_(folderName);
   const safeName = taoTenFileAnToan_(candidateName);
   const originalName = String(fileData.name || "cv");
-  const extension = originalName.includes(".") ? originalName.substring(originalName.lastIndexOf(".")) : "";
-  const finalName = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "yyyyMMdd-HHmmss") + "_" + safeName + extension;
+  const extension = originalName.includes(".")
+    ? originalName.substring(originalName.lastIndexOf("."))
+    : "";
 
+  const timestamp = Utilities.formatDate(
+    new Date(),
+    Session.getScriptTimeZone(),
+    "yyyyMMdd-HHmmss"
+  );
+
+  const finalName = timestamp + "_" + safeName + extension;
   const bytes = Utilities.base64Decode(fileData.data);
-  const blob = Utilities.newBlob(bytes, fileData.type || "application/octet-stream", finalName);
-  const file = folder.createFile(blob);
+  const blob = Utilities.newBlob(
+    bytes,
+    fileData.type || "application/octet-stream",
+    finalName
+  );
 
-  // Cho phép HR mở bằng link trong Sheet.
-  file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+  const file = folder.createFile(blob);
+  file.setSharing(
+    DriveApp.Access.ANYONE_WITH_LINK,
+    DriveApp.Permission.VIEW
+  );
 
   return {
     name: finalName,
@@ -195,47 +304,140 @@ function luuFileCvLenDrive_(fileData, candidateName) {
   };
 }
 
-function layHoacTaoThuMucCv_() {
-  const folders = DriveApp.getFoldersByName(CV_FOLDER_NAME);
+function layHoacTaoThuMuc_(folderName) {
+  const folders = DriveApp.getFoldersByName(folderName);
   if (folders.hasNext()) return folders.next();
-  return DriveApp.createFolder(CV_FOLDER_NAME);
+  return DriveApp.createFolder(folderName);
 }
 
-function suaLaiHeaderUngVienV24() {
+/**
+ * Chuyển dữ liệu sheet "Ứng viên" cũ sang 2 sheet mới.
+ * Chỉ chạy 1 lần nếu Hạnh muốn dọn dữ liệu cũ.
+ */
+function chuyenDuLieuUngVienCuV29() {
   const ss = SpreadsheetApp.openById(SHEET_ID);
-  const sheet = taoHoacLaySheet_(ss, TEN_SHEET.ungVien, UNG_VIEN_HEADERS);
-  sheet.getRange(1, 1, 1, UNG_VIEN_HEADERS.length).setValues([UNG_VIEN_HEADERS]);
+  const oldSheet = ss.getSheetByName(TEN_SHEET.ungVienCu);
+
+  if (!oldSheet) {
+    return traJson_({
+      ok: true,
+      message: 'Không tìm thấy sheet "Ứng viên" cũ.'
+    });
+  }
+
+  const values = oldSheet.getDataRange().getValues();
+  if (values.length < 2) {
+    return traJson_({
+      ok: true,
+      message: 'Sheet "Ứng viên" cũ chưa có dữ liệu.'
+    });
+  }
+
+  const headers = values[0].map(String);
+  let canHoCount = 0;
+  let ucrCount = 0;
+
+  values.slice(1).forEach(row => {
+    const obj = {};
+    headers.forEach((header, index) => obj[header] = row[index]);
+
+    const channel = xacDinhKenhTuyenDung_({
+      source: obj["Nguồn ứng tuyển"] || "",
+      position: obj["Vị trí ứng tuyển"] || ""
+    });
+
+    const targetSheet = taoHoacLaySheet_(
+      ss,
+      channel.sheetName,
+      UNG_VIEN_HEADERS
+    );
+
+    const targetHeaders = layHeaders_(targetSheet);
+    const targetRow = targetHeaders.map(header =>
+      obj[header] !== undefined ? obj[header] : ""
+    );
+
+    targetSheet.appendRow(targetRow);
+
+    if (channel.sheetName === TEN_SHEET.ungVienUcr) {
+      ucrCount++;
+    } else {
+      canHoCount++;
+    }
+  });
+
+  dinhDangSheetUngVien_(ss.getSheetByName(TEN_SHEET.ungVienCanHo));
+  dinhDangSheetUngVien_(ss.getSheetByName(TEN_SHEET.ungVienUcr));
+
+  return traJson_({
+    ok: true,
+    message: "Đã chuyển dữ liệu cũ sang 2 sheet mới.",
+    canHo: canHoCount,
+    ucr: ucrCount
+  });
+}
+
+/**
+ * Chỉ ẩn sheet cũ, không xóa dữ liệu.
+ */
+function anSheetUngVienCuV29() {
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const oldSheet = ss.getSheetByName(TEN_SHEET.ungVienCu);
+
+  if (oldSheet && !oldSheet.isSheetHidden()) {
+    oldSheet.hideSheet();
+  }
+
+  return traJson_({
+    ok: true,
+    message: 'Đã ẩn sheet "Ứng viên" cũ nếu tồn tại.'
+  });
+}
+
+function dinhDangSheetUngVien_(sheet) {
+  if (!sheet) return;
+
   sheet.setFrozenRows(1);
-  sheet.autoResizeColumns(1, UNG_VIEN_HEADERS.length);
+  sheet.autoResizeColumns(1, Math.max(sheet.getLastColumn(), UNG_VIEN_HEADERS.length));
 
-  return traJson_({
-    ok: true,
-    message: "Đã chuẩn hóa lại header sheet Ứng viên theo V24."
-  });
-}
+  const headerRange = sheet.getRange(1, 1, 1, UNG_VIEN_HEADERS.length);
+  headerRange
+    .setFontWeight("bold")
+    .setBackground("#356B58")
+    .setFontColor("#FFFFFF")
+    .setWrap(true);
 
-function anSheetApplicationsCu() {
-  const ss = SpreadsheetApp.openById(SHEET_ID);
-  const oldSheet = ss.getSheetByName("Applications");
-  if (oldSheet) oldSheet.hideSheet();
+  const timeCol = UNG_VIEN_HEADERS.indexOf("Thời gian gửi") + 1;
+  if (timeCol > 0 && sheet.getMaxRows() > 1) {
+    sheet.getRange(2, timeCol, sheet.getMaxRows() - 1, 1)
+      .setNumberFormat("dd/MM/yyyy HH:mm");
+  }
 
-  return traJson_({
-    ok: true,
-    message: "Đã ẩn sheet Applications cũ nếu tồn tại."
-  });
+  const cvLinkCol = UNG_VIEN_HEADERS.indexOf("Link file CV") + 1;
+  if (cvLinkCol > 0) {
+    sheet.setColumnWidth(cvLinkCol, 120);
+  }
+
+  const deviceCol = UNG_VIEN_HEADERS.indexOf("Thiết bị/Trình duyệt") + 1;
+  if (deviceCol > 0) {
+    sheet.setColumnWidth(deviceCol, 240);
+  }
 }
 
 function taoHoacLaySheet_(ss, tenSheet, headers) {
   let sheet = ss.getSheetByName(tenSheet);
   if (!sheet) sheet = ss.insertSheet(tenSheet);
 
-  const currentLastCol = Math.max(sheet.getLastColumn(), headers.length);
-  const currentHeaders = sheet.getRange(1, 1, 1, currentLastCol).getValues()[0].map(String);
+  const lastCol = Math.max(sheet.getLastColumn(), headers.length);
+  const currentHeaders = sheet
+    .getRange(1, 1, 1, lastCol)
+    .getValues()[0]
+    .map(String);
+
   const isEmpty = currentHeaders.every(cell => cell === "");
 
   if (isEmpty) {
     sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
-    sheet.setFrozenRows(1);
   } else {
     headers.forEach(header => {
       if (!currentHeaders.includes(header)) {
@@ -244,16 +446,18 @@ function taoHoacLaySheet_(ss, tenSheet, headers) {
     });
   }
 
-  sheet.autoResizeColumns(1, Math.max(sheet.getLastColumn(), headers.length));
   return sheet;
 }
 
 function layHeaders_(sheet) {
-  return sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0].map(String);
+  return sheet
+    .getRange(1, 1, 1, sheet.getLastColumn())
+    .getValues()[0]
+    .map(String);
 }
 
 function themDuLieuChiNhanhMau_(sheet) {
-  if (sheet.getLastRow() > 1) return;
+  if (!sheet || sheet.getLastRow() > 1) return;
 
   const rows = [
     ["Văn phòng chính DFC", "125 Trần Bình Trọng, phường Chợ Quán, TP.HCM (Quận 5 cũ)", 10.75609363585227, 106.6810910436253, "", "", "", "", "Có", "Có"],
@@ -280,20 +484,31 @@ function layChiNhanh_() {
       const diaChi = row["Địa chỉ"] || "";
       const lat = Number(row["Vĩ độ"] || 0);
       const lng = Number(row["Kinh độ"] || 0);
-      const maps = row["Link Google Maps"] || ("https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(diaChi || (lat + "," + lng)));
-      const directions = row["Link chỉ đường"] || ("https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(diaChi || (lat + "," + lng)) + "&travelmode=driving");
+
+      const maps =
+        row["Link Google Maps"] ||
+        ("https://www.google.com/maps/search/?api=1&query=" +
+          encodeURIComponent(diaChi || (lat + "," + lng)));
+
+      const directions =
+        row["Link chỉ đường"] ||
+        ("https://www.google.com/maps/dir/?api=1&destination=" +
+          encodeURIComponent(diaChi || (lat + "," + lng)) +
+          "&travelmode=driving");
 
       return {
         id: taoSlug_(ten || ("chi-nhanh-" + index)),
         name: ten,
         address: diaChi,
-        lat: lat,
-        lng: lng,
+        lat,
+        lng,
         note: row["Ghi chú"] || "",
         image: row["Link hình ảnh"] || "",
         googleMaps: maps,
-        directions: directions,
-        isHQ: String(row["Trụ sở chính"] || "").toLowerCase() === "true" || String(row["Trụ sở chính"] || "").toLowerCase() === "có"
+        directions,
+        isHQ:
+          String(row["Trụ sở chính"] || "").toLowerCase() === "true" ||
+          String(row["Trụ sở chính"] || "").toLowerCase() === "có"
       };
     })
     .filter(row => row.name && row.lat && row.lng);
@@ -317,7 +532,9 @@ function layCauHinh_() {
   const obj = {};
 
   rows.forEach(row => {
-    if (row["Mục cấu hình"]) obj[row["Mục cấu hình"]] = row["Giá trị"] || "";
+    if (row["Mục cấu hình"]) {
+      obj[row["Mục cấu hình"]] = row["Giá trị"] || "";
+    }
   });
 
   return obj;
@@ -348,14 +565,25 @@ function docDuLieuGuiLen_(e) {
   try {
     return JSON.parse(e.postData.contents);
   } catch (err) {
-    if (e.parameter && e.parameter.payload) return JSON.parse(e.parameter.payload);
+    if (e.parameter && e.parameter.payload) {
+      return JSON.parse(e.parameter.payload);
+    }
     throw new Error("Không đọc được dữ liệu gửi lên.");
   }
 }
 
 function dangHienThi_(value) {
   const text = String(value || "").trim().toLowerCase();
-  return text === "" || text === "có" || text === "co" || text === "true" || text === "1" || text === "yes" || text === "active";
+
+  return (
+    text === "" ||
+    text === "có" ||
+    text === "co" ||
+    text === "true" ||
+    text === "1" ||
+    text === "yes" ||
+    text === "active"
+  );
 }
 
 function taoSlug_(text) {

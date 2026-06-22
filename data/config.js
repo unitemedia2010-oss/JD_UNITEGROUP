@@ -3,6 +3,7 @@ window.UNITE_CONFIG = {
   LOGO_URL: "https://techbytruong.wordpress.com/wp-content/uploads/2026/01/unite-group-2.png",
   MARKER_URL: "https://techbytruong.wordpress.com/wp-content/uploads/2025/12/unite-group-gold-doc-png-1-e1767002671511.png",
   THEME_MODE: "system",
+  PREFER_LOCAL_GALLERY: true,
   DEFAULT_SOURCE: "career-jd-unitegroup",
   DEFAULT_POSITION: "Chuyên viên tư vấn cho thuê căn hộ",
   LOCAL_GALLERY: [
