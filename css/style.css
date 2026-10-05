@@ -348,7 +348,7 @@ html[data-theme='dark'] .global-watermark img{
 
   .map-main,
   .leaflet-map{
-    min-height:390px !important;
+    min-height:500px !important;
   }
 
   .selected-branch{
@@ -1257,7 +1257,7 @@ html[data-theme='dark'] .journey-step{
     grid-template-columns:1fr;
   }
 
-  .journey-track{
+  .journey-track, .journey-track.has-5-steps {
     grid-template-columns:1fr;
     gap:.85rem;
   }
@@ -2855,5 +2855,117 @@ html[data-theme='dark'] .global-watermark img{
 
   html[data-theme='dark'] .global-watermark img{
     opacity:.11 !important;
+  }
+}
+
+/* Dark Map styling */
+html[data-theme='dark'] .leaflet-map {
+  background: #18181b !important;
+}
+html[data-theme='dark'] .leaflet-control-zoom a {
+  background: #27272a !important;
+  color: #fff !important;
+  border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+}
+
+/* Training Board */
+.training-section {
+  padding-top: 2rem;
+}
+.training-board {
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.training-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+.training-header h3 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+.training-list {
+  display: grid;
+  gap: 1rem;
+}
+.training-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: color-mix(in srgb, var(--surface) 80%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.2rem;
+  transition: transform 0.2s;
+}
+.training-item:hover {
+  transform: translateX(4px);
+  border-color: var(--gold);
+}
+.t-date {
+  text-align: center;
+  background: color-mix(in srgb, var(--surface-2) 60%, transparent);
+  padding: 0.8rem 1.2rem;
+  border-radius: 12px;
+  min-width: 90px;
+}
+.t-date strong {
+  display: block;
+  color: var(--gold-deep);
+  font-size: 1.1rem;
+}
+html[data-theme='dark'] .t-date strong {
+  color: var(--gold);
+}
+.t-date span {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.t-info {
+  flex: 1;
+}
+.t-info h4 {
+  margin: 0 0 0.3rem;
+  font-size: 1.15rem;
+}
+.t-info p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.t-tag {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+}
+.t-tag.required {
+  background: rgba(255, 60, 60, 0.1);
+  color: #ff4d4d;
+}
+.t-tag.optional {
+  background: rgba(60, 180, 255, 0.1);
+  color: #3cb4ff;
+}
+
+@media (max-width: 760px) {
+  .training-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .t-date {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    justify-content: center;
   }
 }
