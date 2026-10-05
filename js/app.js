@@ -295,8 +295,8 @@ async function loadTrainingDataFromCSV() {
     for (let i = 2; i < rows.length; i++) {
       if (rows[i][0]) {
         items.push({
-          day: rows[i][0],
-          date: rows[i][1],
+          date: rows[i][0],
+          session: rows[i][1],
           title: rows[i][2],
           time: rows[i][3],
           tag: rows[i][4]
