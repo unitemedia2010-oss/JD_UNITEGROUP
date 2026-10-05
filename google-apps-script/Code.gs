@@ -106,7 +106,7 @@ function doGet(e) {
     return traJson_({
       ok: true,
       message: "Career JD Apps Script đang hoạt động.",
-      version: "V31_CMS_ADMIN",
+      version: "V32_CMS_FORM_ACK",
       cmsReady: (PropertiesService.getScriptProperties().getProperty("CMS_ADMIN_PASSWORD") || "").length >= 12,
       sheets: {
         canHo: TEN_SHEET.ungVienCanHo,
@@ -125,6 +125,18 @@ function doGet(e) {
     });
   }
 
+  if (action === "applystatus") {
+    const id = String((e && e.parameter && e.parameter.id) || "");
+    const callback = String((e && e.parameter && e.parameter.callback) || "");
+    if (!/^[0-9a-f-]{36}$/i.test(id) ||
+        !/^__uniteApplyStatus_[a-z0-9]{8,32}$/.test(callback)) {
+      return traJson_({ ok: false, message: "Tham số không hợp lệ." });
+    }
+    const state = CacheService.getScriptCache().get("apply_" + id) || "pending";
+    return ContentService.createTextOutput(callback + "(" + JSON.stringify({ state: state }) + ");")
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+
   return traJson_({
     ok: true,
     message: "Unite Group / Unite Central Real Career JD API",
@@ -133,8 +145,9 @@ function doGet(e) {
 }
 
 function doPost(e) {
+  let payload = {};
   try {
-    const payload = docDuLieuGuiLen_(e);
+    payload = docDuLieuGuiLen_(e);
     const action = String(payload.action || "").toLowerCase();
 
     if (action === "cmssave") {
@@ -146,6 +159,11 @@ function doPost(e) {
     }
 
     const result = luuUngVien_(payload.data || payload);
+    const id = String(payload.submissionId || "");
+    if (/^[0-9a-f-]{36}$/i.test(id)) {
+      try { CacheService.getScriptCache().put("apply_" + id, "saved", 600); }
+      catch (cacheError) { console.warn(cacheError); }
+    }
 
     return traJson_({
       ok: true,
@@ -157,6 +175,11 @@ function doPost(e) {
     });
 
   } catch (err) {
+    const id = String(payload.submissionId || "");
+    if (/^[0-9a-f-]{36}$/i.test(id)) {
+      try { CacheService.getScriptCache().put("apply_" + id, "failed", 600); }
+      catch (cacheError) { console.warn(cacheError); }
+    }
     return traJson_({
       ok: false,
       message: err.message || String(err)

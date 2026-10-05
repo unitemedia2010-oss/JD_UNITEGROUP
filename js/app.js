@@ -479,6 +479,36 @@ function initFileUpload(){
   });
 }
 
+function readApplyStatus(url,id){
+  return new Promise(resolve=>{
+    const bytes=new Uint8Array(8);
+    crypto.getRandomValues(bytes);
+    const callback='__uniteApplyStatus_'+Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');
+    const script=document.createElement('script');
+    let settled=false;
+    const finish=state=>{
+      if(settled) return;
+      settled=true;
+      clearTimeout(timer);
+      delete window[callback];
+      script.remove();
+      resolve(state);
+    };
+    window[callback]=result=>finish(result?.state||'pending');
+    script.onerror=()=>finish('pending');
+    const timer=setTimeout(()=>finish('pending'),5000);
+    script.src=url+'?action=applyStatus&id='+encodeURIComponent(id)+'&callback='+callback+'&_='+Date.now();
+    document.head.appendChild(script);
+  });
+}
+async function confirmApplySaved(url,id){
+  for(let attempt=0;attempt<6;attempt++){
+    const state=await readApplyStatus(url,id);
+    if(state==='saved'||state==='failed') return state;
+    await new Promise(resolve=>setTimeout(resolve,700));
+  }
+  return 'pending';
+}
 function initApplyForm(){
   const form=$('#applyForm'), note=$('#formNote');
   if(!form) return;
@@ -494,6 +524,7 @@ function initApplyForm(){
     data.source=window.UNITE_CONFIG?.DEFAULT_SOURCE||'career-jd-unitegroup';
     data.submittedAt=new Date().toISOString();
     data.userAgent=navigator.userAgent;
+    const submissionId=crypto.randomUUID();
 
     const fileInput = $('#cvFile', form);
     const selectedFile = fileInput?.files?.[0];
@@ -527,8 +558,14 @@ function initApplyForm(){
           method:'POST',
           mode:'no-cors',
           headers:{'Content-Type':'text/plain;charset=utf-8'},
-          body:JSON.stringify({action:'apply', data})
+          body:JSON.stringify({action:'apply', data, submissionId})
         });
+        const savedState=await confirmApplySaved(url,submissionId);
+        if(savedState!=='saved'){
+          throw new Error(savedState==='failed'
+            ? 'Apps Script báo chưa lưu được hồ sơ. Vui lòng kiểm tra lại hoặc liên hệ HR.'
+            : 'Chưa xác nhận được hồ sơ đã lưu. Vui lòng chờ HR kiểm tra trước khi gửi lại để tránh trùng.');
+        }
 
         note.textContent='Đã gửi hồ sơ. Bộ phận tuyển dụng Unite Group sẽ liên hệ bạn sớm nhất.';
         showSubmitToast('success','Đã gửi thông tin thành công','Cảm ơn bạn đã ứng tuyển. Unite Group sẽ liên hệ trong thời gian sớm nhất.');
