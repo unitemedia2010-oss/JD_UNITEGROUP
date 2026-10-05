@@ -561,10 +561,16 @@ function initApplyForm(){
           body:JSON.stringify({action:'apply', data, submissionId})
         });
         const savedState=await confirmApplySaved(url,submissionId);
-        if(savedState!=='saved'){
-          throw new Error(savedState==='failed'
-            ? 'Apps Script báo chưa lưu được hồ sơ. Vui lòng kiểm tra lại hoặc liên hệ HR.'
-            : 'Chưa xác nhận được hồ sơ đã lưu. Vui lòng chờ HR kiểm tra trước khi gửi lại để tránh trùng.');
+        if(savedState==='pending'){
+          note.textContent='Yêu cầu đã chuyển đi nhưng chưa xác nhận được trạng thái lưu. Vui lòng chờ HR kiểm tra trước khi gửi lại để tránh trùng.';
+          showSubmitToast('loading','Đang chờ xác nhận',note.textContent);
+          hideSubmitToast(2800);
+          safeStoreCandidate('uniteCandidateDraft',data);
+          if(submitBtn) submitBtn.disabled=false;
+          return;
+        }
+        if(savedState==='failed'){
+          throw new Error('Apps Script báo chưa lưu được hồ sơ. Vui lòng kiểm tra lại hoặc liên hệ HR.');
         }
 
         note.textContent='Đã gửi hồ sơ. Bộ phận tuyển dụng Unite Group sẽ liên hệ bạn sớm nhất.';
