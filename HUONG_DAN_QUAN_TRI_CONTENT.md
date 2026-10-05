@@ -1,6 +1,6 @@
 # Quản trị nội dung 3 trang
 
-Mở https://unitemedia2010-oss.github.io/JD_UNITEGROUP/admin.html. Chọn Căn hộ, Nhà nguyên căn hoặc TPA; bấm chữ trong bản xem trước, gõ trực tiếp, rồi bấm **Lưu nội dung**. Số thứ tự, tiêu đề, mô tả, nút, nhãn biểu mẫu, FAQ, chân trang và chữ nhỏ đều có thể chọn. Những mục khó bấm như lựa chọn trong danh sách và chữ gợi ý nhập liệu có trong mục **Tìm chữ cần sửa** bên phải. Nút Lưu chỉ báo thành công khi đọc lại được đúng nội dung từ tab Web_Content.
+Mở https://unitemedia2010-oss.github.io/JD_UNITEGROUP/admin.html. Chọn Căn hộ, Nhà nguyên căn hoặc TPA; bấm chữ trong bản xem trước, gõ trực tiếp, rồi bấm **Lưu nội dung**. Số thứ tự, tiêu đề, mô tả, nút, nhãn biểu mẫu, FAQ, chân trang và chữ nhỏ đều có thể chọn. Những mục khó bấm như lựa chọn trong danh sách, chữ gợi ý nhập liệu và thông báo kết quả trắc nghiệm ẩn có trong mục **Tìm chữ cần sửa** bên phải. Nút Lưu chỉ báo thành công khi đọc lại được đúng nội dung từ tab Web_Content.
 
 ## Kích hoạt nút Lưu
 
