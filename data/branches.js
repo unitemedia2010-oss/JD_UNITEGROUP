@@ -1,4 +1,4 @@
-window.UNITE_BRANCHES_GEOJSON = {
+﻿window.UNITE_BRANCHES_GEOJSON = {
   "type": "FeatureCollection",
   "name": "Unite Group Branch Map",
   "features": [
@@ -188,3 +188,5 @@ window.UNITE_BRANCHES_GEOJSON = {
     }
   ]
 };
+
+

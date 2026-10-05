@@ -90,7 +90,24 @@ function initQuiz(){
 }
 function initIncome(){const deal=$('#dealRange'), avg=$('#avgRange'), dVal=$('#dealValue'), aVal=$('#avgValue'), out=$('#incomeOutput'); if(!deal||!avg) return; const update=()=>{const deals=Number(deal.value), av=Number(avg.value), rate=.5, bonus=deals>=10?2000000:deals>=5?1000000:0; dVal.textContent=deals; aVal.textContent=formatVND(av); out.textContent=formatVND(Math.round(deals*av*rate+bonus));}; deal.addEventListener('input',update); avg.addEventListener('input',update); update();}
 function pointFeatures(){return (window.UNITE_BRANCHES_GEOJSON?.features||[]).filter(f=>f.geometry?.type==='Point')}
-function asBranch(feature){const [lng,lat]=feature.geometry.coordinates; const p=feature.properties||{}; return {id:p.id||`${lat}-${lng}`, name:p.name||'Unite Branch', lat, lng, coordsText:p.coordsText||`${lat.toFixed(6)}, ${lng.toFixed(6)}`, address:p.address||'', note:p.note||'', isHQ:!!p.isHQ, googleMaps:p.googleMaps||`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, directions:p.directions||`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`, image:p.image||''}}
+function asBranch(feature){
+  const [lng,lat]=feature.geometry.coordinates; 
+  const p=feature.properties||{}; 
+  const isTPA = window.UNITE_CONFIG?.DEFAULT_SOURCE === 'career-jd-tpa';
+  const isHQ = isTPA ? (p.id === 'vp-ksc-mvc') : !!p.isHQ;
+  return {
+    id:p.id||`${lat}-${lng}`, 
+    name:p.name||'Unite Branch', 
+    lat, lng, 
+    coordsText:p.coordsText||`${lat.toFixed(6)}, ${lng.toFixed(6)}`, 
+    address:p.address||'', 
+    note:p.note||'', 
+    isHQ, 
+    googleMaps:p.googleMaps||`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, 
+    directions:p.directions||`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`, 
+    image:p.image||''
+  };
+}
 function popupHtml(b){
   const addressLine = b.address ? escapeHtml(b.address) : 'Đang cập nhật địa chỉ';
   return `<div class="popup-title">${escapeHtml(b.name)}</div>
@@ -183,10 +200,11 @@ function renderTraining(data){
   const sections=document.querySelectorAll('.training-section');
   if(!sections.length) return;
   const defaultData={
-    weekTitle: "Tháng 10 / Tuần 2",
+    weekTitle: "Tháng 10 / Tuần 3",
     items: [
-      { day: "Thứ 3", date: "10/10", title: "Kỹ năng Telesale & Xử lý từ chối", time: "Phòng Đào tạo • 09:00 - 11:30", tag: "Bắt buộc cho Newbie" },
-      { day: "Thứ 5", date: "12/10", title: "Phân tích thị trường & Thẩm định giá", time: "Leader Hội đồng • 14:00 - 16:30", tag: "Mở rộng" }
+      { date: "17/10", session: "Sáng", title: "Văn hóa Unite Group", time: "Phòng Đào tạo • 09:00 - 11:30", tag: "Bắt buộc cho Newbie" },
+      { date: "17/10", session: "Chiều", title: "Kỹ năng Telesale & Xử lý từ chối", time: "Phòng Đào tạo • 14:00 - 16:30", tag: "Bắt buộc cho Newbie" },
+      { date: "19/10", session: "Sáng", title: "Phân tích thị trường & Thẩm định giá", time: "Leader Hội đồng • 09:00 - 11:30", tag: "Mở rộng" }
     ]
   };
   const tData = (data && data.weekTitle && data.items && data.items.length) ? data : defaultData;
@@ -194,6 +212,38 @@ function renderTraining(data){
     const t = (tag || '').toLowerCase();
     if(t.includes('bắt buộc') || t.includes('newbie')) return 'required';
     if(t.includes('mở rộng') || t.includes('tùy chọn')) return 'optional';
+    return '';
+  };
+  const getDayOfWeek = (dateStr) => {
+    if(!dateStr) return '';
+    const p = dateStr.split('/');
+    if(p.length >= 2) {
+      const d = parseInt(p[0]), m = parseInt(p[1]) - 1;
+      let y = p.length===3 ? parseInt(p[2]) : new Date().getFullYear();
+      const dt = new Date(y, m, d);
+      if(!isNaN(dt)) {
+        const days = ['Chủ Nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
+        return days[dt.getDay()];
+      }
+    }
+    return 'Ngày';
+  };
+  const grouped = {};
+  tData.items.forEach(item => {
+    if(!grouped[item.date]) grouped[item.date] = [];
+    grouped[item.date].push(item);
+  });
+  const getSessionIcon = (session) => {
+    const s = (session || '').toLowerCase();
+    if(s.includes('sáng')) return `<div class="sc-icon">☀️ ${escapeHtml(session)}</div>`;
+    if(s.includes('chiều')) return `<div class="sc-icon">🌙 ${escapeHtml(session)}</div>`;
+    if(s.includes('tối')) return `<div class="sc-icon">⭐ ${escapeHtml(session)}</div>`;
+    return `<div class="sc-icon">${escapeHtml(session || 'Buổi')}</div>`;
+  };
+  const getSessionClass = (session) => {
+    const s = (session || '').toLowerCase();
+    if(s.includes('sáng')) return 'morning';
+    if(s.includes('chiều') || s.includes('tối')) return 'afternoon';
     return '';
   };
   sections.forEach(section => {
@@ -205,17 +255,24 @@ function renderTraining(data){
         <span class="status-pill">HR Cập nhật</span>
       </div>
       <div class="training-list">
-        ${tData.items.map(item => `
-          <div class="training-item">
-            <div class="t-date">
-              <strong>${escapeHtml(item.day || '')}</strong>
-              <span>${escapeHtml(item.date || '')}</span>
+        ${Object.keys(grouped).map(dateKey => `
+          <div class="timetable-day">
+            <div class="td-date">
+              <div class="day-name">${getDayOfWeek(dateKey)}</div>
+              <div class="day-num">${escapeHtml(dateKey)}</div>
             </div>
-            <div class="t-info">
-              <h4>${escapeHtml(item.title || '')}</h4>
-              <p>${escapeHtml(item.time || '')}</p>
+            <div class="td-sessions">
+              ${grouped[dateKey].map(item => `
+                <div class="session-card ${getSessionClass(item.session)}">
+                  ${getSessionIcon(item.session)}
+                  <div class="sc-content">
+                    <h4>${escapeHtml(item.title || '')}</h4>
+                    <p>${escapeHtml(item.time || '')}</p>
+                  </div>
+                  ${item.tag ? `<div class="sc-tag ${getTagClass(item.tag)}">${escapeHtml(item.tag)}</div>` : ''}
+                </div>
+              `).join('')}
             </div>
-            ${item.tag ? `<div class="t-tag ${getTagClass(item.tag)}">${escapeHtml(item.tag)}</div>` : ''}
           </div>
         `).join('')}
       </div>
