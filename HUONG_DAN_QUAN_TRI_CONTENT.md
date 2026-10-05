@@ -1,0 +1,16 @@
+# Quản trị nội dung 3 trang
+
+Mở https://unitemedia2010-oss.github.io/JD_UNITEGROUP/admin.html. Chọn Căn hộ, Nhà nguyên căn hoặc TPA; bấm đoạn chữ trong bản xem trước, gõ trực tiếp, rồi bấm **Lưu nội dung**. Nút Lưu chỉ báo thành công khi đọc lại được đúng nội dung từ tab Web_Content.
+
+## Kích hoạt nút Lưu
+
+1. Mở dự án Apps Script hiện dùng cho form ứng tuyển. File google-apps-script/Code.gs trong repo là bản V31 đã ghép trực tiếp từ mã V30 bạn gửi, có đầy đủ CMS và Training. Thay nội dung Mã.gs bằng file V31 này và lưu.
+2. Trong **Project Settings → Script properties**, thêm thuộc tính CMS_ADMIN_PASSWORD với một mật khẩu riêng, ít nhất 12 ký tự. Không ghi mật khẩu vào GitHub hay file HTML. Bước này phải do chủ tài khoản thực hiện.
+3. Lưu, rồi **Deploy → Manage deployments → Edit → New version → Deploy**. Giữ deployment hiện tại để URL /exec trong ba file config không đổi.
+4. Mở URL /exec?action=health; kết quả cần có version V31_CMS_ADMIN và cmsReady true. Sau đó mở admin.html, nhập mật khẩu vừa đặt và thử sửa một chữ không ảnh hưởng nội dung quan trọng. Xem thông báo xác nhận, tải lại trang công khai và kiểm tra.
+
+Google Sheet Web_Content vẫn là nơi lưu dữ liệu, nhưng nhân viên content làm việc trên trang quản trị. Nếu tab này bị xóa, lần lưu tiếp theo sẽ tạo lại tab cùng hàng tiêu đề. Phần văn bản chưa có dấu viền khi rê chuột vẫn nằm trong HTML và cần cập nhật bằng mã nguồn.
+
+## Tình trạng dữ liệu Training
+
+Tab Training hiện chỉ có tiêu đề tuần và hàng tên cột. Web hiển thị “HR chưa cập nhật lịch Training” cho đến khi có hàng ngày/buổi hợp lệ. Trang quản trị này chỉ sửa nội dung chữ; lịch Training vẫn được HR nhập tại tab riêng.

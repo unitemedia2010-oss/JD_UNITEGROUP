@@ -2878,6 +2878,7 @@ html[data-theme='dark'] .leaflet-control-zoom a {
   max-width: 900px;
   margin: 0 auto;
 }
+.training-empty{margin:0;color:var(--muted);text-align:center;padding:2rem 1rem;line-height:1.6}
 .training-header {
   display: flex;
   justify-content: space-between;
@@ -3019,6 +3020,7 @@ body.tpa-page {
 }
 
 /* Premium Gradient Text for Main Titles */
+.tpa-page .title-area{display:block;font-size:.4em;margin-top:10px;letter-spacing:0}
 .tpa-page h1 span, .tpa-page .hero-title-color-match span {
   background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c) !important;
   -webkit-background-clip: text !important;

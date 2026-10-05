@@ -1,7 +1,44 @@
-﻿const $=(s,r=document)=>r.querySelector(s); const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const $=(s,r=document)=>r.querySelector(s); const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const APP_STATE={themePref:localStorage.getItem('uniteThemePref')||(window.UNITE_CONFIG?.THEME_MODE||'system'),map:null,markers:new Map(),userLayer:null,branches:[],baseLayers:{light:null,dark:null}};
 function formatVND(v){return new Intl.NumberFormat('vi-VN',{style:'currency',currency:'VND',maximumFractionDigits:0}).format(v)}
 function escapeHtml(v){return String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;')}
+function parseCsvRows(text){
+  const rows=[]; let row=[],cell='',quoted=false;
+  for(let i=0;i<text.length;i++){
+    const char=text[i];
+    if(quoted){
+      if(char==='"'&&text[i+1]==='"'){cell+='"';i++;}
+      else if(char==='"') quoted=false;
+      else cell+=char;
+    }else if(char==='"') quoted=true;
+    else if(char===','){row.push(cell);cell='';}
+    else if(char==='\r'||char==='\n'){
+      if(char==='\r'&&text[i+1]==='\n') i++;
+      row.push(cell);rows.push(row);row=[];cell='';
+    }else cell+=char;
+  }
+  if(cell||row.length){row.push(cell);rows.push(row);}
+  return rows;
+}
+function sanitizeCmsHtml(value){
+  const template=document.createElement('template');template.innerHTML=String(value??'').replace(/\\n/g,'<br>');
+  const allowed=new Set(['BR','STRONG','EM','SPAN']);
+  const clean=node=>{
+    for(const child of [...node.childNodes]){
+      if(child.nodeType===8){child.remove();continue;}
+      if(child.nodeType!==1) continue;
+      if(['SCRIPT','STYLE','IFRAME','SVG','MATH'].includes(child.tagName)){child.remove();continue;}
+      if(!allowed.has(child.tagName)){child.replaceWith(document.createTextNode(child.textContent||''));continue;}
+      clean(child);
+      const className=child.tagName==='SPAN'&&child.classList.contains('title-soft')?'title-soft':
+        child.tagName==='SPAN'&&(child.classList.contains('title-area')||/font-size:\s*0\.4em/i.test(child.getAttribute('style')||''))?'title-area':'';
+      for(const attr of [...child.attributes]) child.removeAttribute(attr.name);
+      if(className) child.className=className;
+    }
+  };
+  clean(template.content);
+  return template.innerHTML;
+}
 function activeTheme(){if(APP_STATE.themePref==='system'){return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'} return APP_STATE.themePref||'light'}
 function applyTheme(){const theme=activeTheme(); document.documentElement.setAttribute('data-theme', theme); const label=$('#themeLabel'), icon=$('#themeIcon'); if(label&&icon){ if(APP_STATE.themePref==='system'){label.textContent='Auto'; icon.textContent='◐'} else if(APP_STATE.themePref==='dark'){label.textContent='Tối'; icon.textContent='●'} else {label.textContent='Sáng'; icon.textContent='☀'} } updateMapTheme();}
 function initTheme(){
@@ -199,15 +236,11 @@ function initAutoNearestOffice(){
 function renderTraining(data){
   const sections=document.querySelectorAll('.training-section');
   if(!sections.length) return;
-  const defaultData={
-    weekTitle: "Tháng 10 / Tuần 3",
-    items: [
-      { date: "17/10", session: "Sáng", title: "Văn hóa Unite Group", time: "Phòng Đào tạo • 09:00 - 11:30", tag: "Bắt buộc cho Newbie" },
-      { date: "17/10", session: "Chiều", title: "Kỹ năng Telesale & Xử lý từ chối", time: "Phòng Đào tạo • 14:00 - 16:30", tag: "Bắt buộc cho Newbie" },
-      { date: "19/10", session: "Sáng", title: "Phân tích thị trường & Thẩm định giá", time: "Leader Hội đồng • 09:00 - 11:30", tag: "Mở rộng" }
-    ]
-  };
-  const tData = (data && data.weekTitle && data.items && data.items.length) ? data : defaultData;
+  if(!data?.items?.length){
+    sections.forEach(section=>{const board=section.querySelector('.training-board');if(board) board.innerHTML='<div class="training-header"><h3>Lịch Training</h3></div><p class="training-empty">HR chưa cập nhật lịch Training. Vui lòng quay lại sau.</p>';});
+    return;
+  }
+  const tData=data;
   const getTagClass = (tag) => {
     const t = (tag || '').toLowerCase();
     if(t.includes('bắt buộc') || t.includes('newbie')) return 'required';
@@ -288,12 +321,12 @@ async function loadTrainingDataFromCSV() {
     const res = await fetch(url);
     if (!res.ok) throw new Error('Cannot fetch CSV');
     const text = await res.text();
-    const rows = text.split('\n').map(r => r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(s => s.replace(/^"|"$/g, '').replace(/\\"/g, '"').trim()));
-    if (rows.length < 3) throw new Error('Not enough rows');
+    const rows = parseCsvRows(text).map(row=>row.map(cell=>cell.trim()));
+    if (rows.length < 2) throw new Error('Training sheet has no header');
     const weekTitle = rows[0][1] || 'Lịch Training';
     const items = [];
     for (let i = 2; i < rows.length; i++) {
-      if (rows[i][0]) {
+      if (/^\d{1,2}\/\d{1,2}(?:\/\d{4})?$/.test(rows[i][0]||'')) {
         items.push({
           date: rows[i][0],
           session: rows[i][1],
@@ -304,10 +337,18 @@ async function loadTrainingDataFromCSV() {
       }
     }
     if (items.length) {
+      const order=item=>{
+        const parts=item.date.split('/').map(Number);
+        const day=parts[0],month=parts[1],year=parts[2]||new Date().getFullYear();
+        return new Date(year,month-1,day).getTime();
+      };
+      items.sort((a,b)=>order(a)-order(b)||
+        (a.session.toLowerCase().includes('sáng')?0:1)-
+        (b.session.toLowerCase().includes('sáng')?0:1));
       renderTraining({ weekTitle, items });
       return;
     }
-    throw new Error('No items parsed');
+    renderTraining(null);
   } catch (err) {
     console.warn('Failed to load training CSV', err);
     renderTraining(null);
@@ -815,16 +856,16 @@ async function loadCMSData() {
     const res = await fetch(url);
     if (!res.ok) return;
     const text = await res.text();
-    const rows = text.split('\n').map(r => r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(s => s.replace(/^"|"$/g, '').replace(/\\"/g, '"').trim()));
+    const rows = parseCsvRows(text);
     
     const cms = {};
     for (let i = 1; i < rows.length; i++) {
-      const page = rows[i][0];
-      const key = rows[i][1];
+      const page = rows[i][0]?.trim();
+      const key = rows[i][1]?.trim();
       const val = rows[i][2];
       if (page && key && val) {
         if (!cms[page]) cms[page] = {};
-        cms[page][key] = val.replace(/\\n/g, '<br>');
+        cms[page][key] = val;
       }
     }
     
@@ -836,9 +877,7 @@ async function loadCMSData() {
       let val = cms[currentPage]?.[key];
       if (!val) val = cms['global']?.[key];
       if (val) {
-        if (el.tagName === 'IMG') el.src = val;
-        else if (el.tagName === 'A' && el.hasAttribute('href')) el.href = val;
-        else el.innerHTML = val;
+        el.innerHTML = sanitizeCmsHtml(val);
       }
     });
   } catch(e) {

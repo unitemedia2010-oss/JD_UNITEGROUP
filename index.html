@@ -6,7 +6,7 @@
   <title>Unite Group Career JD | Chuyên viên tư vấn cho thuê căn hộ</title>
   <meta name="description" content="JD Career tương tác dành riêng cho Unite Group." />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="css/style.css?v=6" />
+  <link rel="stylesheet" href="css/style.css?v=11" />
 </head>
 <body class="is-loading">
   <div class="scroll-progress" id="scrollProgress"></div>
@@ -120,8 +120,8 @@
 
     <section class="section intro">
       <div class="section-title">
-        <p class="eyebrow">Why</p>
-        <h2>Tại sao bạn nên gia nhập Unite Group?</h2>
+        <p class="eyebrow" data-cms="why_eyebrow">Why</p>
+        <h2 data-cms="why_title">Tại sao bạn nên gia nhập Unite Group?</h2>
       </div>
       <div class="value-grid value-grid-four">
         <article class="value-card"><span>01</span><h3>Sản phẩm đa dạng</h3><p>Hệ thống sản phẩm rộng khắp trên địa bàn TP.HCM, gồm nhiều dạng phòng với tầm giá khác nhau, đáp ứng nhu cầu đa dạng của khách hàng.</p></article>
@@ -133,9 +133,9 @@
 
     <section class="section fit-section" id="fit">
       <div class="section-title narrow">
-        <p class="eyebrow">Quick Match</p>
-        <h2>Bạn có hợp với vị trí này không?</h2>
-        <p>Hãy chọn những điều đúng với bạn. Kết quả đánh giá mức độ phù hợp sẽ hiển thị ngay bên dưới.</p>
+        <p class="eyebrow" data-cms="quiz_eyebrow">Quick Match</p>
+        <h2 data-cms="quiz_title">Bạn có hợp với vị trí này không?</h2>
+        <p data-cms="quiz_desc">Hãy chọn những điều đúng với bạn. Kết quả đánh giá mức độ phù hợp sẽ hiển thị ngay bên dưới.</p>
       </div>
 
       <div class="quiz-card glass">
@@ -155,8 +155,8 @@
 
     <section class="section job-section" id="job">
       <div class="section-title">
-        <p class="eyebrow">What you will do</p>
-        <h2>Ở Unite Group, bạn sẽ làm gì?</h2>
+        <p class="eyebrow" data-cms="tasks_eyebrow">What you will do</p>
+        <h2 data-cms="tasks_title">Ở Unite Group, bạn sẽ làm gì?</h2>
       </div>
       <div class="timeline">
         <article><time>01</time><div><h3>Marketing &amp; Tạo nguồn khách hàng tiềm năng</h3><p>Đăng bài, sáng tạo nội dung trên Facebook, TikTok, Threads, Instagram hoặc các nền tảng phù hợp.</p></div></article>
@@ -166,7 +166,7 @@
     </section>
 
     <section class="section income-section" id="income">
-      <div class="section-title"><p class="eyebrow">Income Simulator</p><h2>Thử ước tính thu nhập theo kết quả</h2><p>Ứng viên có thể tự kéo thanh để hình dung thu nhập tham khảo.</p></div>
+      <div class="section-title"><p class="eyebrow" data-cms="income_eyebrow">Income Simulator</p><h2 data-cms="income_title">Thử ước tính thu nhập theo kết quả</h2><p data-cms="income_desc">Ứng viên có thể tự kéo thanh để hình dung thu nhập tham khảo.</p></div>
       <div class="calculator glass">
         <div class="range-group"><label for="dealRange">Số giao dịch / tháng: <b id="dealValue">5</b></label><input id="dealRange" type="range" min="1" max="30" value="5" /></div>
         <div class="range-group"><label for="avgRange">Doanh thu trung bình / giao dịch: <b id="avgValue">5.000.000đ</b></label><input id="avgRange" type="range" min="1000000" max="30000000" step="500000" value="5000000" /></div>
@@ -176,9 +176,9 @@
 
     <section class="section growth-section" id="growth">
       <div class="section-title">
-        <p class="eyebrow">Career Path</p>
-        <h2>Lộ trình phát triển tại Unite Group</h2>
-        <p>Hành trình phát triển được thể hiện theo từng nấc thang đi lên, giúp ứng viên dễ hình dung hướng đi trong công việc.</p>
+        <p class="eyebrow" data-cms="path_eyebrow">Career Path</p>
+        <h2 data-cms="path_title">Lộ trình phát triển tại Unite Group</h2>
+        <p data-cms="path_desc">Hành trình phát triển được thể hiện theo từng nấc thang đi lên, giúp ứng viên dễ hình dung hướng đi trong công việc.</p>
       </div>
 
       <div class="career-journey glass">
@@ -222,49 +222,22 @@
 
     <section class="section training-section" id="training">
       <div class="section-title">
-        <p class="eyebrow">Weekly Training</p>
-        <h2>Lịch Training Hàng Tuần</h2>
-        <p>Tham gia các buổi đào tạo thực chiến để nâng cao kỹ năng chốt sale và phát triển bản thân.</p>
+        <p class="eyebrow" data-cms="training_eyebrow">Weekly Training</p>
+        <h2 data-cms="training_title">Lịch Training Hàng Tuần</h2>
+        <p data-cms="training_desc">Tham gia các buổi đào tạo thực chiến để nâng cao kỹ năng chốt sale và phát triển bản thân.</p>
       </div>
       <div class="training-board glass">
-        <div class="training-header">
-          <h3>Tháng 10 / Tuần 2</h3>
-          <span class="status-pill">HR Cập nhật</span>
-        </div>
-        <div class="training-list">
-          <div class="training-item">
-            <div class="t-date">
-              <strong>Thứ 3</strong>
-              <span>10/10</span>
-            </div>
-            <div class="t-info">
-              <h4>Kỹ năng Telesale & Xử lý từ chối</h4>
-              <p>Phòng Đào tạo • 09:00 - 11:30</p>
-            </div>
-            <div class="t-tag required">Bắt buộc cho Newbie</div>
-          </div>
-          <div class="training-item">
-            <div class="t-date">
-              <strong>Thứ 5</strong>
-              <span>12/10</span>
-            </div>
-            <div class="t-info">
-              <h4>Phân tích thị trường & Thẩm định giá</h4>
-              <p>Leader Hội đồng • 14:00 - 16:30</p>
-            </div>
-            <div class="t-tag optional">Mở rộng</div>
-          </div>
-        </div>
+        <p class="training-empty">Đang tải lịch Training…</p>
       </div>
     </section>
 
     <section class="section culture-section" id="culture">
-      <div class="section-title"><p class="eyebrow">Culture Gallery</p><h2>Môi trường trẻ, thực chiến và có Leader đồng hành</h2><p>Tại Unite Group, bạn không chỉ làm việc với khách hàng mà còn được học hỏi, kết nối và phát triển trong một môi trường năng động.</p></div>
+      <div class="section-title"><p class="eyebrow" data-cms="gallery_eyebrow">Culture Gallery</p><h2 data-cms="gallery_title">Môi trường trẻ, thực chiến và có Leader đồng hành</h2><p data-cms="gallery_desc">Tại Unite Group, bạn không chỉ làm việc với khách hàng mà còn được học hỏi, kết nối và phát triển trong một môi trường năng động.</p></div>
       <div class="gallery" id="cultureGallery"></div>
     </section>
 
     <section class="section map-section" id="workplace">
-      <div class="section-title"><p class="eyebrow">Workplace</p><h2>Chọn nơi làm việc phù hợp</h2><p>Chọn văn phòng phù hợp với khu vực sinh sống và mở chỉ đường Google Maps trực tiếp.</p></div>
+      <div class="section-title"><p class="eyebrow" data-cms="workplace_eyebrow">Workplace</p><h2 data-cms="workplace_title">Chọn nơi làm việc phù hợp</h2><p data-cms="workplace_desc">Chọn văn phòng phù hợp với khu vực sinh sống và mở chỉ đường Google Maps trực tiếp.</p></div>
       <div class="map-shell glass">
         <aside class="map-panel">
           <div class="map-panel-head"><span class="tiny-label">Branch Map</span><h3>Chi nhánh Unite Group</h3><p>Chọn một văn phòng để xem địa chỉ và mở chỉ đường nhanh trên Google Maps.</p></div>
@@ -279,7 +252,7 @@
     </section>
 
     <section class="section faq-section">
-      <div class="section-title narrow"><p class="eyebrow">FAQ</p><h2>Ứng viên thường hỏi gì?</h2></div>
+      <div class="section-title narrow"><p class="eyebrow" data-cms="faq_eyebrow">FAQ</p><h2 data-cms="faq_title">Ứng viên thường hỏi gì?</h2></div>
       <div class="faq-list">
         <details><summary>Mình chưa có kinh nghiệm có ứng tuyển được không?</summary><p>Có. Đối với nhân sự mới, Unite Group sẽ đào tạo từ đầu và hướng dẫn từng bước đến khi bạn quen việc.</p></details>
         <details><summary>Full-time và Part-time khác nhau thế nào?</summary><p>Full-time và Part-time khác nhau về thời gian làm việc, mức độ cam kết và chính sách hoa hồng tương ứng.</p></details>
@@ -290,7 +263,7 @@
 
     <section class="section apply-section" id="apply">
       <div class="apply-card glass">
-        <div><p class="eyebrow">Apply Now</p><h2>Sẵn sàng bắt đầu hành trình mới tại Unite Group?</h2><p>Điền thông tin bên dưới để Bộ phận tuyển dụng Unite Group liên hệ trao đổi chi tiết công việc và sắp lịch phỏng vấn.</p></div>
+        <div><p class="eyebrow" data-cms="apply_eyebrow">Apply Now</p><h2 data-cms="apply_title">Sẵn sàng bắt đầu hành trình mới tại Unite Group?</h2><p data-cms="apply_desc">Điền thông tin bên dưới để Bộ phận tuyển dụng Unite Group liên hệ trao đổi chi tiết công việc và sắp lịch phỏng vấn.</p></div>
         <form id="applyForm">
           <div class="form-grid">
             <label>Họ và tên<input name="name" type="text" placeholder="Nguyễn Văn A" required /></label>
@@ -337,7 +310,7 @@
   <script src="data/config.js"></script>
   <script src="data/branches.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-  <script src="js/app.js?v=10"></script>
+  <script src="js/app.js?v=13"></script>
 
 </body>
 </html>

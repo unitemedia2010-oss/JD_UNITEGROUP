@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Quản trị nội dung | Unite Career</title>
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <div class="brand"><span class="brand-mark">U</span><div><strong>UNITE CAREER</strong><small>Quản trị nội dung</small></div></div>
+    <a class="view-link" id="publicLink" href="index.html" target="_blank" rel="noopener">Mở trang công khai ↗</a>
+  </header>
+  <main>
+    <section class="intro">
+      <div><p class="eyebrow">CONTENT STUDIO</p><h1>Bấm vào chữ để sửa.</h1><p>Chọn một trang, bấm trực tiếp vào đoạn chữ trong bản xem trước, sửa rồi lưu. Nội dung được ghi vào <b>Web_Content</b> và tự hiện trên web.</p></div>
+      <div class="security">
+        <label for="adminPassword">Mật khẩu quản trị</label>
+        <input id="adminPassword" type="password" autocomplete="off" placeholder="Nhập mật khẩu CMS">
+        <small>Mật khẩu chỉ giữ trong phiên trình duyệt này.</small>
+      </div>
+    </section>
+    <div class="toolbar">
+      <nav class="page-tabs" aria-label="Chọn trang">
+        <button type="button" data-page="index" class="active">Căn hộ</button>
+        <button type="button" data-page="nha-nguyen-can">Nhà nguyên căn</button>
+        <button type="button" data-page="tpa">TPA</button>
+      </nav>
+      <div class="viewport-tabs" aria-label="Kích thước xem trước">
+        <button type="button" data-size="desktop" class="active">Máy tính</button>
+        <button type="button" data-size="phone">Điện thoại</button>
+      </div>
+    </div>
+    <p id="adminStatus" class="status" role="status" aria-live="polite">Đang tải bản xem trước…</p>
+    <div class="workspace">
+      <div class="preview-wrap" id="previewWrap">
+        <iframe id="preview" title="Bản xem trước trang tuyển dụng" src="index.html" sandbox="allow-same-origin"></iframe>
+      </div>
+      <aside class="editor" aria-label="Công cụ sửa nội dung">
+        <span class="editor-kicker">CHỈNH SỬA TRỰC TIẾP</span>
+        <h2 id="fieldTitle">Chọn một đoạn chữ</h2>
+        <p id="fieldHelp">Bấm vào chữ có viền khi rê chuột ở bản xem trước. Con trỏ sẽ xuất hiện ngay trên chữ để bạn sửa.</p>
+        <div class="field-meta" id="fieldMeta" hidden><span>Vị trí trong trang</span><code id="fieldKey"></code></div>
+        <div class="editor-actions">
+          <button type="button" id="saveButton" class="save" disabled>Lưu nội dung</button>
+          <button type="button" id="cancelButton" class="cancel" disabled>Hủy sửa</button>
+        </div>
+        <div class="editor-note">Sau khi lưu, hãy mở trang công khai và tải lại để kiểm tra nội dung. Những chữ chưa có dấu chọn sửa vẫn nằm trong mã HTML.</div>
+      </aside>
+    </div>
+  </main>
+  <script src="data/config.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
