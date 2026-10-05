@@ -810,7 +810,7 @@ function initGoldShader(){
 // --- CMS SYSTEM ---
 async function loadCMSData() {
   const sheetId = '13syUfCyNPcvKcQI8xi5or_Uq-CbYoCbzfuiuPOwYs1o';
-  const url = https://docs.google.com/spreadsheets/d/ + sheetId + /gviz/tq?tqx=out:csv&sheet=Web_Content;
+  const url = 'https://docs.google.com/spreadsheets/d/' + sheetId + '/gviz/tq?tqx=out:csv&sheet=Web_Content';
   try {
     const res = await fetch(url);
     if (!res.ok) return;
@@ -845,3 +845,4 @@ async function loadCMSData() {
     console.error('CMS Error', e);
   }
 }
+
