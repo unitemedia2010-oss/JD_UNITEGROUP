@@ -179,8 +179,86 @@ function initAutoNearestOffice(){
   }
 }
 
+function renderTraining(data){
+  const sections=document.querySelectorAll('.training-section');
+  if(!sections.length) return;
+  const defaultData={
+    weekTitle: "Tháng 10 / Tuần 2",
+    items: [
+      { day: "Thứ 3", date: "10/10", title: "Kỹ năng Telesale & Xử lý từ chối", time: "Phòng Đào tạo • 09:00 - 11:30", tag: "Bắt buộc cho Newbie" },
+      { day: "Thứ 5", date: "12/10", title: "Phân tích thị trường & Thẩm định giá", time: "Leader Hội đồng • 14:00 - 16:30", tag: "Mở rộng" }
+    ]
+  };
+  const tData = (data && data.weekTitle && data.items && data.items.length) ? data : defaultData;
+  const getTagClass = (tag) => {
+    const t = (tag || '').toLowerCase();
+    if(t.includes('bắt buộc') || t.includes('newbie')) return 'required';
+    if(t.includes('mở rộng') || t.includes('tùy chọn')) return 'optional';
+    return '';
+  };
+  sections.forEach(section => {
+    const board = section.querySelector('.training-board');
+    if(!board) return;
+    board.innerHTML = `
+      <div class="training-header">
+        <h3>${escapeHtml(tData.weekTitle)}</h3>
+        <span class="status-pill">HR Cập nhật</span>
+      </div>
+      <div class="training-list">
+        ${tData.items.map(item => `
+          <div class="training-item">
+            <div class="t-date">
+              <strong>${escapeHtml(item.day || '')}</strong>
+              <span>${escapeHtml(item.date || '')}</span>
+            </div>
+            <div class="t-info">
+              <h4>${escapeHtml(item.title || '')}</h4>
+              <p>${escapeHtml(item.time || '')}</p>
+            </div>
+            ${item.tag ? `<div class="t-tag ${getTagClass(item.tag)}">${escapeHtml(item.tag)}</div>` : ''}
+          </div>
+        `).join('')}
+      </div>
+    `;
+  });
+}
+
 function renderGallery(items){const gallery=$('#cultureGallery'); if(!gallery) return; const data=(items&&items.length?items:window.UNITE_CONFIG?.LOCAL_GALLERY||[]).filter(Boolean); gallery.innerHTML=data.map((item,idx)=>`<article><div class="gallery-photo" style="${item.image?`background-image:url('${escapeHtml(item.image)}')`:''}"></div><div class="gallery-body"><h3>${escapeHtml(item.title||`Hình ảnh ${idx+1}`)}</h3><p>${escapeHtml(item.caption||'Khoảnh khắc văn hóa Unite Group.')}</p></div></article>`).join('')}
+async function loadTrainingDataFromCSV() {
+  const sheetId = '13syUfCyNPcvKcQI8xi5or_Uq-CbYoCbzfuiuPOwYs1o';
+  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=Training`;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Cannot fetch CSV');
+    const text = await res.text();
+    const rows = text.split('\n').map(r => r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(s => s.replace(/^"|"$/g, '').replace(/\\"/g, '"').trim()));
+    if (rows.length < 3) throw new Error('Not enough rows');
+    const weekTitle = rows[0][1] || 'Lịch Training';
+    const items = [];
+    for (let i = 2; i < rows.length; i++) {
+      if (rows[i][0]) {
+        items.push({
+          day: rows[i][0],
+          date: rows[i][1],
+          title: rows[i][2],
+          time: rows[i][3],
+          tag: rows[i][4]
+        });
+      }
+    }
+    if (items.length) {
+      renderTraining({ weekTitle, items });
+      return;
+    }
+    throw new Error('No items parsed');
+  } catch (err) {
+    console.warn('Failed to load training CSV', err);
+    renderTraining(null);
+  }
+}
+
 async function loadSheetData(){
+  loadTrainingDataFromCSV();
   if(window.UNITE_CONFIG?.PREFER_LOCAL_GALLERY){
     renderGallery();
     return;
