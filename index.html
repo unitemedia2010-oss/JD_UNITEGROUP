@@ -147,9 +147,10 @@
           <button type="button" data-cms="text_053">Tôi sẵn sàng học hỏi và trải nghiệm từ thực tế</button>
         </div>
         <div class="quiz-result" id="quizResult">
-          <b>Chọn ít nhất 3 mục để xem mức độ phù hợp.</b>
-          <span>Tại Unite Group, ứng viên sẽ được đào tạo bài bản từ nền tảng, từng bước làm quen với công việc và phát triển kỹ năng thực tế.</span>
+          <b data-cms="quiz_low_title">Chọn ít nhất 3 mục để xem mức độ phù hợp.</b>
+          <span data-cms="quiz_low_desc">Tại Unite Group, ứng viên sẽ được đào tạo bài bản từ nền tảng, từng bước làm quen với công việc và phát triển kỹ năng thực tế.</span>
         </div>
+        <div hidden aria-hidden="true"><span data-cms="quiz_mid_title">Bạn khá phù hợp.</span><span data-cms="quiz_mid_desc">Tại Unite Group, ứng viên sẽ được đào tạo bài bản từ nền tảng, từng bước làm quen với công việc và phát triển kỹ năng thực tế.</span><span data-cms="quiz_high_title">Bạn rất phù hợp với vị trí này.</span><span data-cms="quiz_high_desc">Bạn có nhiều điểm phù hợp với môi trường tư vấn tại Unite Group: thích giao tiếp, có tinh thần chủ động, mong muốn tăng thu nhập và sẵn sàng học hỏi từ thực tế.</span></div>
       </div>
     </section>
 
@@ -227,7 +228,7 @@
         <p data-cms="training_desc">Tham gia các buổi đào tạo thực chiến để nâng cao kỹ năng chốt sale và phát triển bản thân.</p>
       </div>
       <div class="training-board glass">
-        <p class="training-empty">Đang tải lịch Training…</p>
+        <div class="training-header"><h3 data-cms="training_empty_title">Lịch Training</h3></div><p class="training-empty" data-cms="training_empty_desc">HR chưa cập nhật lịch Training. Vui lòng quay lại sau.</p>
       </div>
     </section>
 
@@ -246,7 +247,7 @@
         </aside>
         <div class="map-main">
           <div id="uniteMap" class="leaflet-map" aria-label="Bản đồ chi nhánh Unite Group"></div>
-          <div class="selected-branch" id="selectedBranch"><span>Đang chọn</span><strong>Toàn bộ chi nhánh</strong><small>Bấm vào marker hoặc card bên trái để xem chi tiết.</small></div>
+          <div class="selected-branch" id="selectedBranch"><span data-cms="map_selected_status">Đang chọn</span><strong data-cms="map_selected_all">Toàn bộ chi nhánh</strong><small data-cms="map_selected_hint">Bấm vào marker hoặc card bên trái để xem chi tiết.</small></div>
         </div>
       </div>
     </section>
@@ -288,7 +289,7 @@
             </label>
           </div>
           <button class="btn primary full" type="submit" data-cms="text_110">Gửi hồ sơ ứng tuyển</button>
-          <p class="form-note" id="formNote">Thông tin của bạn sẽ được gửi đến Bộ phận tuyển dụng Unite Group.</p>
+          <p class="form-note" id="formNote" data-cms="form_note_initial">Thông tin của bạn sẽ được gửi đến Bộ phận tuyển dụng Unite Group.</p>
         </form>
       </div>
     </section>
@@ -310,7 +311,7 @@
   <script src="data/config.js"></script>
   <script src="data/branches.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-  <script src="js/app.js?v=16"></script>
+  <script src="js/app.js?v=17"></script>
 
 </body>
 </html>

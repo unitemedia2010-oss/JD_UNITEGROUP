@@ -1,5 +1,6 @@
 const $=(s,r=document)=>r.querySelector(s); const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
-const APP_STATE={themePref:localStorage.getItem('uniteThemePref')||(window.UNITE_CONFIG?.THEME_MODE||'system'),map:null,markers:new Map(),userLayer:null,branches:[],baseLayers:{light:null,dark:null}};
+const APP_STATE={themePref:localStorage.getItem('uniteThemePref')||(window.UNITE_CONFIG?.THEME_MODE||'system'),map:null,markers:new Map(),userLayer:null,branches:[],baseLayers:{light:null,dark:null},cms:{}};
+function cmsText(key,fallback){return APP_STATE.cms[key]||fallback;}
 function formatVND(v){return new Intl.NumberFormat('vi-VN',{style:'currency',currency:'VND',maximumFractionDigits:0}).format(v)}
 function escapeHtml(v){return String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;')}
 function parseCsvRows(text){
@@ -117,11 +118,11 @@ function initQuiz(){
     btn.classList.toggle('active');
     const score=buttons.filter(b=>b.classList.contains('active')).length;
     if(score>=4){
-      result.innerHTML=`<b>Bạn rất phù hợp với vị trí này.</b><span>Bạn có nhiều điểm phù hợp với môi trường tư vấn tại Unite Group: thích giao tiếp, có tinh thần chủ động, mong muốn tăng thu nhập và sẵn sàng học hỏi từ thực tế.</span>`;
+      result.innerHTML=`<b>${escapeHtml(cmsText('quiz_high_title','Bạn rất phù hợp với vị trí này.'))}</b><span>${escapeHtml(cmsText('quiz_high_desc','Bạn có nhiều điểm phù hợp với môi trường tư vấn tại Unite Group: thích giao tiếp, có tinh thần chủ động, mong muốn tăng thu nhập và sẵn sàng học hỏi từ thực tế.'))}</span>`;
     }else if(score===3){
-      result.innerHTML=`<b>Bạn khá phù hợp.</b><span>Tại Unite Group, ứng viên sẽ được đào tạo bài bản từ nền tảng, từng bước làm quen với công việc và phát triển kỹ năng thực tế.</span>`;
+      result.innerHTML=`<b>${escapeHtml(cmsText('quiz_mid_title','Bạn khá phù hợp.'))}</b><span>${escapeHtml(cmsText('quiz_mid_desc','Tại Unite Group, ứng viên sẽ được đào tạo bài bản từ nền tảng, từng bước làm quen với công việc và phát triển kỹ năng thực tế.'))}</span>`;
     }else{
-      result.innerHTML=`<b>Chọn ít nhất 3 mục để xem mức độ phù hợp.</b><span>Tại Unite Group, ứng viên sẽ được đào tạo bài bản từ nền tảng, từng bước làm quen với công việc và phát triển kỹ năng thực tế. Chúng tôi đánh giá cao tinh thần chủ động, thái độ cầu tiến và sự sẵn sàng học hỏi trong quá trình đồng hành cùng đội ngũ.</span>`;
+      result.innerHTML=`<b>${escapeHtml(cmsText('quiz_low_title','Chọn ít nhất 3 mục để xem mức độ phù hợp.'))}</b><span>${escapeHtml(cmsText('quiz_low_desc','Tại Unite Group, ứng viên sẽ được đào tạo bài bản từ nền tảng, từng bước làm quen với công việc và phát triển kỹ năng thực tế.'))}</span>`;
     }
   }))
 }
@@ -160,11 +161,11 @@ function updateSelectedBranch(branch, distance=null){
 
   if(branch){
     const addressText = branch.address ? escapeHtml(branch.address) : 'Đang cập nhật địa chỉ';
-    box.innerHTML=`<span>${distance!=null?`Gần bạn khoảng ${distance.toFixed(1)} km`:'Đang chọn'}</span>
+    box.innerHTML=`<span>${distance!=null?`Gần bạn khoảng ${distance.toFixed(1)} km`:escapeHtml(cmsText('map_selected_status','Đang chọn'))}</span>
       <strong>${escapeHtml(branch.name)}</strong>
       <small>${addressText}</small>`;
   } else {
-    box.innerHTML=`<span>Đang chọn</span><strong>Toàn bộ chi nhánh</strong><small>Bấm vào marker hoặc card bên trái để xem chi tiết.</small>`;
+    box.innerHTML=`<span data-cms="map_selected_status">${escapeHtml(cmsText('map_selected_status','Đang chọn'))}</span><strong data-cms="map_selected_all">${escapeHtml(cmsText('map_selected_all','Toàn bộ chi nhánh'))}</strong><small data-cms="map_selected_hint">${escapeHtml(cmsText('map_selected_hint','Bấm vào marker hoặc card bên trái để xem chi tiết.'))}</small>`;
   }
 
   $$('.branch-card').forEach(card=>card.classList.toggle('active', card.dataset.branchId===branch?.id));
@@ -237,7 +238,7 @@ function renderTraining(data){
   const sections=document.querySelectorAll('.training-section');
   if(!sections.length) return;
   if(!data?.items?.length){
-    sections.forEach(section=>{const board=section.querySelector('.training-board');if(board) board.innerHTML='<div class="training-header"><h3>Lịch Training</h3></div><p class="training-empty">HR chưa cập nhật lịch Training. Vui lòng quay lại sau.</p>';});
+    sections.forEach(section=>{const board=section.querySelector('.training-board');if(board) board.innerHTML='<div class="training-header"><h3 data-cms="training_empty_title">'+escapeHtml(cmsText('training_empty_title','Lịch Training'))+'</h3></div><p class="training-empty" data-cms="training_empty_desc">'+escapeHtml(cmsText('training_empty_desc','HR chưa cập nhật lịch Training. Vui lòng quay lại sau.'))+'</p>';});
     return;
   }
   const tData=data;
@@ -914,6 +915,7 @@ async function loadCMSData() {
     
     const currentPage = document.body.className.includes('tpa-page') ? 'tpa' : 
                         document.body.className.includes('house-page') ? 'nha-nguyen-can' : 'index';
+    APP_STATE.cms = {...cms.global, ...cms[currentPage]};
                         
     document.querySelectorAll('[data-cms]').forEach(el => {
       const key = el.getAttribute('data-cms');

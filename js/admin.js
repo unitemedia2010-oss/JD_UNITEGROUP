@@ -114,7 +114,7 @@
     if(editMode==='text'){
       const value=restore?original:active.textContent;
       active.replaceWith(previewDoc.createTextNode(textSpacing[0]+value+textSpacing[1]));
-    }else if(editMode==='option'||editMode==='placeholder'){
+    }else if(editMode==='option'||editMode==='placeholder'||editMode==='hidden'){
       if(restore){
         if(editMode==='placeholder') activeHost.placeholder=original;
         else activeHost.textContent=original;
@@ -149,9 +149,9 @@
       node.replaceWith(active);
       active.setAttribute('contenteditable','true');
       editMode='text';
-    }else if(el.tagName==='OPTION'||el.dataset.cmsTarget==='placeholder'){
+    }else if(el.tagName==='OPTION'||el.dataset.cmsTarget==='placeholder'||el.closest('[hidden]')){
       active=el;original=el.dataset.cmsTarget==='placeholder'?el.placeholder:el.textContent;
-      editMode=el.dataset.cmsTarget==='placeholder'?'placeholder':'option';
+      editMode=el.dataset.cmsTarget==='placeholder'?'placeholder':el.tagName==='OPTION'?'option':'hidden';
       editorText.hidden=false;
       editorText.value=original;
     }else{
@@ -160,13 +160,13 @@
     }
     el.classList.add('admin-editing');
     document.getElementById('fieldTitle').textContent='Đang sửa trên trang';
-    document.getElementById('fieldHelp').textContent=editMode==='option'||editMode==='placeholder'
+    document.getElementById('fieldHelp').textContent=['option','placeholder','hidden'].includes(editMode)
       ?'Sửa nội dung trong ô bên dưới rồi bấm “Lưu nội dung”.'
       :'Gõ trực tiếp vào chữ đang được tô viền. Bấm “Lưu nội dung” khi xong.';
     document.getElementById('fieldKey').textContent=el.dataset.cms;
     document.getElementById('fieldMeta').hidden=false;
     saveButton.disabled=false;cancelButton.disabled=false;
-    if(editMode==='option'||editMode==='placeholder') editorText.focus(); else active.focus();
+    if(['option','placeholder','hidden'].includes(editMode)) editorText.focus(); else active.focus();
     setStatus('Đang sửa '+el.dataset.cms+'.');
   }
   function setupPreview(){
@@ -186,7 +186,6 @@
       '.admin-text-fragment{outline:2px solid #357a3e!important;min-width:1ch;display:inline!important}'
     ].join('\n');
     doc.head.appendChild(style);
-    doc.querySelectorAll('.training-board').forEach(board=>{board.innerHTML='<p class="training-empty">Lịch Training được xem trên trang công khai.</p>';});
     const logoUrls={
       index:window.UNITE_CONFIG?.LOGO_URL,
       'nha-nguyen-can':'https://techbytruong.wordpress.com/wp-content/uploads/2026/06/ucr.png',
@@ -219,7 +218,7 @@
   async function save(){
     if(!activeHost||!endpoint) return;
     const key=activeHost.dataset.cms;
-    const value=editMode==='option'||editMode==='placeholder'?editorText.value.trim():
+    const value=['option','placeholder','hidden'].includes(editMode)?editorText.value.trim():
       editMode==='text'?active.textContent.trim():cleanHtml(active.innerHTML).trim();
     if(!value){setStatus('Nội dung không được để trống.','error');return;}
     if(value===(editMode==='html'?cleanHtml(original).trim():original.trim())){leaveEdit(false);setStatus('Nội dung chưa thay đổi.');return;}
@@ -245,6 +244,7 @@
       }
       if(editMode==='option') activeHost.textContent=value;
       else if(editMode==='placeholder') activeHost.placeholder=value;
+      else if(editMode==='hidden') activeHost.textContent=value;
       else if(editMode==='text') active.textContent=value;
       else active.innerHTML=value;
       leaveEdit(false);

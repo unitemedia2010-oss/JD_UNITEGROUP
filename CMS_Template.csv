@@ -456,3 +456,33 @@ tpa,text_116,Nguyễn Văn A,apply-section · input · Nguyễn Văn A
 tpa,text_117,09xx xxx xxx,apply-section · input · 09xx xxx xxx
 tpa,text_118,2003,apply-section · input · 2003
 tpa,text_119,https://facebook.com/...,apply-section · input · https://facebook.com/...
+index,quiz_low_title,Chọn ít nhất 3 mục để xem mức độ phù hợp.,Nội dung giao diện · quiz_low_title
+index,quiz_low_desc,"Tại Unite Group, ứng viên sẽ được đào tạo bài bản từ nền tảng, từng bước làm quen với công việc và phát triển kỹ năng thực tế.",Nội dung giao diện · quiz_low_desc
+index,quiz_mid_title,Bạn khá phù hợp.,Nội dung giao diện · quiz_mid_title
+index,quiz_mid_desc,"Tại Unite Group, ứng viên sẽ được đào tạo bài bản từ nền tảng, từng bước làm quen với công việc và phát triển kỹ năng thực tế.",Nội dung giao diện · quiz_mid_desc
+index,quiz_high_title,Bạn rất phù hợp với vị trí này.,Nội dung giao diện · quiz_high_title
+index,quiz_high_desc,"Bạn có nhiều điểm phù hợp với môi trường tư vấn tại Unite Group: thích giao tiếp, có tinh thần chủ động, mong muốn tăng thu nhập và sẵn sàng học hỏi từ thực tế.",Nội dung giao diện · quiz_high_desc
+index,training_empty_title,Lịch Training,Nội dung giao diện · training_empty_title
+index,training_empty_desc,HR chưa cập nhật lịch Training. Vui lòng quay lại sau.,Nội dung giao diện · training_empty_desc
+index,map_selected_status,Đang chọn,Nội dung giao diện · map_selected_status
+index,map_selected_all,Toàn bộ chi nhánh,Nội dung giao diện · map_selected_all
+index,map_selected_hint,Bấm vào marker hoặc card bên trái để xem chi tiết.,Nội dung giao diện · map_selected_hint
+index,form_note_initial,Thông tin của bạn sẽ được gửi đến Bộ phận tuyển dụng Unite Group.,Nội dung giao diện · form_note_initial
+nha-nguyen-can,quiz_low_title,Chọn ít nhất 3 mục để xem mức độ phù hợp.,Nội dung giao diện · quiz_low_title
+nha-nguyen-can,quiz_low_desc,"Người mới được hướng dẫn từ kiến thức sản phẩm, khảo sát nhà đến cách tư vấn và hỗ trợ khách hàng.",Nội dung giao diện · quiz_low_desc
+nha-nguyen-can,quiz_mid_title,Bạn khá phù hợp.,Nội dung giao diện · quiz_mid_title
+nha-nguyen-can,quiz_mid_desc,"Tại Unite Group, ứng viên sẽ được đào tạo bài bản từ nền tảng, từng bước làm quen với công việc và phát triển kỹ năng thực tế.",Nội dung giao diện · quiz_mid_desc
+nha-nguyen-can,quiz_high_title,Bạn rất phù hợp với vị trí này.,Nội dung giao diện · quiz_high_title
+nha-nguyen-can,quiz_high_desc,"Bạn có nhiều điểm phù hợp với môi trường tư vấn tại Unite Group: thích giao tiếp, có tinh thần chủ động, mong muốn tăng thu nhập và sẵn sàng học hỏi từ thực tế.",Nội dung giao diện · quiz_high_desc
+nha-nguyen-can,training_empty_title,Lịch Training,Nội dung giao diện · training_empty_title
+nha-nguyen-can,training_empty_desc,HR chưa cập nhật lịch Training. Vui lòng quay lại sau.,Nội dung giao diện · training_empty_desc
+nha-nguyen-can,form_note_initial,Thông tin của bạn sẽ được gửi đến Bộ phận tuyển dụng Unite Group.,Nội dung giao diện · form_note_initial
+tpa,quiz_low_title,Chọn ít nhất 3 mục để xem mức độ phù hợp.,Nội dung giao diện · quiz_low_title
+tpa,quiz_low_desc,"Người mới được hướng dẫn từ kiến thức sản phẩm, khảo sát nhà đến cách tư vấn và hỗ trợ khách hàng.",Nội dung giao diện · quiz_low_desc
+tpa,quiz_mid_title,Bạn khá phù hợp.,Nội dung giao diện · quiz_mid_title
+tpa,quiz_mid_desc,"Tại Unite Group, ứng viên sẽ được đào tạo bài bản từ nền tảng, từng bước làm quen với công việc và phát triển kỹ năng thực tế.",Nội dung giao diện · quiz_mid_desc
+tpa,quiz_high_title,Bạn rất phù hợp với vị trí này.,Nội dung giao diện · quiz_high_title
+tpa,quiz_high_desc,"Bạn có nhiều điểm phù hợp với môi trường tư vấn tại Unite Group: thích giao tiếp, có tinh thần chủ động, mong muốn tăng thu nhập và sẵn sàng học hỏi từ thực tế.",Nội dung giao diện · quiz_high_desc
+tpa,training_empty_title,Lịch Training,Nội dung giao diện · training_empty_title
+tpa,training_empty_desc,HR chưa cập nhật lịch Training. Vui lòng quay lại sau.,Nội dung giao diện · training_empty_desc
+tpa,form_note_initial,Thông tin của bạn sẽ được gửi đến Bộ phận tuyển dụng Unite Group.,Nội dung giao diện · form_note_initial
