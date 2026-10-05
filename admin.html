@@ -28,9 +28,9 @@
     <section id="trainingPanel" class="training-panel" hidden>
       <div class="training-panel-head"><div><p class="eyebrow">LỊCH TRAINING HÀNG TUẦN</p><h2>Nhập lịch theo ngày, Sáng và Chiều</h2><p>Thêm ngày mới sẽ tạo hai buổi. Lịch tự sắp theo ngày khi lưu và hiển thị trên cả ba trang tuyển dụng.</p></div><button type="button" id="reloadTraining" class="cancel">Tải lại lịch</button></div>
       <label class="week-title-label">Tiêu đề tuần<input id="trainingWeekTitle" type="text" maxlength="120" placeholder="Ví dụ: Lịch Training tuần 05–11/10"></label>
-      <div class="training-actions"><label>Ngày cần thêm<input id="trainingNewDate" type="date"></label><button type="button" id="addTrainingDay" class="save">+ Thêm ngày (Sáng và Chiều)</button></div>
+      <div class="training-actions cal-nav"><button type="button" id="trainingPrevWeek" class="cancel">‹ Tuần trước</button><button type="button" id="trainingToday" class="cancel">Hôm nay</button><strong id="trainingWeekLabel"></strong><button type="button" id="trainingNextWeek" class="cancel">Tuần sau ›</button></div>
       <p id="trainingStatus" class="status" role="status" aria-live="polite"></p>
-      <div id="trainingRows" class="training-rows"></div>
+      <div id="trainingCalendar" class="training-calendar"></div>
       <div class="training-save-bar"><span>Kiểm tra chủ đề và thời gian trước khi lưu. Các buổi xóa sẽ biến mất khỏi lịch công khai sau khi lưu.</span><button type="button" id="saveTraining" class="save">Lưu lịch Training</button></div>
     </section>
     <div id="contentPanel">
@@ -83,6 +83,6 @@
   <script src="data/config.js"></script>
   <script src="js/blocks.js?v=1"></script>
   <script src="js/admin.js?v=4"></script>
-  <script src="js/admin-training.js?v=1"></script>
+  <script src="js/admin-training.js?v=2"></script>
 </body>
 </html>

@@ -4,31 +4,34 @@
   const panel=document.getElementById('trainingPanel');
   const content=document.getElementById('contentPanel');
   const status=document.getElementById('trainingStatus');
-  const rowsHost=document.getElementById('trainingRows');
+  const calHost=document.getElementById('trainingCalendar');
   const titleInput=document.getElementById('trainingWeekTitle');
-  const dateInput=document.getElementById('trainingNewDate');
   const saveButton=document.getElementById('saveTraining');
   const password=document.getElementById('adminPassword');
+  const weekLabel=document.getElementById('trainingWeekLabel');
   const sheetId='13syUfCyNPcvKcQI8xi5or_Uq-CbYoCbzfuiuPOwYs1o';
   const sessions=['Sáng','Chiều'];
   const tags=['','Bắt buộc cho Newbie','Bắt buộc','Mở rộng','Tùy chọn'];
-  let rows=[],revision='',loaded=false,dirty=false,sequence=0;
+  let rows=[],revision='',loaded=false,dirty=false,sequence=0,weekStart=null,editor=null;
 
   function message(value,type=''){
     status.textContent=value;
     status.className='status'+(type?' '+type:'');
   }
+  function pad(n){return String(n).padStart(2,'0');}
   function dateParts(value){
     const match=/^(\d{4})-(\d{2})-(\d{2})$/.exec(value||'');
     if(!match) return null;
     const date=new Date(Number(match[1]),Number(match[2])-1,Number(match[3]),12);
     return date.getFullYear()===Number(match[1])&&date.getMonth()===Number(match[2])-1&&date.getDate()===Number(match[3])?date:null;
   }
+  function iso(date){return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}`;}
+  function mondayOf(date){const d=new Date(date.getFullYear(),date.getMonth(),date.getDate(),12);const shift=(d.getDay()+6)%7;d.setDate(d.getDate()-shift);return d;}
   function displayDay(value){
     const date=dateParts(value);
     if(!date) return 'Chọn ngày';
     const names=['Chủ Nhật','Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7'];
-    return `${names[date.getDay()]} · ${String(date.getDate()).padStart(2,'0')}/${String(date.getMonth()+1).padStart(2,'0')}/${date.getFullYear()}`;
+    return `${names[date.getDay()]} · ${pad(date.getDate())}/${pad(date.getMonth()+1)}/${date.getFullYear()}`;
   }
   function sortRows(){
     rows.sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999')||
@@ -49,25 +52,25 @@
     });
   }
   function parseCsv(text){
-    const rows=[];let row=[],cell='',quoted=false;
+    const out=[];let row=[],cell='',quoted=false;
     for(let i=0;i<text.length;i++){
       const c=text[i];
       if(quoted){if(c==='"'&&text[i+1]==='"'){cell+='"';i++;}else if(c==='"')quoted=false;else cell+=c;}
       else if(c==='"')quoted=true;
       else if(c===','){row.push(cell);cell='';}
-      else if(c==='\r'||c==='\n'){if(c==='\r'&&text[i+1]==='\n')i++;row.push(cell);rows.push(row);row=[];cell='';}
+      else if(c==='\r'||c==='\n'){if(c==='\r'&&text[i+1]==='\n')i++;row.push(cell);out.push(row);row=[];cell='';}
       else cell+=c;
     }
-    if(cell||row.length){row.push(cell);rows.push(row);}
-    return rows;
+    if(cell||row.length){row.push(cell);out.push(row);}
+    return out;
   }
   function csvDate(value){
     const text=String(value||'').trim();
     if(dateParts(text))return text;
     const match=/^(\d{1,2})\/(\d{1,2})(?:\/(\d{4}))?$/.exec(text);
     if(!match)return '';
-    const iso=`${match[3]||new Date().getFullYear()}-${String(match[2]).padStart(2,'0')}-${String(match[1]).padStart(2,'0')}`;
-    return dateParts(iso)?iso:'';
+    const candidate=`${match[3]||new Date().getFullYear()}-${pad(match[2])}-${pad(match[1])}`;
+    return dateParts(candidate)?candidate:'';
   }
   async function fallbackCsv(){
     const url=`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=Training&_=${Date.now()}`;
@@ -80,40 +83,81 @@
         title:row[2]||'',time:row[3]||'',tag:row[4]||''
       }))};
   }
-  function labelInput(label,value,kind,onInput,options){
-    const wrapper=document.createElement('label');wrapper.textContent=label;
-    const input=document.createElement(kind==='select'?'select':'input');
-    if(kind!=='select')input.type=kind;
-    if(kind==='select'){
-      options.forEach(option=>{const el=document.createElement('option');el.value=option;el.textContent=option||'Không phân loại';input.appendChild(el);});
-      if(value&&!options.includes(value)){const el=document.createElement('option');el.value=value;el.textContent=value;input.appendChild(el);}
-    }
-    input.value=value||'';
-    if(kind==='text')input.maxLength=250;
-    input.addEventListener(kind==='date'||kind==='select'?'change':'input',()=>onInput(input.value));
-    wrapper.appendChild(input);return wrapper;
+  function closeEditor(){
+    if(editor){editor.remove();editor=null;}
+  }
+  function openEditor(anchor,row){
+    closeEditor();
+    const box=document.createElement('div');box.className='cal-editor';
+    const head=document.createElement('div');head.className='cal-editor-head';
+    const title=document.createElement('strong');title.textContent=`${displayDay(row.date)} · ${row.session}`;
+    const close=document.createElement('button');close.type='button';close.textContent='×';close.className='cal-editor-close';
+    close.addEventListener('click',closeEditor);
+    head.append(title,close);box.appendChild(head);
+    const titleInput2=document.createElement('input');titleInput2.type='text';titleInput2.maxLength=250;titleInput2.placeholder='Chủ đề buổi Training';titleInput2.value=row.title||'';box.appendChild(titleInput2);
+    const timeInput=document.createElement('input');timeInput.type='text';timeInput.maxLength=250;timeInput.placeholder='Thời gian & địa điểm (vd: 09:00 · Phòng họp A)';timeInput.value=row.time||'';box.appendChild(timeInput);
+    const tagSelect=document.createElement('select');
+    tags.forEach(tag=>{const opt=document.createElement('option');opt.value=tag;opt.textContent=tag||'Không phân loại';tagSelect.appendChild(opt);});
+    if(row.tag&&!tags.includes(row.tag)){const opt=document.createElement('option');opt.value=row.tag;opt.textContent=row.tag;tagSelect.appendChild(opt);}
+    tagSelect.value=row.tag||'';box.appendChild(tagSelect);
+    const actions=document.createElement('div');actions.className='cal-editor-actions';
+    const save=document.createElement('button');save.type='button';save.className='save';save.textContent='Xong';
+    save.addEventListener('click',()=>{
+      row.title=titleInput2.value.trim();row.time=timeInput.value.trim();row.tag=tagSelect.value;
+      dirty=true;closeEditor();render();
+      message('Đã cập nhật bản nháp. Bấm "Lưu lịch Training" để áp dụng.');
+    });
+    const remove=document.createElement('button');remove.type='button';remove.className='cancel cal-editor-delete';remove.textContent='Xóa buổi';
+    remove.addEventListener('click',()=>{
+      rows=rows.filter(item=>item.id!==row.id);dirty=true;closeEditor();render();
+      message('Đã xóa khỏi bản nháp. Bấm "Lưu lịch Training" để áp dụng.');
+    });
+    actions.append(remove,save);box.appendChild(actions);
+    anchor.appendChild(box);editor=box;
+    titleInput2.focus();
   }
   function render(){
-    sortRows();rowsHost.replaceChildren();
-    if(!rows.length){const empty=document.createElement('p');empty.className='training-empty-admin';empty.textContent='Chưa có buổi Training. Chọn ngày và bấm “Thêm ngày” để bắt đầu.';rowsHost.appendChild(empty);return;}
-    rows.forEach(row=>{
-      const card=document.createElement('article');card.className='training-row';
-      const head=document.createElement('div');head.className='training-row-head';
-      const heading=document.createElement('strong');heading.textContent=`${displayDay(row.date)} · ${row.session||'Chọn buổi'}`;
-      const remove=document.createElement('button');remove.type='button';remove.className='training-row-remove';remove.textContent='Xóa buổi';
-      remove.addEventListener('click',()=>{rows=rows.filter(item=>item.id!==row.id);dirty=true;render();message('Đã xóa khỏi bản nháp. Bấm “Lưu lịch Training” để áp dụng.');});
-      head.append(heading,remove);card.appendChild(head);
-      if(row.sourceDate&&!row.date){const warning=document.createElement('p');warning.className='training-row-warning';warning.textContent=`Ngày trong Sheet chưa hợp lệ: ${row.sourceDate}. Hãy chọn lại ngày.`;card.appendChild(warning);}
-      const grid=document.createElement('div');grid.className='training-row-grid';
-      grid.append(
-        labelInput('Ngày',row.date,'date',value=>{row.date=value;row.sourceDate='';dirty=true;render();}),
-        labelInput('Buổi',row.session,'select',value=>{row.session=value;dirty=true;heading.textContent=`${displayDay(row.date)} · ${row.session}`;},sessions),
-        labelInput('Chủ đề',row.title,'text',value=>{row.title=value;dirty=true;}),
-        labelInput('Thời gian & địa điểm',row.time,'text',value=>{row.time=value;dirty=true;}),
-        labelInput('Phân loại',row.tag,'select',value=>{row.tag=value;dirty=true;},tags)
-      );
-      card.appendChild(grid);rowsHost.appendChild(card);
-    });
+    closeEditor();
+    if(!weekStart){const dated=rows.map(row=>row.date).filter(Boolean).sort();weekStart=mondayOf(dated.length?dateParts(dated[0]):new Date());}
+    calHost.replaceChildren();
+    const weekEnd=new Date(weekStart);weekEnd.setDate(weekEnd.getDate()+6);
+    weekLabel.textContent=`${pad(weekStart.getDate())}/${pad(weekStart.getMonth()+1)} – ${pad(weekEnd.getDate())}/${pad(weekEnd.getMonth()+1)}/${weekEnd.getFullYear()}`;
+    const dayNames=['CN','T2','T3','T4','T5','T6','T7'];
+    const todayIso=iso(new Date());
+    const grid=document.createElement('div');grid.className='cal-grid';
+    for(let i=0;i<7;i++){
+      const day=new Date(weekStart);day.setDate(day.getDate()+i);
+      const col=document.createElement('div');col.className='cal-col';
+      const head=document.createElement('div');head.className='cal-day-head'+(iso(day)===todayIso?' is-today':'');
+      head.innerHTML=`<span>${dayNames[day.getDay()]}</span><b>${day.getDate()}</b>`;
+      col.appendChild(head);
+      sessions.forEach(session=>{
+        const slot=document.createElement('div');slot.className='cal-slot';
+        const row=rows.find(item=>item.date===iso(day)&&item.session===session);
+        const tag=document.createElement('span');tag.className='cal-slot-label';tag.textContent=session==='Sáng'?'Buổi sáng':'Buổi chiều';
+        slot.appendChild(tag);
+        if(row){
+          const ev=document.createElement('button');ev.type='button';ev.className='cal-event'+(row.tag==='Bắt buộc cho Newbie'||row.tag==='Bắt buộc'?' is-required':'');
+          ev.innerHTML=`<b>${row.title||'(Chưa có chủ đề)'}</b><span>${row.time||''}</span>${row.tag?`<em>${row.tag}</em>`:''}`;
+          ev.addEventListener('click',()=>openEditor(slot,row));
+          slot.appendChild(ev);
+          if(row.sourceDate&&!row.date){const warn=document.createElement('p');warn.className='cal-warn';warn.textContent=`Ngày lỗi: ${row.sourceDate}`;slot.appendChild(warn);}
+        }else{
+          const add=document.createElement('button');add.type='button';add.className='cal-add';add.textContent='+ Thêm buổi';
+          add.addEventListener('click',()=>{
+            const created={id:++sequence,date:iso(day),sourceDate:'',session,title:'',time:'',tag:''};
+            rows.push(created);dirty=true;render();
+            const colEl=calHost.querySelectorAll('.cal-col')[i];
+            const slots=colEl.querySelectorAll('.cal-slot');
+            openEditor(slots[sessions.indexOf(session)],created);
+          });
+          slot.appendChild(add);
+        }
+        col.appendChild(slot);
+      });
+      grid.appendChild(col);
+    }
+    calHost.appendChild(grid);
   }
   async function load(){
     if(dirty&&!window.confirm('Bỏ các thay đổi lịch chưa lưu và tải lại từ Sheet?'))return;
@@ -126,7 +170,10 @@
     }
     titleInput.value=data.weekTitle||'Lịch Training';
     rows=(data.rows||[]).map(row=>({...row,id:++sequence}));
-    revision=data.revision||'';loaded=true;dirty=false;render();
+    revision=data.revision||'';loaded=true;dirty=false;
+    const dated=rows.map(row=>row.date).filter(Boolean).sort();
+    weekStart=mondayOf(dated.length?dateParts(dated[0]):new Date());
+    render();
     saveButton.disabled=!revision;
     if(fromFallback)message('Đã đọc lịch từ Sheet. Chức năng lưu cần phiên bản Apps Script mới được triển khai.','error');
     else message(`Đã tải ${rows.length} buổi Training. ${rows.some(row=>!row.date)?'Có dòng cần chọn lại ngày.':''}`);
@@ -176,13 +223,9 @@
     if(training&&!loaded)load();
   }));
   document.getElementById('reloadTraining').addEventListener('click',load);
-  document.getElementById('addTrainingDay').addEventListener('click',()=>{
-    if(!dateParts(dateInput.value)){message('Chọn ngày bằng ô lịch trước khi thêm.','error');dateInput.focus();return;}
-    const date=dateInput.value;
-    const missing=sessions.filter(session=>!rows.some(row=>row.date===date&&row.session===session));
-    if(!missing.length){message('Ngày này đã có đủ buổi Sáng và Chiều.');return;}
-    missing.forEach(session=>rows.push({id:++sequence,date,sourceDate:'',session,title:'',time:'',tag:''}));
-    dirty=true;render();message(`Đã thêm ${missing.join(' và ')} ngày ${displayDay(date)}. Nhập chủ đề rồi lưu.`);
-  });
-  document.getElementById('saveTraining').addEventListener('click',save);
+  const shiftWeek=delta=>{if(!weekStart)weekStart=mondayOf(new Date());weekStart=new Date(weekStart.getFullYear(),weekStart.getMonth(),weekStart.getDate()+delta*7);render();};
+  document.getElementById('trainingPrevWeek').addEventListener('click',()=>shiftWeek(-1));
+  document.getElementById('trainingNextWeek').addEventListener('click',()=>shiftWeek(1));
+  document.getElementById('trainingToday').addEventListener('click',()=>{weekStart=mondayOf(new Date());render();});
+  saveButton.addEventListener('click',save);
 })();
