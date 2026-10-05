@@ -1,4 +1,4 @@
-const $=(s,r=document)=>r.querySelector(s); const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+﻿const $=(s,r=document)=>r.querySelector(s); const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const APP_STATE={themePref:localStorage.getItem('uniteThemePref')||(window.UNITE_CONFIG?.THEME_MODE||'system'),map:null,markers:new Map(),userLayer:null,branches:[],baseLayers:{light:null,dark:null}};
 function formatVND(v){return new Intl.NumberFormat('vi-VN',{style:'currency',currency:'VND',maximumFractionDigits:0}).format(v)}
 function escapeHtml(v){return String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;')}
@@ -532,7 +532,7 @@ function initFloatingDock(){
 }
 
 
-document.addEventListener('DOMContentLoaded',()=>{initTheme(); initBrand(); initScrollProgress(); initQuiz(); initIncome(); initBranches(); initAutoNearestOffice(); loadSheetData(); initFileUpload(); initApplyForm();});
+document.addEventListener('DOMContentLoaded',()=>{initTheme(); initBrand(); initScrollProgress(); initQuiz(); initIncome(); initBranches(); initAutoNearestOffice(); loadSheetData(); initFileUpload(); initApplyForm(); loadCMSData();});
 
 
 /* Candidate V14 - reliable floating dock trigger */
@@ -805,3 +805,43 @@ function initGoldShader(){
     startGoldShader();
   }
 })();
+
+
+// --- CMS SYSTEM ---
+async function loadCMSData() {
+  const sheetId = '13syUfCyNPcvKcQI8xi5or_Uq-CbYoCbzfuiuPOwYs1o';
+  const url = https://docs.google.com/spreadsheets/d/ + sheetId + /gviz/tq?tqx=out:csv&sheet=Web_Content;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return;
+    const text = await res.text();
+    const rows = text.split('\n').map(r => r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(s => s.replace(/^"|"$/g, '').replace(/\\"/g, '"').trim()));
+    
+    const cms = {};
+    for (let i = 1; i < rows.length; i++) {
+      const page = rows[i][0];
+      const key = rows[i][1];
+      const val = rows[i][2];
+      if (page && key && val) {
+        if (!cms[page]) cms[page] = {};
+        cms[page][key] = val.replace(/\\n/g, '<br>');
+      }
+    }
+    
+    const currentPage = document.body.className.includes('tpa-page') ? 'tpa' : 
+                        document.body.className.includes('house-page') ? 'nha-nguyen-can' : 'index';
+                        
+    document.querySelectorAll('[data-cms]').forEach(el => {
+      const key = el.getAttribute('data-cms');
+      let val = cms[currentPage]?.[key];
+      if (!val) val = cms['global']?.[key];
+      if (val) {
+        if (el.tagName === 'IMG') el.src = val;
+        else if (el.tagName === 'A' && el.hasAttribute('href')) el.href = val;
+        else el.innerHTML = val;
+      }
+    });
+  } catch(e) {
+    console.error('CMS Error', e);
+  }
+}
