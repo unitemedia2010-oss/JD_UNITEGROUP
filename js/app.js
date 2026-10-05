@@ -112,10 +112,13 @@ function initBrand(){
 }
 function initScrollProgress(){const bar=$('#scrollProgress'); window.addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-window.innerHeight; bar.style.width=`${max>0?(window.scrollY/max)*100:0}%`;},{passive:true})}
 function initQuiz(){
-  const buttons=$$('#quizOptions button');
+  const options=$('#quizOptions');
   const result=$('#quizResult');
-  buttons.forEach(btn=>btn.addEventListener('click',()=>{
+  options?.addEventListener('click',event=>{
+    const btn=event.target.closest('button');
+    if(!btn||!options.contains(btn)) return;
     btn.classList.toggle('active');
+    const buttons=$$('#quizOptions button');
     const score=buttons.filter(b=>b.classList.contains('active')).length;
     if(score>=4){
       result.innerHTML=`<b>${escapeHtml(cmsText('quiz_high_title','Bạn rất phù hợp với vị trí này.'))}</b><span>${escapeHtml(cmsText('quiz_high_desc','Bạn có nhiều điểm phù hợp với môi trường tư vấn tại Unite Group: thích giao tiếp, có tinh thần chủ động, mong muốn tăng thu nhập và sẵn sàng học hỏi từ thực tế.'))}</span>`;
@@ -124,7 +127,7 @@ function initQuiz(){
     }else{
       result.innerHTML=`<b>${escapeHtml(cmsText('quiz_low_title','Chọn ít nhất 3 mục để xem mức độ phù hợp.'))}</b><span>${escapeHtml(cmsText('quiz_low_desc','Tại Unite Group, ứng viên sẽ được đào tạo bài bản từ nền tảng, từng bước làm quen với công việc và phát triển kỹ năng thực tế.'))}</span>`;
     }
-  }))
+  });
 }
 function initIncome(){const deal=$('#dealRange'), avg=$('#avgRange'), dVal=$('#dealValue'), aVal=$('#avgValue'), out=$('#incomeOutput'); if(!deal||!avg) return; const update=()=>{const deals=Number(deal.value), av=Number(avg.value), rate=.5, bonus=deals>=10?2000000:deals>=5?1000000:0; dVal.textContent=deals; aVal.textContent=formatVND(av); out.textContent=formatVND(Math.round(deals*av*rate+bonus));}; deal.addEventListener('input',update); avg.addEventListener('input',update); update();}
 function pointFeatures(){return (window.UNITE_BRANCHES_GEOJSON?.features||[]).filter(f=>f.geometry?.type==='Point')}
@@ -326,8 +329,9 @@ async function loadTrainingDataFromCSV() {
     if (rows.length < 2) throw new Error('Training sheet has no header');
     const weekTitle = rows[0][1] || 'Lịch Training';
     const items = [];
-    for (let i = 2; i < rows.length; i++) {
-      if (/^\d{1,2}\/\d{1,2}(?:\/\d{4})?$/.test(rows[i][0]||'')) {
+    for (let i = 1; i < rows.length; i++) {
+      if (/^\d{1,2}\/\d{1,2}(?:\/\d{4})?$/.test(rows[i][0]||'') &&
+          /^(Sáng|Chiều)$/.test(rows[i][1]||'') && rows[i][2]) {
         items.push({
           date: rows[i][0],
           session: rows[i][1],
@@ -918,6 +922,7 @@ async function loadCMSData() {
     APP_STATE.cms = {...cms.global, ...cms[currentPage]};
                         
     document.querySelectorAll('[data-cms]').forEach(el => {
+      if (el.dataset.cmsBlocks) return;
       const key = el.getAttribute('data-cms');
       let val = cms[currentPage]?.[key];
       if (!val) val = cms['global']?.[key];
@@ -937,6 +942,7 @@ async function loadCMSData() {
         }
       }
     });
+    window.UNITE_BLOCKS?.applySaved(document, APP_STATE.cms);
   } catch(e) {
     console.error('CMS Error', e);
   }

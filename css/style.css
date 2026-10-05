@@ -3132,3 +3132,6 @@ body.tpa-page {
 .tpa-page .selected-branch span {
   color: var(--gold) !important;
 }
+
+/* Repeatable CMS content */
+.journey-track.cms-flexible{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))!important;align-items:stretch!important;padding-bottom:1rem!important}.journey-track.cms-flexible .journey-arrow{display:none}.journey-track.cms-flexible .journey-step{transform:none!important}.hero-facts:has(>div:nth-child(5)),.hero-metrics:has(>div:nth-child(4)){grid-template-columns:repeat(auto-fit,minmax(130px,1fr))!important}

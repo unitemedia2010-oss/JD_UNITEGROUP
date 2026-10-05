@@ -11,6 +11,10 @@
   const editorText=document.getElementById('editorText');
   const fieldSearch=document.getElementById('fieldSearch');
   const fieldList=document.getElementById('fieldList');
+  const blocks=window.UNITE_BLOCKS;
+  const blockEditor=document.getElementById('blockEditor');
+  const blockFields=document.getElementById('blockFields');
+  let blockEdit=null;
   let page='index',cms={},active=null,activeHost=null,editMode='',original='',textSpacing=null,previewDoc=null;
 
   function setStatus(message,type=''){
@@ -69,6 +73,7 @@
   }
   function applyCms(doc){
     doc.querySelectorAll('[data-cms]').forEach(el=>{
+      if(el.dataset.cmsBlocks) return;
       const key=el.getAttribute('data-cms');
       const value=cms[page]?.[key]??cms.global?.[key];
       if(!value) return;
@@ -89,6 +94,7 @@
     fieldList.replaceChildren();
     let count=0;
     previewDoc.querySelectorAll('[data-cms]').forEach(el=>{
+      if(el.dataset.cmsBlocks||el.closest('[data-cms-blocks]')) return;
       const label=(el.dataset.cmsTarget==='placeholder'?`Ví dụ nhập: ${el.placeholder}`:el.dataset.cmsTarget==='text'
         ?[...el.childNodes].filter(node=>node.nodeType===Node.TEXT_NODE).map(node=>node.textContent).join(' ')
         :el.textContent).trim().replace(/\s+/g,' ');
@@ -99,6 +105,8 @@
       button.textContent=label.length>76?label.slice(0,76)+'…':label;
       button.title=label;
       button.addEventListener('click',()=>{
+        const group=el.closest('[data-cms-blocks]');
+        if(group){selectBlock(group.dataset.cmsBlocks,Number(el.closest('[data-block-item]')?.dataset.blockItem||0));return;}
         if(activeHost&&activeHost!==el){setStatus('Hãy lưu hoặc hủy đoạn chữ đang sửa trước.','error');return;}
         el.closest('details')?.setAttribute('open','');
         (el.tagName==='OPTION'?el.closest('select'):el).scrollIntoView({behavior:'smooth',block:'center'});
@@ -133,6 +141,7 @@
     renderFieldList();
   }
   function selectField(el){
+    if(blockEdit){setStatus('Hãy lưu hoặc hủy nhóm mục đang sửa trước.','error');return;}
     if(activeHost&&activeHost!==el){setStatus('Hãy lưu hoặc hủy đoạn chữ đang sửa trước.','error');return;}
     if(activeHost===el) return;
     activeHost=el;
@@ -169,10 +178,117 @@
     if(['option','placeholder','hidden'].includes(editMode)) editorText.focus(); else active.focus();
     setStatus('Đang sửa '+el.dataset.cms+'.');
   }
+  function renderBlockGroups(){
+    const list=document.getElementById('blockGroups');
+    list.replaceChildren();
+    if(!previewDoc||!blocks) return;
+    blocks.definitions.forEach(def=>{
+      if(!blocks.container(previewDoc,def.key)) return;
+      const button=document.createElement('button');
+      button.type='button';
+      button.textContent=`${def.label} · ${blocks.extract(previewDoc,def.key).length} mục`;
+      button.addEventListener('click',()=>{
+        blocks.container(previewDoc,def.key).scrollIntoView({behavior:'smooth',block:'center'});
+        selectBlock(def.key,0);
+      });
+      list.appendChild(button);
+    });
+  }
+  function renderBlockDraft(){
+    if(!blockEdit) return;
+    blocks.render(previewDoc,blockEdit.key,blockEdit.items);
+    const root=blocks.container(previewDoc,blockEdit.key);
+    root.querySelector(`[data-block-item="${blockEdit.index}"]`)?.classList.add('admin-block-selected');
+    renderBlockGroups();
+  }
+  function blockForm(){
+    if(!blockEdit) return;
+    const def=blocks.byKey[blockEdit.key],row=blockEdit.items[blockEdit.index];
+    document.getElementById('blockTitle').textContent=row?`${def.label} · mục ${blockEdit.index+1}`:`${def.label} · chưa có mục`;
+    blockFields.replaceChildren();
+    if(row) def.fields.forEach(([name,label])=>{
+      const wrapper=document.createElement('label');
+      wrapper.textContent=label;
+      const input=['description','answer'].includes(name)?document.createElement('textarea'):document.createElement('input');
+      if(input.tagName==='INPUT') input.type='text';
+      input.value=row[name];
+      input.maxLength=name==='description'||name==='answer'?500:180;
+      input.addEventListener('input',()=>{
+        row[name]=input.value;
+        renderBlockDraft();
+      });
+      wrapper.appendChild(input);
+      blockFields.appendChild(wrapper);
+    });
+    document.getElementById('deleteBlockItem').disabled=!row;
+  }
+  function selectBlock(key,index){
+    if(!blocks?.container(previewDoc,key)) return;
+    if(activeHost){setStatus('Hãy lưu hoặc hủy đoạn chữ đang sửa trước.','error');return;}
+    if(blockEdit&&blockEdit.key!==key){setStatus('Hãy lưu hoặc hủy nhóm mục đang sửa trước.','error');return;}
+    if(!blockEdit){
+      const root=blocks.container(previewDoc,key);
+      const roleCount=previewDoc.querySelector('.role-summary-head > span');
+      blockEdit={key,items:blocks.extract(previewDoc,key),originalHtml:root.innerHTML,
+        originalClass:root.className,originalStyle:root.getAttribute('style'),
+        originalRoleCount:key==='roles'&&roleCount?roleCount.textContent:null,index};
+    }
+    blockEdit.index=Math.min(index,blockEdit.items.length-1);
+    blockEditor.hidden=false;
+    document.getElementById('fieldActions').hidden=true;
+    document.getElementById('fieldTitle').textContent='Thêm / xóa mục';
+    document.getElementById('fieldHelp').textContent='Sửa các ô bên dưới, thêm hoặc xóa mục, rồi lưu cả nhóm.';
+    document.getElementById('fieldMeta').hidden=true;
+    renderBlockDraft();blockForm();
+    setStatus('Đang sửa nhóm '+blocks.byKey[key].label+'.');
+  }
+  function cancelBlock(){
+    if(!blockEdit) return;
+    const root=blocks.container(previewDoc,blockEdit.key);
+    root.innerHTML=blockEdit.originalHtml;
+    root.className=blockEdit.originalClass;
+    if(blockEdit.originalStyle===null) root.removeAttribute('style');
+    else root.setAttribute('style',blockEdit.originalStyle);
+    if(blockEdit.originalRoleCount!==null){
+      const roleCount=previewDoc.querySelector('.role-summary-head > span');
+      if(roleCount) roleCount.textContent=blockEdit.originalRoleCount;
+    }
+    blocks.decorate(previewDoc,blockEdit.key);
+    blockEdit=null;blockEditor.hidden=true;
+    document.getElementById('fieldActions').hidden=false;
+    document.getElementById('fieldTitle').textContent='Chọn một đoạn chữ';
+    document.getElementById('fieldHelp').textContent='Bấm vào chữ có viền khi rê chuột ở bản xem trước. Con trỏ sẽ xuất hiện ngay trên chữ để bạn sửa.';
+    renderBlockGroups();renderFieldList();
+  }
+  async function saveBlock(){
+    if(!blockEdit||!endpoint) return;
+    if(!password.value){setStatus('Nhập mật khẩu quản trị trước khi lưu.','error');password.focus();return;}
+    const {key,items}=blockEdit;
+    if(items.length>20||items.some(row=>Object.values(row).some(value=>!String(value).trim()))){setStatus('Mỗi mục cần đủ nội dung; tối đa 20 mục mỗi nhóm.','error');return;}
+    const value=JSON.stringify(items);
+    if(value.length>4000){setStatus('Nhóm quá dài (tối đa 4.000 ký tự). Hãy rút ngắn nội dung.','error');return;}
+    const button=document.getElementById('saveBlock');button.disabled=true;
+    setStatus('Đang lưu nhóm mục…');
+    try{
+      await fetch(endpoint,{method:'POST',mode:'no-cors',cache:'no-store',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'cmsSave',page,key:blocks.contentKey(key),value,password:password.value})});
+      let verified=false;
+      for(let attempt=0;attempt<8;attempt++){
+        await new Promise(resolve=>setTimeout(resolve,850));
+        try{await readCms();}catch(_){continue;}
+        if(cms[page]?.[blocks.contentKey(key)]===value){verified=true;break;}
+      }
+      if(!verified){setStatus('Chưa xác nhận được nhóm đã lưu. Kiểm tra mật khẩu và thử tải lại.','error');return;}
+      blockEdit=null;blockEditor.hidden=true;document.getElementById('fieldActions').hidden=false;
+      document.getElementById('fieldTitle').textContent='Chọn một đoạn chữ';
+      document.getElementById('fieldHelp').textContent='Bấm vào chữ có viền khi rê chuột ở bản xem trước. Con trỏ sẽ xuất hiện ngay trên chữ để bạn sửa.';
+      renderBlockGroups();renderFieldList();setStatus('Đã lưu nhóm mục và xác nhận trên Sheet.','success');
+    }catch(error){setStatus('Không lưu được nhóm: '+error.message,'error');}
+    finally{button.disabled=false;}
+  }
   function setupPreview(){
     const doc=frame.contentDocument;
     if(!doc){setStatus('Không truy cập được bản xem trước. Hãy mở admin trên cùng tên miền với web.','error');return;}
-    if(doc===previewDoc){applyCms(doc);return;}
+    if(doc===previewDoc){applyCms(doc);blocks?.applySaved(doc,cms[page]);return;}
     previewDoc=doc;
     doc.body.classList.remove('is-loading');
     const style=doc.createElement('style');
@@ -183,7 +299,9 @@
       '[data-cms]{cursor:text!important;outline:2px solid transparent;outline-offset:5px}',
       '[data-cms]:hover{outline-color:#4f9e48!important;background:rgba(201,239,160,.2)!important}',
       '[data-cms].admin-editing{outline:3px solid #357a3e!important;background:rgba(201,239,160,.28)!important}',
-      '.admin-text-fragment{outline:2px solid #357a3e!important;min-width:1ch;display:inline!important}'
+      '.admin-text-fragment{outline:2px solid #357a3e!important;min-width:1ch;display:inline!important}',
+      '[data-block-item]{cursor:pointer!important;outline:2px solid transparent;outline-offset:3px}',
+      '[data-block-item]:hover,.admin-block-selected{outline-color:#4f9e48!important}'
     ].join('\n');
     doc.head.appendChild(style);
     const logoUrls={
@@ -194,8 +312,16 @@
     const logo=doc.getElementById('brandLogo');
     if(logo&&logoUrls[page]) logo.src=logoUrls[page];
     applyCms(doc);
+    blocks?.applySaved(doc,cms[page]);
     doc.querySelectorAll('details').forEach(item=>item.open=true);
     doc.addEventListener('click',event=>{
+      const group=event.target.closest?.('[data-cms-blocks]');
+      if(group){
+        event.preventDefault();event.stopPropagation();
+        const item=event.target.closest('[data-block-item]');
+        selectBlock(group.dataset.cmsBlocks,Number(item?.dataset.blockItem||0));
+        return;
+      }
       const el=event.target.closest?.('[data-cms]');
       if(active&&active.contains(event.target)) return;
       event.preventDefault();
@@ -204,11 +330,13 @@
     },true);
     doc.addEventListener('submit',event=>event.preventDefault(),true);
     renderFieldList();
+    renderBlockGroups();
     setStatus('Bản xem trước đã sẵn sàng. Rê chuột lên chữ để chọn.');
   }
   function changePage(next){
     if(!pageFiles[next]) return;
     leaveEdit(true);
+    cancelBlock();
     page=next;
     document.querySelectorAll('[data-page]').forEach(button=>button.classList.toggle('active',button.dataset.page===page));
     document.getElementById('publicLink').href=pageFiles[page];
@@ -264,6 +392,22 @@
   saveButton.addEventListener('click',save);
   cancelButton.addEventListener('click',()=>{leaveEdit(true);setStatus('Đã hủy thay đổi chưa lưu.');});
   fieldSearch.addEventListener('input',renderFieldList);
+  document.getElementById('addBlockItem').addEventListener('click',()=>{
+    if(!blockEdit) return;
+    const index=blockEdit.index<0?0:blockEdit.index+1;
+    blockEdit.items.splice(index,0,blocks.blank(blockEdit.key,index));
+    if(blockEdit.items.some(row=>'number' in row)) blockEdit.items.forEach((row,i)=>row.number=String(i+1).padStart(2,'0'));
+    blockEdit.index=index;renderBlockDraft();blockForm();
+  });
+  document.getElementById('deleteBlockItem').addEventListener('click',()=>{
+    if(!blockEdit||blockEdit.index<0) return;
+    blockEdit.items.splice(blockEdit.index,1);
+    if(blockEdit.items.some(row=>'number' in row)) blockEdit.items.forEach((row,i)=>row.number=String(i+1).padStart(2,'0'));
+    blockEdit.index=Math.min(blockEdit.index,blockEdit.items.length-1);
+    renderBlockDraft();blockForm();
+  });
+  document.getElementById('saveBlock').addEventListener('click',saveBlock);
+  document.getElementById('cancelBlock').addEventListener('click',()=>{cancelBlock();setStatus('Đã hủy thay đổi nhóm mục.');});
   readCms().then(()=>{if(frame.contentDocument?.readyState==='complete') setupPreview();else setStatus('Đang tải bản xem trước…');})
     .catch(error=>setStatus(error.message+' Bản xem trước vẫn có thể mở.','error'));
 })();

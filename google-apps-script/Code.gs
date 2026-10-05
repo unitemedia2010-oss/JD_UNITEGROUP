@@ -1,6 +1,6 @@
 /**
  * UNITE GROUP / UNITE CENTRAL REAL CAREER JD
- * V30 - TÍCH HỢP HỆ THỐNG CMS VÀ LỊCH TRAINING
+ * V33 - CMS VÀ QUẢN TRỊ LỊCH TRAINING
  *
  * Phân luồng tự động:
  * - Trang Căn hộ          -> sheet "Ứng viên Căn hộ"
@@ -106,8 +106,9 @@ function doGet(e) {
     return traJson_({
       ok: true,
       message: "Career JD Apps Script đang hoạt động.",
-      version: "V32_CMS_FORM_ACK",
+      version: "V33_CMS_TRAINING_ADMIN",
       cmsReady: (PropertiesService.getScriptProperties().getProperty("CMS_ADMIN_PASSWORD") || "").length >= 12,
+      trainingReady: true,
       sheets: {
         canHo: TEN_SHEET.ungVienCanHo,
         ucr: TEN_SHEET.ungVienUcr
@@ -125,6 +126,20 @@ function doGet(e) {
     });
   }
 
+  if (action === "trainingdata") {
+    const callback = String((e && e.parameter && e.parameter.callback) || "");
+    if (!/^__uniteTraining_[a-z0-9]{8,32}$/.test(callback)) {
+      return traJson_({ ok: false, message: "Callback không hợp lệ." });
+    }
+    try {
+      return ContentService.createTextOutput(callback + "(" + JSON.stringify(layLichTrainingQuanTri_()) + ");")
+        .setMimeType(ContentService.MimeType.JAVASCRIPT);
+    } catch (err) {
+      return ContentService.createTextOutput(callback + "(" + JSON.stringify({ ok: false, message: err.message || String(err) }) + ");")
+        .setMimeType(ContentService.MimeType.JAVASCRIPT);
+    }
+  }
+
   if (action === "applystatus") {
     const id = String((e && e.parameter && e.parameter.id) || "");
     const callback = String((e && e.parameter && e.parameter.callback) || "");
@@ -140,7 +155,7 @@ function doGet(e) {
   return traJson_({
     ok: true,
     message: "Unite Group / Unite Central Real Career JD API",
-    actions: ["health", "getData"]
+    actions: ["health", "getData", "trainingData", "trainingSave", "cmsSave", "apply"]
   });
 }
 
@@ -152,6 +167,10 @@ function doPost(e) {
 
     if (action === "cmssave") {
       return traJson_(luuNoiDungCms_(payload));
+    }
+
+    if (action === "trainingsave") {
+      return traJson_(luuLichTrainingQuanTri_(payload));
     }
 
     if (action !== "apply") {
@@ -610,6 +629,108 @@ function ensureTrainingSheet_(ss) {
   sheet.setColumnWidth(1, 110); sheet.setColumnWidth(2, 120); sheet.setColumnWidth(3, 350);
   sheet.setColumnWidth(4, 250); sheet.setColumnWidth(5, 180);
   return sheet;
+}
+
+function ngayTrainingIso_(value) {
+  if (value instanceof Date && !isNaN(value.getTime())) {
+    return Utilities.formatDate(value, Session.getScriptTimeZone(), 'yyyy-MM-dd');
+  }
+  const text = String(value || '').trim();
+  let year, month, day;
+  let match = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(text);
+  if (match) {
+    year = Number(match[1]); month = Number(match[2]); day = Number(match[3]);
+  } else {
+    match = /^(\d{1,2})\/(\d{1,2})(?:\/(\d{4}))?$/.exec(text);
+    if (!match) return '';
+    day = Number(match[1]); month = Number(match[2]);
+    year = Number(match[3] || Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy'));
+  }
+  const date = new Date(year, month - 1, day, 12);
+  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return '';
+  return [year, String(month).padStart(2, '0'), String(day).padStart(2, '0')].join('-');
+}
+
+function dongBatDauTraining_(sheet) {
+  const a2 = sheet.getRange('A2').getValue();
+  if (String(a2 || '').trim().toLowerCase() === 'ngày') return 3;
+  if (ngayTrainingIso_(a2)) return 2;
+  const a1 = String(sheet.getRange('A1').getValue() || '').toLowerCase();
+  return a1.includes('ngày') ? 2 : 3;
+}
+
+function docLichTrainingQuanTri_(sheet) {
+  const lastRow = sheet.getLastRow();
+  const firstRow = dongBatDauTraining_(sheet);
+  const raw = lastRow >= firstRow ? sheet.getRange(firstRow, 1, lastRow - firstRow + 1, 5).getValues() : [];
+  const rows = raw.filter(row => row.some(cell => String(cell || '').trim())).map(row => ({
+    date: ngayTrainingIso_(row[0]),
+    sourceDate: row[0] instanceof Date
+      ? Utilities.formatDate(row[0], Session.getScriptTimeZone(), 'dd/MM/yyyy')
+      : String(row[0] || '').trim(),
+    session: String(row[1] || '').trim(),
+    title: String(row[2] || '').trim(),
+    time: String(row[3] || '').trim(),
+    tag: String(row[4] || '').trim()
+  }));
+  const weekTitle = String(sheet.getRange('B1').getValue() || 'Lịch Training').trim();
+  const revisionBytes = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256,
+    JSON.stringify({ weekTitle: weekTitle, firstRow: firstRow, raw: raw }));
+  const revision = revisionBytes.map(byte => ('0' + (byte & 255).toString(16)).slice(-2)).join('');
+  return { ok: true, weekTitle: weekTitle, rows: rows, revision: revision };
+}
+
+function layLichTrainingQuanTri_() {
+  const sheet = ensureTrainingSheet_(SpreadsheetApp.openById(SHEET_ID));
+  return docLichTrainingQuanTri_(sheet);
+}
+
+function luuLichTrainingQuanTri_(payload) {
+  const savedPassword = PropertiesService.getScriptProperties().getProperty('CMS_ADMIN_PASSWORD') || '';
+  if (savedPassword.length < 12) throw new Error('Chưa cấu hình mật khẩu CMS.');
+  if (String(payload.password || '') !== savedPassword) throw new Error('Mật khẩu quản trị không đúng.');
+  const weekTitle = String(payload.weekTitle || '').trim();
+  if (!weekTitle || weekTitle.length > 120 || /^=/.test(weekTitle)) throw new Error('Tiêu đề tuần không hợp lệ.');
+  if (!Array.isArray(payload.rows) || payload.rows.length > 100) throw new Error('Tối đa 100 buổi Training.');
+  const seen = {};
+  const rows = payload.rows.map(row => {
+    const date = ngayTrainingIso_(row.date);
+    const session = String(row.session || '').trim();
+    const title = String(row.title || '').trim();
+    const time = String(row.time || '').trim();
+    const tag = String(row.tag || '').trim();
+    if (!date || !['Sáng', 'Chiều'].includes(session)) throw new Error('Ngày hoặc buổi Training không hợp lệ.');
+    if (!title || title.length > 250 || time.length > 250 || tag.length > 80 ||
+        [title, time, tag].some(value => /^=/.test(value))) throw new Error('Nội dung buổi Training không hợp lệ.');
+    const identity = date + '|' + session;
+    if (seen[identity]) throw new Error('Một ngày chỉ có một buổi Sáng và một buổi Chiều.');
+    seen[identity] = true;
+    const parts = date.split('-').map(Number);
+    return { date: date, values: [new Date(parts[0], parts[1] - 1, parts[2], 12), session, title, time, tag] };
+  });
+  rows.sort((a, b) => a.date.localeCompare(b.date) ||
+    (a.values[1] === 'Sáng' ? -1 : 1) - (b.values[1] === 'Sáng' ? -1 : 1));
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    const sheet = ensureTrainingSheet_(SpreadsheetApp.openById(SHEET_ID));
+    const current = docLichTrainingQuanTri_(sheet);
+    if (String(payload.revision || '') !== current.revision) {
+      throw new Error('Lịch đã được thay đổi ở nơi khác. Tải lại trước khi lưu.');
+    }
+    const firstRow = dongBatDauTraining_(sheet);
+    sheet.getRange('B1').setValue(weekTitle);
+    if (sheet.getLastRow() >= firstRow) sheet.getRange(firstRow, 1, sheet.getLastRow() - firstRow + 1, 5).clearContent();
+    if (rows.length) {
+      sheet.getRange(firstRow, 1, rows.length, 5).setValues(rows.map(row => row.values));
+      try { sheet.getRange(firstRow, 1, rows.length, 1).setNumberFormat('dd/MM/yyyy'); }
+      catch (err) { console.warn('Không đặt được định dạng ngày: ' + err); }
+    }
+    SpreadsheetApp.flush();
+    return { ok: true, revision: docLichTrainingQuanTri_(sheet).revision };
+  } finally {
+    lock.releaseLock();
+  }
 }
 
 function luuNoiDungCms_(payload) {

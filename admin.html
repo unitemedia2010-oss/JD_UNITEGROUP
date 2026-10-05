@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <title>Quản trị nội dung | Unite Career</title>
-  <link rel="stylesheet" href="css/admin.css?v=2">
+  <link rel="stylesheet" href="css/admin.css?v=3">
 </head>
 <body>
   <header class="admin-header">
@@ -21,6 +21,19 @@
         <small>Mật khẩu chỉ giữ trong phiên trình duyệt này.</small>
       </div>
     </section>
+    <nav class="admin-modes" aria-label="Chọn công cụ quản trị">
+      <button type="button" data-mode="content" class="active">Sửa nội dung</button>
+      <button type="button" data-mode="training">Lịch Training cho HR</button>
+    </nav>
+    <section id="trainingPanel" class="training-panel" hidden>
+      <div class="training-panel-head"><div><p class="eyebrow">LỊCH TRAINING HÀNG TUẦN</p><h2>Nhập lịch theo ngày, Sáng và Chiều</h2><p>Thêm ngày mới sẽ tạo hai buổi. Lịch tự sắp theo ngày khi lưu và hiển thị trên cả ba trang tuyển dụng.</p></div><button type="button" id="reloadTraining" class="cancel">Tải lại lịch</button></div>
+      <label class="week-title-label">Tiêu đề tuần<input id="trainingWeekTitle" type="text" maxlength="120" placeholder="Ví dụ: Lịch Training tuần 05–11/10"></label>
+      <div class="training-actions"><label>Ngày cần thêm<input id="trainingNewDate" type="date"></label><button type="button" id="addTrainingDay" class="save">+ Thêm ngày (Sáng và Chiều)</button></div>
+      <p id="trainingStatus" class="status" role="status" aria-live="polite"></p>
+      <div id="trainingRows" class="training-rows"></div>
+      <div class="training-save-bar"><span>Kiểm tra chủ đề và thời gian trước khi lưu. Các buổi xóa sẽ biến mất khỏi lịch công khai sau khi lưu.</span><button type="button" id="saveTraining" class="save">Lưu lịch Training</button></div>
+    </section>
+    <div id="contentPanel">
     <div class="toolbar">
       <nav class="page-tabs" aria-label="Chọn trang">
         <button type="button" data-page="index" class="active">Căn hộ</button>
@@ -43,7 +56,13 @@
         <p id="fieldHelp">Bấm vào chữ có viền khi rê chuột ở bản xem trước. Con trỏ sẽ xuất hiện ngay trên chữ để bạn sửa.</p>
         <div class="field-meta" id="fieldMeta" hidden><span>Vị trí trong trang</span><code id="fieldKey"></code></div>
         <textarea id="editorText" aria-label="Nội dung lựa chọn" rows="3" hidden></textarea>
-        <div class="editor-actions">
+        <div id="blockEditor" class="block-editor" hidden>
+          <h3 id="blockTitle">Chỉnh sửa mục</h3>
+          <div id="blockFields"></div>
+          <div class="block-actions"><button type="button" id="addBlockItem">+ Thêm mục</button><button type="button" id="deleteBlockItem">Xóa mục này</button></div>
+          <div class="block-actions"><button type="button" id="saveBlock" class="save">Lưu nhóm mục</button><button type="button" id="cancelBlock" class="cancel">Hủy thay đổi</button></div>
+        </div>
+        <div class="editor-actions" id="fieldActions">
           <button type="button" id="saveButton" class="save" disabled>Lưu nội dung</button>
           <button type="button" id="cancelButton" class="cancel" disabled>Hủy sửa</button>
         </div>
@@ -52,11 +71,18 @@
           <input id="fieldSearch" type="search" placeholder="Tìm theo nội dung hoặc mã vị trí" aria-label="Tìm chữ cần sửa">
           <div id="fieldList" class="field-list"></div>
         </details>
+        <details class="field-browser">
+          <summary>Thêm / xóa nhóm mục</summary>
+          <div id="blockGroups" class="block-groups"></div>
+        </details>
         <div class="editor-note">Có thể bấm trực tiếp vào chữ trong bản xem trước hoặc tìm ở danh sách trên. Lịch Training, địa chỉ chi nhánh và ảnh văn hóa lấy từ dữ liệu riêng.</div>
       </aside>
     </div>
+    </div>
   </main>
   <script src="data/config.js"></script>
-  <script src="js/admin.js?v=3"></script>
+  <script src="js/blocks.js?v=1"></script>
+  <script src="js/admin.js?v=4"></script>
+  <script src="js/admin-training.js?v=1"></script>
 </body>
 </html>
