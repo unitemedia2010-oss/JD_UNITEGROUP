@@ -93,3 +93,366 @@ tpa,faq_title,Ứng viên thường hỏi gì?,"Phần ""Câu hỏi thường g�
 tpa,apply_eyebrow,Apply Now,"Phần ""Form ứng tuyển"" - dòng chữ nhỏ phía trên tiêu đề"
 tpa,apply_title,Ứng tuyển TPA,"Phần ""Form ứng tuyển"" - tiêu đề"
 tpa,apply_desc,"Điền thông tin để HR TPA liên hệ, trao đổi công việc và sắp lịch phỏng vấn tại 39 Mai Văn Vĩnh.","Phần ""Form ứng tuyển"" - đoạn mô tả"
+index,text_001,UNITE GROUP,header · strong · UNITE GROUP
+index,text_002,Career JD,header · small · Career JD
+index,text_003,Công việc,header · a · Công việc
+index,text_004,Thu nhập,header · a · Thu nhập
+index,text_005,Lộ trình,header · a · Lộ trình
+index,text_006,Chi nhánh,header · a · Chi nhánh
+index,text_007,Ứng tuyển,header · a · Ứng tuyển
+index,text_008,Ứng tuyển ngay,header · a · Ứng tuyển ngay
+index,text_009,Căn hộ,section · a · Căn hộ
+index,text_010,Nhà nguyên căn,section · a · Nhà nguyên căn
+index,text_011,Full-time / Part-time,section · span · Full-time / Part-time
+index,text_012,Không yêu cầu kinh nghiệm,section · span · Không yêu cầu kinh nghiệm
+index,text_013,Đào tạo 1:1,section · span · Đào tạo 1:1
+index,text_014,Thu nhập theo năng lực,section · span · Thu nhập theo năng lực
+index,text_015,Ứng tuyển ngay,section · a · Ứng tuyển ngay
+index,text_016,Xem văn phòng gần bạn,section · a · Xem văn phòng gần bạn
+index,text_017,Đang tuyển,section · div · Đang tuyển
+index,text_018,Vị trí tuyển dụng,section · p · Vị trí tuyển dụng
+index,text_019,03 vị trí,section · span · 03 vị trí
+index,text_020,Chuyên viên tư vấn,section · span · Chuyên viên tư vấn
+index,text_021,Leader Team,section · span · Leader Team
+index,text_022,Quản lý chi nhánh,section · span · Quản lý chi nhánh
+index,text_023,Địa điểm,section · span · Địa điểm
+index,text_024,TP.HCM,section · strong · TP.HCM
+index,text_025,Đào tạo,section · span · Đào tạo
+index,text_026,Training đầu vào,section · strong · Training đầu vào
+index,text_027,Phù hợp,section · span · Phù hợp
+index,text_028,Gen Z / Người mới,section · strong · Gen Z / Người mới
+index,text_029,Yêu cầu,section · span · Yêu cầu
+index,text_030,Smartphone + di chuyển,section · strong · Smartphone + di chuyển
+index,text_031,TP.HCM,section · b · TP.HCM
+index,text_032,8 văn phòng,section · span · 8 văn phòng
+index,text_033,1-1,section · b · 1-1
+index,text_034,Leader đồng hành,section · span · Leader đồng hành
+index,text_035,Thu nhập,section · b · Thu nhập
+index,text_036,Theo năng lực,section · span · Theo năng lực
+index,text_037,01,intro · span · 01
+index,text_038,Sản phẩm đa dạng,intro · h3 · Sản phẩm đa dạng
+index,text_039,"Hệ thống sản phẩm rộng khắp trên địa bàn TP.HCM, gồm nhiều dạng phòng với tầm giá khác nhau, đáp ứng nhu cầu đa dạng của khách hàng.","intro · p · Hệ thống sản phẩm rộng khắp trên địa bàn TP.HCM, gồm nhiều dạng phòng "
+index,text_040,02,intro · span · 02
+index,text_041,Môi trường làm việc thân thiện,intro · h3 · Môi trường làm việc thân thiện
+index,text_042,"Môi trường trẻ, năng động, sáng tạo với lộ trình phát triển rõ ràng, luôn đồng hành và hỗ trợ lẫn nhau.","intro · p · Môi trường trẻ, năng động, sáng tạo với lộ trình phát triển rõ ràng, l"
+index,text_043,03,intro · span · 03
+index,text_044,Đội ngũ chuyên nghiệp,intro · h3 · Đội ngũ chuyên nghiệp
+index,text_045,"Đội ngũ giàu kinh nghiệm, nhiệt huyết và sáng tạo, luôn học hỏi để mang đến trải nghiệm tư vấn tốt cho khách hàng.","intro · p · Đội ngũ giàu kinh nghiệm, nhiệt huyết và sáng tạo, luôn học hỏi để man"
+index,text_046,04,intro · span · 04
+index,text_047,Cam kết phát triển bền vững,intro · h3 · Cam kết phát triển bền vững
+index,text_048,"Unite Group hướng tới sự phát triển bền vững, đóng góp tích cực cho cộng đồng và tạo giá trị lâu dài cho đội ngũ.","intro · p · Unite Group hướng tới sự phát triển bền vững, đóng góp tích cực cho cộ"
+index,text_049,Tôi thích giao tiếp và gặp gỡ khách hàng,fit-section · button · Tôi thích giao tiếp và gặp gỡ khách hàng
+index,text_050,Tôi muốn thu nhập tăng theo năng lực,fit-section · button · Tôi muốn thu nhập tăng theo năng lực
+index,text_051,Tôi biết sử dụng các nền tảng mạng xã hội cơ bản,fit-section · button · Tôi biết sử dụng các nền tảng mạng xã hội cơ bản
+index,text_052,"Tôi có hứng thú với nhà ở, căn hộ hoặc lĩnh vực bất động sản","fit-section · button · Tôi có hứng thú với nhà ở, căn hộ hoặc lĩnh vực bất động sản"
+index,text_053,Tôi sẵn sàng học hỏi và trải nghiệm từ thực tế,fit-section · button · Tôi sẵn sàng học hỏi và trải nghiệm từ thực tế
+index,text_054,01,job-section · time · 01
+index,text_055,Marketing & Tạo nguồn khách hàng tiềm năng,job-section · h3 · Marketing & Tạo nguồn khách hàng tiềm năng
+index,text_056,"Đăng bài, sáng tạo nội dung trên Facebook, TikTok, Threads, Instagram hoặc các nền tảng phù hợp.","job-section · p · Đăng bài, sáng tạo nội dung trên Facebook, TikTok, Threads, Instagram "
+index,text_057,02,job-section · time · 02
+index,text_058,Tư vấn và hỗ trợ khách xem phòng,job-section · h3 · Tư vấn và hỗ trợ khách xem phòng
+index,text_059,"Tư vấn khách hàng dựa trên nhu cầu về ngân sách, khu vực, tiện ích, phong cách sống và hỗ trợ khách lựa chọn căn hộ phù hợp.","job-section · p · Tư vấn khách hàng dựa trên nhu cầu về ngân sách, khu vực, tiện ích, ph"
+index,text_060,03,job-section · time · 03
+index,text_061,Hỗ trợ ký kết hợp đồng & Chăm sóc khách hàng,job-section · h3 · Hỗ trợ ký kết hợp đồng & Chăm sóc khách hàng
+index,text_062,"Hỗ trợ khách hàng trong quá trình trao đổi, ký kết hợp đồng và chăm sóc trải nghiệm sau tư vấn.","job-section · p · Hỗ trợ khách hàng trong quá trình trao đổi, ký kết hợp đồng và chăm só"
+index,text_063,Số giao dịch / tháng:,income-section · label · Số giao dịch / tháng:
+index,text_064,Doanh thu trung bình / giao dịch:,income-section · label · Doanh thu trung bình / giao dịch:
+index,text_065,Thu nhập tham khảo,income-section · span · Thu nhập tham khảo
+index,text_066,*Chỉ mang tính minh họa. Thu nhập thực tế phụ thuộc chính sách từng thời kỳ và kết quả giao dịch.,income-section · small · *Chỉ mang tính minh họa. Thu nhập thực tế phụ thuộc chính sách từng th
+index,text_067,Định hướng phát triển,growth-section · h3 · Định hướng phát triển
+index,text_068,Từ nền tảng đến vai trò quản lý,growth-section · span · Từ nền tảng đến vai trò quản lý
+index,text_069,01,growth-section · em · 01
+index,text_070,Chuyên viên tư vấn,growth-section · strong · Chuyên viên tư vấn
+index,text_071,02,growth-section · em · 02
+index,text_072,Leader Team,growth-section · strong · Leader Team
+index,text_073,03,growth-section · em · 03
+index,text_074,Trưởng phòng kinh doanh,growth-section · strong · Trưởng phòng kinh doanh
+index,text_075,04,growth-section · em · 04
+index,text_076,Quản lý chi nhánh,growth-section · strong · Quản lý chi nhánh
+index,text_077,05,growth-section · em · 05
+index,text_078,Giám đốc cụm,growth-section · strong · Giám đốc cụm
+index,text_079,Branch Map,map-section · span · Branch Map
+index,text_080,Chi nhánh Unite Group,map-section · h3 · Chi nhánh Unite Group
+index,text_081,Chọn một văn phòng để xem địa chỉ và mở chỉ đường nhanh trên Google Maps.,map-section · p · Chọn một văn phòng để xem địa chỉ và mở chỉ đường nhanh trên Google Ma
+index,text_082,Gợi ý gần bạn,map-section · button · Gợi ý gần bạn
+index,text_083,Xem tất cả,map-section · button · Xem tất cả
+index,text_084,Mình chưa có kinh nghiệm có ứng tuyển được không?,faq-section · summary · Mình chưa có kinh nghiệm có ứng tuyển được không?
+index,text_085,"Có. Đối với nhân sự mới, Unite Group sẽ đào tạo từ đầu và hướng dẫn từng bước đến khi bạn quen việc.","faq-section · p · Có. Đối với nhân sự mới, Unite Group sẽ đào tạo từ đầu và hướng dẫn từ"
+index,text_086,Full-time và Part-time khác nhau thế nào?,faq-section · summary · Full-time và Part-time khác nhau thế nào?
+index,text_087,"Full-time và Part-time khác nhau về thời gian làm việc, mức độ cam kết và chính sách hoa hồng tương ứng.","faq-section · p · Full-time và Part-time khác nhau về thời gian làm việc, mức độ cam kết"
+index,text_088,Ứng tuyển bao lâu thì công ty sẽ liên hệ?,faq-section · summary · Ứng tuyển bao lâu thì công ty sẽ liên hệ?
+index,text_089,"Trong khoảng 1–2 ngày sau khi nhận thông tin ứng tuyển, phòng Nhân sự sẽ liên hệ để trao đổi chi tiết và sắp lịch phỏng vấn.","faq-section · p · Trong khoảng 1–2 ngày sau khi nhận thông tin ứng tuyển, phòng Nhân sự "
+index,text_090,Quy trình nhận việc thế nào?,faq-section · summary · Quy trình nhận việc thế nào?
+index,text_091,Ứng tuyển → Phỏng vấn trực tiếp tại văn phòng → Tham gia training → Nhận việc.,faq-section · p · Ứng tuyển → Phỏng vấn trực tiếp tại văn phòng → Tham gia training → Nh
+index,text_092,Họ và tên,apply-section · label · Họ và tên
+index,text_093,Số điện thoại / Zalo,apply-section · label · Số điện thoại / Zalo
+index,text_094,Năm sinh,apply-section · label · Năm sinh
+index,text_095,Khu vực mong muốn,apply-section · label · Khu vực mong muốn
+index,text_096,Gần nơi sinh sống,apply-section · option · Gần nơi sinh sống
+index,text_097,Quận 5 / Trung tâm,apply-section · option · Quận 5 / Trung tâm
+index,text_098,Tân Bình / Tân Phú,apply-section · option · Tân Bình / Tân Phú
+index,text_099,Bình Thạnh / Gò Vấp,apply-section · option · Bình Thạnh / Gò Vấp
+index,text_100,Quận 7 / Quận 4,apply-section · option · Quận 7 / Quận 4
+index,text_101,Khác,apply-section · option · Khác
+index,text_102,Hình thức,apply-section · label · Hình thức
+index,text_103,Full-time,apply-section · option · Full-time
+index,text_104,Part-time,apply-section · option · Part-time
+index,text_105,"Chưa chắc, cần tư vấn thêm","apply-section · option · Chưa chắc, cần tư vấn thêm"
+index,text_106,Link Facebook / Portfolio nếu có,apply-section · label · Link Facebook / Portfolio nếu có
+index,text_107,Đính kèm CV,apply-section · strong · Đính kèm CV
+index,text_108,"PDF, DOCX, JPG hoặc PNG · tối đa 10MB","apply-section · small · PDF, DOCX, JPG hoặc PNG · tối đa 10MB"
+index,text_109,Chọn tệp,apply-section · span · Chọn tệp
+index,text_110,Gửi hồ sơ ứng tuyển,apply-section · button · Gửi hồ sơ ứng tuyển
+index,text_111,UNITE GROUP CAREER,footer · strong · UNITE GROUP CAREER
+index,text_112,Build your career from real action.,footer · span · Build your career from real action.
+index,text_113,Xem JD Nhà nguyên căn,footer · a · Xem JD Nhà nguyên căn
+index,text_114,Lên đầu trang ↑,footer · a · Lên đầu trang ↑
+index,text_115,Công việc,global · a · Công việc
+index,text_116,Thu nhập,global · a · Thu nhập
+index,text_117,Lộ trình,global · a · Lộ trình
+index,text_118,Chi nhánh,global · a · Chi nhánh
+index,text_119,Ứng tuyển ngay,global · a · Ứng tuyển ngay
+index,text_120,Ứng tuyển ngay,global · a · Ứng tuyển ngay
+nha-nguyen-can,text_001,UNITE CENTRAL REAL,header · strong · UNITE CENTRAL REAL
+nha-nguyen-can,text_002,Nhà nguyên căn,header · small · Nhà nguyên căn
+nha-nguyen-can,text_003,Công việc,header · a · Công việc
+nha-nguyen-can,text_004,Thu nhập,header · a · Thu nhập
+nha-nguyen-can,text_005,Lộ trình,header · a · Lộ trình
+nha-nguyen-can,text_006,Nơi làm việc,header · a · Nơi làm việc
+nha-nguyen-can,text_007,Ứng tuyển,header · a · Ứng tuyển
+nha-nguyen-can,text_008,Ứng tuyển ngay,header · a · Ứng tuyển ngay
+nha-nguyen-can,text_009,Căn hộ,section · a · Căn hộ
+nha-nguyen-can,text_010,Nhà nguyên căn,section · a · Nhà nguyên căn
+nha-nguyen-can,text_011,Full-time / Part-time,section · span · Full-time / Part-time
+nha-nguyen-can,text_012,Không yêu cầu kinh nghiệm,section · span · Không yêu cầu kinh nghiệm
+nha-nguyen-can,text_013,Training sản phẩm thực tế,section · span · Training sản phẩm thực tế
+nha-nguyen-can,text_014,Thu nhập theo năng lực,section · span · Thu nhập theo năng lực
+nha-nguyen-can,text_015,Ứng tuyển ngay,section · a · Ứng tuyển ngay
+nha-nguyen-can,text_016,Xem nơi làm việc,section · a · Xem nơi làm việc
+nha-nguyen-can,text_017,Đang tuyển,section · div · Đang tuyển
+nha-nguyen-can,text_018,Vị trí tuyển dụng,section · p · Vị trí tuyển dụng
+nha-nguyen-can,text_019,03 vị trí,section · span · 03 vị trí
+nha-nguyen-can,text_020,Chuyên viên tư vấn,section · span · Chuyên viên tư vấn
+nha-nguyen-can,text_021,Leader Team,section · span · Leader Team
+nha-nguyen-can,text_022,Giám đốc bộ phận,section · span · Giám đốc bộ phận
+nha-nguyen-can,text_023,Địa điểm,section · span · Địa điểm
+nha-nguyen-can,text_024,125 Trần Bình Trọng,section · strong · 125 Trần Bình Trọng
+nha-nguyen-can,text_025,Sản phẩm,section · span · Sản phẩm
+nha-nguyen-can,text_026,Nhà nguyên căn,section · strong · Nhà nguyên căn
+nha-nguyen-can,text_027,Phù hợp,section · span · Phù hợp
+nha-nguyen-can,text_028,Gen Z / Người mới,section · strong · Gen Z / Người mới
+nha-nguyen-can,text_029,Yêu cầu,section · span · Yêu cầu
+nha-nguyen-can,text_030,Smartphone + di chuyển,section · strong · Smartphone + di chuyển
+nha-nguyen-can,text_031,Quận 5,section · b · Quận 5
+nha-nguyen-can,text_032,1 văn phòng,section · span · 1 văn phòng
+nha-nguyen-can,text_033,1-1,section · b · 1-1
+nha-nguyen-can,text_034,Leader đồng hành,section · span · Leader đồng hành
+nha-nguyen-can,text_035,Thu nhập,section · b · Thu nhập
+nha-nguyen-can,text_036,Theo năng lực,section · span · Theo năng lực
+nha-nguyen-can,text_037,01,intro · span · 01
+nha-nguyen-can,text_038,Nhu cầu thuê đa dạng,intro · h3 · Nhu cầu thuê đa dạng
+nha-nguyen-can,text_039,"Khách có thể thuê để ở, làm văn phòng, kinh doanh hoặc kết hợp nhiều mục đích sử dụng.","intro · p · Khách có thể thuê để ở, làm văn phòng, kinh doanh hoặc kết hợp nhiều m"
+nha-nguyen-can,text_040,02,intro · span · 02
+nha-nguyen-can,text_041,Kỹ năng tư vấn chuyên sâu,intro · h3 · Kỹ năng tư vấn chuyên sâu
+nha-nguyen-can,text_042,"Phát triển khả năng phân tích diện tích, công năng, giá thuê, khu vực và nhu cầu vận hành thực tế.","intro · p · Phát triển khả năng phân tích diện tích, công năng, giá thuê, khu vực "
+nha-nguyen-can,text_043,03,intro · span · 03
+nha-nguyen-can,text_044,Thực chiến khảo sát & đàm phán,intro · h3 · Thực chiến khảo sát & đàm phán
+nha-nguyen-can,text_045,"Rèn kỹ năng khảo sát tài sản, dẫn khách và hỗ trợ thương lượng điều kiện thuê.","intro · p · Rèn kỹ năng khảo sát tài sản, dẫn khách và hỗ trợ thương lượng điều ki"
+nha-nguyen-can,text_046,04,intro · span · 04
+nha-nguyen-can,text_047,Leader đồng hành,intro · h3 · Leader đồng hành
+nha-nguyen-can,text_048,"Người mới được hướng dẫn từ xây nguồn, tư vấn khách đến hỗ trợ ký kết hợp đồng.","intro · p · Người mới được hướng dẫn từ xây nguồn, tư vấn khách đến hỗ trợ ký kết "
+nha-nguyen-can,text_049,Tôi thích giao tiếp và tìm hiểu nhu cầu khách hàng,fit-section · button · Tôi thích giao tiếp và tìm hiểu nhu cầu khách hàng
+nha-nguyen-can,text_050,Tôi sẵn sàng di chuyển để khảo sát và dẫn khách xem nhà,fit-section · button · Tôi sẵn sàng di chuyển để khảo sát và dẫn khách xem nhà
+nha-nguyen-can,text_051,Tôi biết sử dụng mạng xã hội để đăng tin và tìm khách,fit-section · button · Tôi biết sử dụng mạng xã hội để đăng tin và tìm khách
+nha-nguyen-can,text_052,"Tôi có hứng thú với nhà phố, không gian sống hoặc mặt bằng kinh doanh","fit-section · button · Tôi có hứng thú với nhà phố, không gian sống hoặc mặt bằng kinh doanh"
+nha-nguyen-can,text_053,Tôi muốn phát triển kỹ năng đàm phán và tăng thu nhập theo năng lực,fit-section · button · Tôi muốn phát triển kỹ năng đàm phán và tăng thu nhập theo năng lực
+nha-nguyen-can,text_054,01,job-section · time · 01
+nha-nguyen-can,text_055,Marketing & Xây dựng nguồn khách tiềm năng,job-section · h3 · Marketing & Xây dựng nguồn khách tiềm năng
+nha-nguyen-can,text_056,"Đăng tin, sáng tạo nội dung và khai thác khách hàng trên Facebook, TikTok, Threads, hội nhóm hoặc nền tảng phù hợp.","job-section · p · Đăng tin, sáng tạo nội dung và khai thác khách hàng trên Facebook, Tik"
+nha-nguyen-can,text_057,02,job-section · time · 02
+nha-nguyen-can,text_058,Khảo sát nguồn nhà & Tư vấn phương án thuê,job-section · h3 · Khảo sát nguồn nhà & Tư vấn phương án thuê
+nha-nguyen-can,text_059,"Tìm hiểu diện tích, công năng, giá thuê, khu vực và mục đích sử dụng để đề xuất sản phẩm phù hợp.","job-section · p · Tìm hiểu diện tích, công năng, giá thuê, khu vực và mục đích sử dụng đ"
+nha-nguyen-can,text_060,03,job-section · time · 03
+nha-nguyen-can,text_061,"Dẫn khách, hỗ trợ đàm phán & ký kết","job-section · h3 · Dẫn khách, hỗ trợ đàm phán & ký kết"
+nha-nguyen-can,text_062,"Hỗ trợ khách xem nhà, trao đổi điều kiện thuê, hoàn thiện quá trình ký kết và chăm sóc sau tư vấn.","job-section · p · Hỗ trợ khách xem nhà, trao đổi điều kiện thuê, hoàn thiện quá trình ký"
+nha-nguyen-can,text_063,Số giao dịch / tháng:,income-section · label · Số giao dịch / tháng:
+nha-nguyen-can,text_064,Doanh thu trung bình / giao dịch:,income-section · label · Doanh thu trung bình / giao dịch:
+nha-nguyen-can,text_065,Thu nhập tham khảo,income-section · span · Thu nhập tham khảo
+nha-nguyen-can,text_066,*Chỉ mang tính minh họa. Thu nhập thực tế phụ thuộc chính sách từng thời kỳ và kết quả giao dịch.,income-section · small · *Chỉ mang tính minh họa. Thu nhập thực tế phụ thuộc chính sách từng th
+nha-nguyen-can,text_067,Định hướng phát triển,growth-section · h3 · Định hướng phát triển
+nha-nguyen-can,text_068,Từ nền tảng đến vai trò quản lý,growth-section · span · Từ nền tảng đến vai trò quản lý
+nha-nguyen-can,text_069,01,growth-section · em · 01
+nha-nguyen-can,text_070,Chuyên viên tư vấn,growth-section · strong · Chuyên viên tư vấn
+nha-nguyen-can,text_071,02,growth-section · em · 02
+nha-nguyen-can,text_072,Leader Team,growth-section · strong · Leader Team
+nha-nguyen-can,text_073,03,growth-section · em · 03
+nha-nguyen-can,text_074,Trưởng phòng kinh doanh,growth-section · strong · Trưởng phòng kinh doanh
+nha-nguyen-can,text_075,04,growth-section · em · 04
+nha-nguyen-can,text_076,Giám đốc bộ phận,growth-section · strong · Giám đốc bộ phận
+nha-nguyen-can,text_077,Unite Central Real Office,house-workplace-section · span · Unite Central Real Office
+nha-nguyen-can,text_078,125 Trần Bình Trọng,house-workplace-section · h3 · 125 Trần Bình Trọng
+nha-nguyen-can,text_079,"125 Trần Bình Trọng, phường Chợ Quán, TP.HCM (Quận 5 cũ)","house-workplace-section · p · 125 Trần Bình Trọng, phường Chợ Quán, TP.HCM (Quận 5 cũ)"
+nha-nguyen-can,text_080,Training trực tiếp,house-workplace-section · span · Training trực tiếp
+nha-nguyen-can,text_081,Leader đồng hành,house-workplace-section · span · Leader đồng hành
+nha-nguyen-can,text_082,Trung tâm TP.HCM,house-workplace-section · span · Trung tâm TP.HCM
+nha-nguyen-can,text_083,Chỉ đường,house-workplace-section · a · Chỉ đường
+nha-nguyen-can,text_084,Mở Google Maps,house-workplace-section · a · Mở Google Maps
+nha-nguyen-can,text_085,Chưa có kinh nghiệm nhà nguyên căn có ứng tuyển được không?,faq-section · summary · Chưa có kinh nghiệm nhà nguyên căn có ứng tuyển được không?
+nha-nguyen-can,text_086,"Có. Người mới được training kiến thức sản phẩm, cách khảo sát nhà, tư vấn nhu cầu và hỗ trợ khách theo từng bước.","faq-section · p · Có. Người mới được training kiến thức sản phẩm, cách khảo sát nhà, tư "
+nha-nguyen-can,text_087,Công việc có thường xuyên khảo sát và dẫn khách không?,faq-section · summary · Công việc có thường xuyên khảo sát và dẫn khách không?
+nha-nguyen-can,text_088,Có. Đây là vị trí thực chiến nên bạn cần chủ động di chuyển để khảo sát nguồn nhà và hỗ trợ khách xem sản phẩm.,faq-section · p · Có. Đây là vị trí thực chiến nên bạn cần chủ động di chuyển để khảo sá
+nha-nguyen-can,text_089,Full-time và Part-time khác nhau thế nào?,faq-section · summary · Full-time và Part-time khác nhau thế nào?
+nha-nguyen-can,text_090,"Hai hình thức khác nhau về thời gian hoạt động, mức độ cam kết và chính sách thu nhập tương ứng.","faq-section · p · Hai hình thức khác nhau về thời gian hoạt động, mức độ cam kết và chín"
+nha-nguyen-can,text_091,Quy trình ứng tuyển thế nào?,faq-section · summary · Quy trình ứng tuyển thế nào?
+nha-nguyen-can,text_092,Gửi hồ sơ → Phỏng vấn tại 125 Trần Bình Trọng → Training → Bắt đầu hoạt động cùng Leader.,faq-section · p · Gửi hồ sơ → Phỏng vấn tại 125 Trần Bình Trọng → Training → Bắt đầu hoạ
+nha-nguyen-can,text_093,Họ và tên,apply-section · label · Họ và tên
+nha-nguyen-can,text_094,Số điện thoại / Zalo,apply-section · label · Số điện thoại / Zalo
+nha-nguyen-can,text_095,Năm sinh,apply-section · label · Năm sinh
+nha-nguyen-can,text_096,Văn phòng làm việc,apply-section · label · Văn phòng làm việc
+nha-nguyen-can,text_097,125 Trần Bình Trọng – Quận 5 cũ,apply-section · option · 125 Trần Bình Trọng – Quận 5 cũ
+nha-nguyen-can,text_098,Hình thức,apply-section · label · Hình thức
+nha-nguyen-can,text_099,Full-time,apply-section · option · Full-time
+nha-nguyen-can,text_100,Part-time,apply-section · option · Part-time
+nha-nguyen-can,text_101,"Chưa chắc, cần tư vấn thêm","apply-section · option · Chưa chắc, cần tư vấn thêm"
+nha-nguyen-can,text_102,Link Facebook / Portfolio nếu có,apply-section · label · Link Facebook / Portfolio nếu có
+nha-nguyen-can,text_103,Đính kèm CV,apply-section · strong · Đính kèm CV
+nha-nguyen-can,text_104,"PDF, DOCX, JPG hoặc PNG · tối đa 10MB","apply-section · small · PDF, DOCX, JPG hoặc PNG · tối đa 10MB"
+nha-nguyen-can,text_105,Chọn tệp,apply-section · span · Chọn tệp
+nha-nguyen-can,text_106,Gửi hồ sơ ứng tuyển,apply-section · button · Gửi hồ sơ ứng tuyển
+nha-nguyen-can,text_107,UNITE CENTRAL REAL CAREER,footer · strong · UNITE CENTRAL REAL CAREER
+nha-nguyen-can,text_108,Build your career from real action.,footer · span · Build your career from real action.
+nha-nguyen-can,text_109,Xem JD Căn hộ,footer · a · Xem JD Căn hộ
+nha-nguyen-can,text_110,Lên đầu trang ↑,footer · a · Lên đầu trang ↑
+nha-nguyen-can,text_111,Công việc,global · a · Công việc
+nha-nguyen-can,text_112,Thu nhập,global · a · Thu nhập
+nha-nguyen-can,text_113,Lộ trình,global · a · Lộ trình
+nha-nguyen-can,text_114,Nơi làm việc,global · a · Nơi làm việc
+nha-nguyen-can,text_115,Ứng tuyển ngay,global · a · Ứng tuyển ngay
+nha-nguyen-can,text_116,Ứng tuyển ngay,global · a · Ứng tuyển ngay
+tpa,text_001,UNITE TPA CAREER,header · strong · UNITE TPA CAREER
+tpa,text_002,TPA,header · small · TPA
+tpa,text_003,Công việc,header · a · Công việc
+tpa,text_004,Thu nhập,header · a · Thu nhập
+tpa,text_005,Lộ trình,header · a · Lộ trình
+tpa,text_006,Nơi làm việc,header · a · Nơi làm việc
+tpa,text_007,Ứng tuyển,header · a · Ứng tuyển
+tpa,text_008,Ứng tuyển ngay,header · a · Ứng tuyển ngay
+tpa,text_009,TPA,section · a · TPA
+tpa,text_010,Full-time / Part-time,section · span · Full-time / Part-time
+tpa,text_011,Không yêu cầu kinh nghiệm,section · span · Không yêu cầu kinh nghiệm
+tpa,text_012,Training sản phẩm thực tế,section · span · Training sản phẩm thực tế
+tpa,text_013,Thu nhập theo năng lực,section · span · Thu nhập theo năng lực
+tpa,text_014,Ứng tuyển ngay,section · a · Ứng tuyển ngay
+tpa,text_015,Xem nơi làm việc,section · a · Xem nơi làm việc
+tpa,text_016,Đang tuyển,section · div · Đang tuyển
+tpa,text_017,Vị trí tuyển dụng,section · p · Vị trí tuyển dụng
+tpa,text_018,03 vị trí,section · span · 03 vị trí
+tpa,text_019,Chuyên viên tư vấn,section · span · Chuyên viên tư vấn
+tpa,text_020,Leader Team,section · span · Leader Team
+tpa,text_021,Giám đốc bộ phận,section · span · Giám đốc bộ phận
+tpa,text_022,Địa điểm,section · span · Địa điểm
+tpa,text_023,39 Mai Văn Vĩnh,section · strong · 39 Mai Văn Vĩnh
+tpa,text_024,Sản phẩm,section · span · Sản phẩm
+tpa,text_025,Cụm Tiên Phong Apartment,section · strong · Cụm Tiên Phong Apartment
+tpa,text_026,Phù hợp,section · span · Phù hợp
+tpa,text_027,Gen Z / Người mới,section · strong · Gen Z / Người mới
+tpa,text_028,Yêu cầu,section · span · Yêu cầu
+tpa,text_029,Smartphone + di chuyển,section · strong · Smartphone + di chuyển
+tpa,text_030,Quận 7,section · b · Quận 7
+tpa,text_031,1 văn phòng,section · span · 1 văn phòng
+tpa,text_032,1-1,section · b · 1-1
+tpa,text_033,Leader đồng hành,section · span · Leader đồng hành
+tpa,text_034,Thu nhập,section · b · Thu nhập
+tpa,text_035,Theo năng lực,section · span · Theo năng lực
+tpa,text_036,01,intro · span · 01
+tpa,text_037,Nhu cầu thuê đa dạng,intro · h3 · Nhu cầu thuê đa dạng
+tpa,text_038,"Khách có thể thuê để ở, làm văn phòng, kinh doanh hoặc kết hợp nhiều mục đích sử dụng.","intro · p · Khách có thể thuê để ở, làm văn phòng, kinh doanh hoặc kết hợp nhiều m"
+tpa,text_039,02,intro · span · 02
+tpa,text_040,Kỹ năng tư vấn chuyên sâu,intro · h3 · Kỹ năng tư vấn chuyên sâu
+tpa,text_041,"Phát triển khả năng phân tích diện tích, công năng, giá thuê, khu vực và nhu cầu vận hành thực tế.","intro · p · Phát triển khả năng phân tích diện tích, công năng, giá thuê, khu vực "
+tpa,text_042,03,intro · span · 03
+tpa,text_043,Thực chiến khảo sát & đàm phán,intro · h3 · Thực chiến khảo sát & đàm phán
+tpa,text_044,"Rèn kỹ năng khảo sát tài sản, dẫn khách và hỗ trợ thương lượng điều kiện thuê.","intro · p · Rèn kỹ năng khảo sát tài sản, dẫn khách và hỗ trợ thương lượng điều ki"
+tpa,text_045,04,intro · span · 04
+tpa,text_046,Leader đồng hành,intro · h3 · Leader đồng hành
+tpa,text_047,"Người mới được hướng dẫn từ xây nguồn, tư vấn khách đến hỗ trợ ký kết hợp đồng.","intro · p · Người mới được hướng dẫn từ xây nguồn, tư vấn khách đến hỗ trợ ký kết "
+tpa,text_048,Tôi thích giao tiếp và tìm hiểu nhu cầu khách hàng,fit-section · button · Tôi thích giao tiếp và tìm hiểu nhu cầu khách hàng
+tpa,text_049,Tôi sẵn sàng di chuyển để khảo sát và dẫn khách xem nhà,fit-section · button · Tôi sẵn sàng di chuyển để khảo sát và dẫn khách xem nhà
+tpa,text_050,Tôi biết sử dụng mạng xã hội để đăng tin và tìm khách,fit-section · button · Tôi biết sử dụng mạng xã hội để đăng tin và tìm khách
+tpa,text_051,"Tôi có hứng thú với nhà phố, không gian sống hoặc mặt bằng kinh doanh","fit-section · button · Tôi có hứng thú với nhà phố, không gian sống hoặc mặt bằng kinh doanh"
+tpa,text_052,Tôi muốn phát triển kỹ năng đàm phán và tăng thu nhập theo năng lực,fit-section · button · Tôi muốn phát triển kỹ năng đàm phán và tăng thu nhập theo năng lực
+tpa,text_053,01,job-section · time · 01
+tpa,text_054,Marketing & Xây dựng nguồn khách tiềm năng,job-section · h3 · Marketing & Xây dựng nguồn khách tiềm năng
+tpa,text_055,"Đăng tin, sáng tạo nội dung và khai thác khách hàng trên Facebook, TikTok, Threads, hội nhóm hoặc nền tảng phù hợp.","job-section · p · Đăng tin, sáng tạo nội dung và khai thác khách hàng trên Facebook, Tik"
+tpa,text_056,02,job-section · time · 02
+tpa,text_057,Khảo sát nguồn nhà & Tư vấn phương án thuê,job-section · h3 · Khảo sát nguồn nhà & Tư vấn phương án thuê
+tpa,text_058,"Tìm hiểu diện tích, công năng, giá thuê, khu vực và mục đích sử dụng để đề xuất sản phẩm phù hợp.","job-section · p · Tìm hiểu diện tích, công năng, giá thuê, khu vực và mục đích sử dụng đ"
+tpa,text_059,03,job-section · time · 03
+tpa,text_060,"Dẫn khách, hỗ trợ đàm phán & ký kết","job-section · h3 · Dẫn khách, hỗ trợ đàm phán & ký kết"
+tpa,text_061,"Hỗ trợ khách xem nhà, trao đổi điều kiện thuê, hoàn thiện quá trình ký kết và chăm sóc sau tư vấn.","job-section · p · Hỗ trợ khách xem nhà, trao đổi điều kiện thuê, hoàn thiện quá trình ký"
+tpa,text_062,Số giao dịch / tháng:,income-section · label · Số giao dịch / tháng:
+tpa,text_063,Doanh thu trung bình / giao dịch:,income-section · label · Doanh thu trung bình / giao dịch:
+tpa,text_064,Thu nhập tham khảo,income-section · span · Thu nhập tham khảo
+tpa,text_065,*Chỉ mang tính minh họa. Thu nhập thực tế phụ thuộc chính sách từng thời kỳ và kết quả giao dịch.,income-section · small · *Chỉ mang tính minh họa. Thu nhập thực tế phụ thuộc chính sách từng th
+tpa,text_066,Định hướng phát triển,growth-section · h3 · Định hướng phát triển
+tpa,text_067,Từ nền tảng đến vai trò quản lý,growth-section · span · Từ nền tảng đến vai trò quản lý
+tpa,text_068,01,growth-section · em · 01
+tpa,text_069,Chuyên viên tư vấn,growth-section · strong · Chuyên viên tư vấn
+tpa,text_070,02,growth-section · em · 02
+tpa,text_071,Leader Team,growth-section · strong · Leader Team
+tpa,text_072,03,growth-section · em · 03
+tpa,text_073,Trưởng phòng kinh doanh,growth-section · strong · Trưởng phòng kinh doanh
+tpa,text_074,04,growth-section · em · 04
+tpa,text_075,Giám đốc bộ phận,growth-section · strong · Giám đốc bộ phận
+tpa,text_076,TPA Office,house-workplace-section · span · TPA Office
+tpa,text_077,39 Mai Văn Vĩnh,house-workplace-section · h3 · 39 Mai Văn Vĩnh
+tpa,text_078,"39 Mai Văn Vĩnh, Phường Tân Hưng, Quận 7, TP.HCM","house-workplace-section · p · 39 Mai Văn Vĩnh, Phường Tân Hưng, Quận 7, TP.HCM"
+tpa,text_079,Training trực tiếp,house-workplace-section · span · Training trực tiếp
+tpa,text_080,Leader đồng hành,house-workplace-section · span · Leader đồng hành
+tpa,text_081,Trung tâm TP.HCM,house-workplace-section · span · Trung tâm TP.HCM
+tpa,text_082,Chỉ đường,house-workplace-section · a · Chỉ đường
+tpa,text_083,Mở Google Maps,house-workplace-section · a · Mở Google Maps
+tpa,text_084,Chưa có kinh nghiệm TPA có ứng tuyển được không?,faq-section · summary · Chưa có kinh nghiệm TPA có ứng tuyển được không?
+tpa,text_085,"Có. Người mới được training kiến thức sản phẩm, cách khảo sát nhà, tư vấn nhu cầu và hỗ trợ khách theo từng bước.","faq-section · p · Có. Người mới được training kiến thức sản phẩm, cách khảo sát nhà, tư "
+tpa,text_086,Công việc có thường xuyên khảo sát và dẫn khách không?,faq-section · summary · Công việc có thường xuyên khảo sát và dẫn khách không?
+tpa,text_087,Có. Đây là vị trí thực chiến nên bạn cần chủ động di chuyển để khảo sát nguồn nhà và hỗ trợ khách xem sản phẩm.,faq-section · p · Có. Đây là vị trí thực chiến nên bạn cần chủ động di chuyển để khảo sá
+tpa,text_088,Full-time và Part-time khác nhau thế nào?,faq-section · summary · Full-time và Part-time khác nhau thế nào?
+tpa,text_089,"Hai hình thức khác nhau về thời gian hoạt động, mức độ cam kết và chính sách thu nhập tương ứng.","faq-section · p · Hai hình thức khác nhau về thời gian hoạt động, mức độ cam kết và chín"
+tpa,text_090,Quy trình ứng tuyển thế nào?,faq-section · summary · Quy trình ứng tuyển thế nào?
+tpa,text_091,Gửi hồ sơ → Phỏng vấn tại 39 Mai Văn Vĩnh → Training → Bắt đầu hoạt động cùng Leader.,faq-section · p · Gửi hồ sơ → Phỏng vấn tại 39 Mai Văn Vĩnh → Training → Bắt đầu hoạt độ
+tpa,text_092,Họ và tên,apply-section · label · Họ và tên
+tpa,text_093,Số điện thoại / Zalo,apply-section · label · Số điện thoại / Zalo
+tpa,text_094,Năm sinh,apply-section · label · Năm sinh
+tpa,text_095,Văn phòng làm việc,apply-section · label · Văn phòng làm việc
+tpa,text_096,39 Mai Văn Vĩnh – Quận 7 cũ,apply-section · option · 39 Mai Văn Vĩnh – Quận 7 cũ
+tpa,text_097,Hình thức,apply-section · label · Hình thức
+tpa,text_098,Full-time,apply-section · option · Full-time
+tpa,text_099,Part-time,apply-section · option · Part-time
+tpa,text_100,"Chưa chắc, cần tư vấn thêm","apply-section · option · Chưa chắc, cần tư vấn thêm"
+tpa,text_101,Link Facebook / Portfolio nếu có,apply-section · label · Link Facebook / Portfolio nếu có
+tpa,text_102,Đính kèm CV,apply-section · strong · Đính kèm CV
+tpa,text_103,"PDF, DOCX, JPG hoặc PNG · tối đa 10MB","apply-section · small · PDF, DOCX, JPG hoặc PNG · tối đa 10MB"
+tpa,text_104,Chọn tệp,apply-section · span · Chọn tệp
+tpa,text_105,Gửi hồ sơ ứng tuyển,apply-section · button · Gửi hồ sơ ứng tuyển
+tpa,text_106,Unite TPA Career,footer · strong · Unite TPA Career
+tpa,text_107,Build your career from real action.,footer · span · Build your career from real action.
+tpa,text_108,Xem JD Căn hộ,footer · a · Xem JD Căn hộ
+tpa,text_109,Lên đầu trang ↑,footer · a · Lên đầu trang ↑
+tpa,text_110,Công việc,global · a · Công việc
+tpa,text_111,Thu nhập,global · a · Thu nhập
+tpa,text_112,Lộ trình,global · a · Lộ trình
+tpa,text_113,Nơi làm việc,global · a · Nơi làm việc
+tpa,text_114,Ứng tuyển ngay,global · a · Ứng tuyển ngay
+tpa,text_115,Ứng tuyển ngay,global · a · Ứng tuyển ngay
+index,text_121,Nguyễn Văn A,apply-section · input · Nguyễn Văn A
+index,text_122,09xx xxx xxx,apply-section · input · 09xx xxx xxx
+index,text_123,2003,apply-section · input · 2003
+index,text_124,https://facebook.com/...,apply-section · input · https://facebook.com/...
+nha-nguyen-can,text_117,Nguyễn Văn A,apply-section · input · Nguyễn Văn A
+nha-nguyen-can,text_118,09xx xxx xxx,apply-section · input · 09xx xxx xxx
+nha-nguyen-can,text_119,2003,apply-section · input · 2003
+nha-nguyen-can,text_120,https://facebook.com/...,apply-section · input · https://facebook.com/...
+tpa,text_116,Nguyễn Văn A,apply-section · input · Nguyễn Văn A
+tpa,text_117,09xx xxx xxx,apply-section · input · 09xx xxx xxx
+tpa,text_118,2003,apply-section · input · 2003
+tpa,text_119,https://facebook.com/...,apply-section · input · https://facebook.com/...

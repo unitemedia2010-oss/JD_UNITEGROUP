@@ -1,6 +1,6 @@
 # Quản trị nội dung 3 trang
 
-Mở https://unitemedia2010-oss.github.io/JD_UNITEGROUP/admin.html. Chọn Căn hộ, Nhà nguyên căn hoặc TPA; bấm đoạn chữ trong bản xem trước, gõ trực tiếp, rồi bấm **Lưu nội dung**. Nút Lưu chỉ báo thành công khi đọc lại được đúng nội dung từ tab Web_Content.
+Mở https://unitemedia2010-oss.github.io/JD_UNITEGROUP/admin.html. Chọn Căn hộ, Nhà nguyên căn hoặc TPA; bấm chữ trong bản xem trước, gõ trực tiếp, rồi bấm **Lưu nội dung**. Số thứ tự, tiêu đề, mô tả, nút, nhãn biểu mẫu, FAQ, chân trang và chữ nhỏ đều có thể chọn. Những mục khó bấm như lựa chọn trong danh sách và chữ gợi ý nhập liệu có trong mục **Tìm chữ cần sửa** bên phải. Nút Lưu chỉ báo thành công khi đọc lại được đúng nội dung từ tab Web_Content.
 
 ## Kích hoạt nút Lưu
 
@@ -9,7 +9,7 @@ Mở https://unitemedia2010-oss.github.io/JD_UNITEGROUP/admin.html. Chọn Căn 
 3. Lưu, rồi **Deploy → Manage deployments → Edit → New version → Deploy**. Giữ deployment hiện tại để URL /exec trong ba file config không đổi.
 4. Mở URL /exec?action=health; kết quả cần có version V32_CMS_FORM_ACK và cmsReady true. Sau đó mở admin.html, nhập mật khẩu vừa đặt và thử sửa một chữ không ảnh hưởng nội dung quan trọng. Xem thông báo xác nhận, tải lại trang công khai và kiểm tra.
 
-Google Sheet Web_Content vẫn là nơi lưu dữ liệu, nhưng nhân viên content làm việc trên trang quản trị. Nếu tab này bị xóa, lần lưu tiếp theo sẽ tạo lại tab cùng hàng tiêu đề. Phần văn bản chưa có dấu viền khi rê chuột vẫn nằm trong HTML và cần cập nhật bằng mã nguồn.
+Google Sheet Web_Content vẫn là nơi lưu dữ liệu, nhưng nhân viên content làm việc trên trang quản trị. Nếu tab này bị xóa, lần lưu tiếp theo sẽ tạo lại tab cùng hàng tiêu đề. Không cần dán lại toàn bộ CMS_Template.csv: khi lưu một vị trí mới, hệ thống tự thêm hàng tương ứng. Các giá trị được tính tự động (như thu nhập) và dữ liệu từ tab Training, Chi nhánh, Hình ảnh văn hóa được cập nhật ở nguồn dữ liệu tương ứng.
 
 ## Tình trạng dữ liệu Training
 

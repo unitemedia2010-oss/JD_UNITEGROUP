@@ -8,7 +8,10 @@
   const password=document.getElementById('adminPassword');
   const saveButton=document.getElementById('saveButton');
   const cancelButton=document.getElementById('cancelButton');
-  let page='index',cms={},active=null,original='',previewDoc=null;
+  const editorText=document.getElementById('editorText');
+  const fieldSearch=document.getElementById('fieldSearch');
+  const fieldList=document.getElementById('fieldList');
+  let page='index',cms={},active=null,activeHost=null,editMode='',original='',textSpacing=null,previewDoc=null;
 
   function setStatus(message,type=''){
     status.textContent=message;
@@ -68,33 +71,102 @@
     doc.querySelectorAll('[data-cms]').forEach(el=>{
       const key=el.getAttribute('data-cms');
       const value=cms[page]?.[key]??cms.global?.[key];
-      if(value) el.innerHTML=cleanHtml(value);
+      if(!value) return;
+      if(el.dataset.cmsTarget==='text'){
+        const node=[...el.childNodes].find(child=>child.nodeType===Node.TEXT_NODE&&child.textContent.trim());
+        if(node){
+          const text=node.textContent;
+          node.textContent=text.match(/^\s*/)[0]+value+text.match(/\s*$/)[0];
+        }
+      }else if(el.dataset.cmsTarget==='placeholder') el.placeholder=value;
+      else if(el.tagName==='OPTION') el.textContent=value;
+      else el.innerHTML=cleanHtml(value);
     });
   }
+  function renderFieldList(){
+    if(!previewDoc) return;
+    const query=fieldSearch.value.trim().toLocaleLowerCase('vi');
+    fieldList.replaceChildren();
+    let count=0;
+    previewDoc.querySelectorAll('[data-cms]').forEach(el=>{
+      const label=(el.dataset.cmsTarget==='placeholder'?`Ví dụ nhập: ${el.placeholder}`:el.dataset.cmsTarget==='text'
+        ?[...el.childNodes].filter(node=>node.nodeType===Node.TEXT_NODE).map(node=>node.textContent).join(' ')
+        :el.textContent).trim().replace(/\s+/g,' ');
+      if(!label) return;
+      if(query&&!`${label} ${el.dataset.cms}`.toLocaleLowerCase('vi').includes(query)) return;
+      const button=document.createElement('button');
+      button.type='button';
+      button.textContent=label.length>76?label.slice(0,76)+'…':label;
+      button.title=label;
+      button.addEventListener('click',()=>{
+        if(activeHost&&activeHost!==el){setStatus('Hãy lưu hoặc hủy đoạn chữ đang sửa trước.','error');return;}
+        el.closest('details')?.setAttribute('open','');
+        (el.tagName==='OPTION'?el.closest('select'):el).scrollIntoView({behavior:'smooth',block:'center'});
+        selectField(el);
+      });
+      fieldList.appendChild(button);
+      count++;
+    });
+    document.getElementById('fieldCount').textContent=`${count} vị trí`;
+  }
   function leaveEdit(restore){
-    if(!active) return;
-    if(restore) active.innerHTML=original;
-    active.removeAttribute('contenteditable');
-    active.classList.remove('admin-editing');
-    active=null;original='';
+    if(!activeHost) return;
+    if(editMode==='text'){
+      const value=restore?original:active.textContent;
+      active.replaceWith(previewDoc.createTextNode(textSpacing[0]+value+textSpacing[1]));
+    }else if(editMode==='option'||editMode==='placeholder'){
+      if(restore){
+        if(editMode==='placeholder') activeHost.placeholder=original;
+        else activeHost.textContent=original;
+      }
+    }else{
+      if(restore) activeHost.innerHTML=original;
+      activeHost.removeAttribute('contenteditable');
+    }
+    activeHost.classList.remove('admin-editing');
+    active=null;activeHost=null;editMode='';original='';textSpacing=null;
+    editorText.hidden=true;
     document.getElementById('fieldTitle').textContent='Chọn một đoạn chữ';
     document.getElementById('fieldHelp').textContent='Bấm vào chữ có viền khi rê chuột ở bản xem trước. Con trỏ sẽ xuất hiện ngay trên chữ để bạn sửa.';
     document.getElementById('fieldMeta').hidden=true;
     saveButton.disabled=true;cancelButton.disabled=true;
+    renderFieldList();
   }
   function selectField(el){
-    if(active&&active!==el){setStatus('Hãy lưu hoặc hủy đoạn chữ đang sửa trước.','error');return;}
-    if(active===el) return;
-    active=el;
-    original=el.innerHTML;
-    el.setAttribute('contenteditable','true');
+    if(activeHost&&activeHost!==el){setStatus('Hãy lưu hoặc hủy đoạn chữ đang sửa trước.','error');return;}
+    if(activeHost===el) return;
+    activeHost=el;
+    if(el.dataset.cmsTarget==='text'){
+      const node=[...el.childNodes].find(child=>child.nodeType===Node.TEXT_NODE&&child.textContent.trim());
+      if(!node){activeHost=null;return;}
+      const text=node.textContent;
+      const prefix=text.match(/^\s*/)[0],suffix=text.match(/\s*$/)[0];
+      original=text.slice(prefix.length,text.length-suffix.length);
+      textSpacing=[prefix,suffix];
+      active=previewDoc.createElement('span');
+      active.className='admin-text-fragment';
+      active.textContent=original;
+      node.replaceWith(active);
+      active.setAttribute('contenteditable','true');
+      editMode='text';
+    }else if(el.tagName==='OPTION'||el.dataset.cmsTarget==='placeholder'){
+      active=el;original=el.dataset.cmsTarget==='placeholder'?el.placeholder:el.textContent;
+      editMode=el.dataset.cmsTarget==='placeholder'?'placeholder':'option';
+      editorText.hidden=false;
+      editorText.value=original;
+    }else{
+      active=el;original=el.innerHTML;editMode='html';
+      el.setAttribute('contenteditable','true');
+    }
     el.classList.add('admin-editing');
     document.getElementById('fieldTitle').textContent='Đang sửa trên trang';
-    document.getElementById('fieldHelp').textContent='Gõ trực tiếp vào chữ đang được tô viền. Bấm “Lưu nội dung” khi xong.';
+    document.getElementById('fieldHelp').textContent=editMode==='option'||editMode==='placeholder'
+      ?'Sửa nội dung trong ô bên dưới rồi bấm “Lưu nội dung”.'
+      :'Gõ trực tiếp vào chữ đang được tô viền. Bấm “Lưu nội dung” khi xong.';
     document.getElementById('fieldKey').textContent=el.dataset.cms;
     document.getElementById('fieldMeta').hidden=false;
     saveButton.disabled=false;cancelButton.disabled=false;
-    el.focus();
+    if(editMode==='option'||editMode==='placeholder') editorText.focus(); else active.focus();
     setStatus('Đang sửa '+el.dataset.cms+'.');
   }
   function setupPreview(){
@@ -110,7 +182,8 @@
       '.reveal,.reveal-item,.reveal-stagger > *,.hero .eyebrow,.hero-title .title-line,.hero-lead,.hero-badges span,.hero-actions .btn,.hero-card{opacity:1!important;visibility:visible!important;transform:none!important;filter:none!important}',
       '[data-cms]{cursor:text!important;outline:2px solid transparent;outline-offset:5px}',
       '[data-cms]:hover{outline-color:#4f9e48!important;background:rgba(201,239,160,.2)!important}',
-      '[data-cms].admin-editing{outline:3px solid #357a3e!important;background:rgba(201,239,160,.28)!important}'
+      '[data-cms].admin-editing{outline:3px solid #357a3e!important;background:rgba(201,239,160,.28)!important}',
+      '.admin-text-fragment{outline:2px solid #357a3e!important;min-width:1ch;display:inline!important}'
     ].join('\n');
     doc.head.appendChild(style);
     doc.querySelectorAll('.training-board').forEach(board=>{board.innerHTML='<p class="training-empty">Lịch Training được xem trên trang công khai.</p>';});
@@ -122,6 +195,7 @@
     const logo=doc.getElementById('brandLogo');
     if(logo&&logoUrls[page]) logo.src=logoUrls[page];
     applyCms(doc);
+    doc.querySelectorAll('details').forEach(item=>item.open=true);
     doc.addEventListener('click',event=>{
       const el=event.target.closest?.('[data-cms]');
       if(active&&active.contains(event.target)) return;
@@ -130,6 +204,7 @@
       if(el) selectField(el);
     },true);
     doc.addEventListener('submit',event=>event.preventDefault(),true);
+    renderFieldList();
     setStatus('Bản xem trước đã sẵn sàng. Rê chuột lên chữ để chọn.');
   }
   function changePage(next){
@@ -142,11 +217,12 @@
     frame.src=pageFiles[page];
   }
   async function save(){
-    if(!active||!endpoint) return;
-    const key=active.dataset.cms;
-    const value=cleanHtml(active.innerHTML).trim();
+    if(!activeHost||!endpoint) return;
+    const key=activeHost.dataset.cms;
+    const value=editMode==='option'||editMode==='placeholder'?editorText.value.trim():
+      editMode==='text'?active.textContent.trim():cleanHtml(active.innerHTML).trim();
     if(!value){setStatus('Nội dung không được để trống.','error');return;}
-    if(value===cleanHtml(original).trim()){leaveEdit(false);setStatus('Nội dung chưa thay đổi.');return;}
+    if(value===(editMode==='html'?cleanHtml(original).trim():original.trim())){leaveEdit(false);setStatus('Nội dung chưa thay đổi.');return;}
     if(!password.value){setStatus('Nhập mật khẩu quản trị trước khi lưu.','error');password.focus();return;}
     saveButton.disabled=true;
     setStatus('Đang lưu và kiểm tra dữ liệu trên Sheet…');
@@ -160,14 +236,17 @@
       for(let attempt=0;attempt<8;attempt++){
         await new Promise(resolve=>setTimeout(resolve,850));
         try{await readCms();}catch(_){continue;}
-        if(cleanHtml(cms[page]?.[key]??'')===value){verified=true;break;}
+        if((editMode==='html'?cleanHtml(cms[page]?.[key]??''):cms[page]?.[key])===value){verified=true;break;}
       }
       if(!verified){
         setStatus('Chưa xác nhận được nội dung đã lưu. Kiểm tra mật khẩu, phiên bản Apps Script và tab Web_Content.','error');
         saveButton.disabled=false;
         return;
       }
-      active.innerHTML=value;
+      if(editMode==='option') activeHost.textContent=value;
+      else if(editMode==='placeholder') activeHost.placeholder=value;
+      else if(editMode==='text') active.textContent=value;
+      else active.innerHTML=value;
       leaveEdit(false);
       setStatus('Đã lưu và xác nhận nội dung trong Web_Content. Tải lại trang công khai để xem.','success');
     }catch(error){
@@ -184,6 +263,7 @@
   }));
   saveButton.addEventListener('click',save);
   cancelButton.addEventListener('click',()=>{leaveEdit(true);setStatus('Đã hủy thay đổi chưa lưu.');});
+  fieldSearch.addEventListener('input',renderFieldList);
   readCms().then(()=>{if(frame.contentDocument?.readyState==='complete') setupPreview();else setStatus('Đang tải bản xem trước…');})
     .catch(error=>setStatus(error.message+' Bản xem trước vẫn có thể mở.','error'));
 })();

@@ -920,7 +920,19 @@ async function loadCMSData() {
       let val = cms[currentPage]?.[key];
       if (!val) val = cms['global']?.[key];
       if (val) {
-        el.innerHTML = sanitizeCmsHtml(val);
+        if (el.dataset.cmsTarget === 'text') {
+          const node = [...el.childNodes].find(child => child.nodeType === Node.TEXT_NODE && child.textContent.trim());
+          if (node) {
+            const original = node.textContent;
+            node.textContent = original.match(/^\s*/)[0] + val + original.match(/\s*$/)[0];
+          }
+        } else if (el.dataset.cmsTarget === 'placeholder') {
+          el.placeholder = val;
+        } else if (el.tagName === 'OPTION') {
+          el.textContent = val;
+        } else {
+          el.innerHTML = sanitizeCmsHtml(val);
+        }
       }
     });
   } catch(e) {

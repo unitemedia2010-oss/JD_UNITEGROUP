@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <title>Quản trị nội dung | Unite Career</title>
-  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/admin.css?v=2">
 </head>
 <body>
   <header class="admin-header">
@@ -42,15 +42,21 @@
         <h2 id="fieldTitle">Chọn một đoạn chữ</h2>
         <p id="fieldHelp">Bấm vào chữ có viền khi rê chuột ở bản xem trước. Con trỏ sẽ xuất hiện ngay trên chữ để bạn sửa.</p>
         <div class="field-meta" id="fieldMeta" hidden><span>Vị trí trong trang</span><code id="fieldKey"></code></div>
+        <textarea id="editorText" aria-label="Nội dung lựa chọn" rows="3" hidden></textarea>
         <div class="editor-actions">
           <button type="button" id="saveButton" class="save" disabled>Lưu nội dung</button>
           <button type="button" id="cancelButton" class="cancel" disabled>Hủy sửa</button>
         </div>
-        <div class="editor-note">Sau khi lưu, hãy mở trang công khai và tải lại để kiểm tra nội dung. Những chữ chưa có dấu chọn sửa vẫn nằm trong mã HTML.</div>
+        <details class="field-browser">
+          <summary>Tìm chữ cần sửa <span id="fieldCount"></span></summary>
+          <input id="fieldSearch" type="search" placeholder="Tìm theo nội dung hoặc mã vị trí" aria-label="Tìm chữ cần sửa">
+          <div id="fieldList" class="field-list"></div>
+        </details>
+        <div class="editor-note">Có thể bấm trực tiếp vào chữ trong bản xem trước hoặc tìm ở danh sách trên. Lịch Training, địa chỉ chi nhánh và ảnh văn hóa lấy từ dữ liệu riêng.</div>
       </aside>
     </div>
   </main>
   <script src="data/config.js"></script>
-  <script src="js/admin.js"></script>
+  <script src="js/admin.js?v=2"></script>
 </body>
 </html>
