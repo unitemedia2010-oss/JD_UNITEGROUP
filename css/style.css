@@ -1346,15 +1346,23 @@ html[data-theme='dark']{
 }
 
 /* Tu chon co chu khi CMS gan noi dung dai: xuong dong thay vi cat chu */
-.hero-title-color-match .title-line,
+.hero-title,
 .hero-title .title-line{
   max-width:100% !important;
+  overflow:visible !important;
+}
+/* cho du mot chut cho phan chu cham xuong duoi, tranh chu bi cat duoi dong */
+.hero-title .title-line{
+  padding-bottom:.08em;
+  margin-bottom:-.08em;
 }
 .title-line.fit-wrapped,
 [data-fit-text].fit-wrapped{
   white-space:normal !important;
   line-height:1.06 !important;
   letter-spacing:-.045em !important;
+  overflow-wrap:anywhere !important;
+  word-break:break-word !important;
   text-wrap:balance;
 }
 

@@ -1,56 +1,64 @@
 (() => {
   'use strict';
-  /* Tu chon kich thuoc chu de moi dong tieu de vua trong khung, tranh chu bi cat.
-     - Do lai chieu rong tu nhien cua dong chu (noi dung sau khi CMS gan).
-     - Giam dan font-size cho den khi vua khung, hoac xuong kich thuoc toi thieu.
-     - Neu van tran, cho phep xuong dong thay vi cat chu.
-     - Tu chay lai khi doi kich thuoc cua so, doi theme, doi noi dung CMS. */
+  /* Tu chon kich thuoc chu cho tung dong tieu de de chu luon vua khung, khong bao gio bi cat.
+     - Do chieu rong chu that bang Range (do chinh xac hon scrollWidth, co ca pho chu nhoi ra ngoai).
+     - Giam dan font-size cho den khi vua khong cha va vua man hinh.
+     - Xuong toi kich thuoc toi thieu thi cho phep xuong dong thay vi cat chu.
+     - Chay lai nhieu lan sau khi font / noi dung CMS nap xong, va moi khi doi kich thuoc cua so. */
   const MIN_PX=20;
+  const GUTTER=18;
   const SELECTORS=[
     '.hero-title .title-line',
     '.title-line',
     '.tpa-page h1 span',
     '[data-fit-text]'
   ].join(',');
-  let bases=new WeakMap();
+  const range=document.createRange();
 
-  function baseSize(el){
-    if(bases.has(el)) return bases.get(el);
-    const raw=parseFloat(getComputedStyle(el).fontSize)||32;
-    bases.set(el,raw);
-    return raw;
+  function textWidth(el){
+    range.selectNodeContents(el);
+    const box=range.getBoundingClientRect();
+    /* bo qua dong trong (Range gop ca \n) */
+    const rects=[...range.getClientRects()].filter(r=>r.height>1);
+    if(!rects.length) return box.width;
+    return rects.reduce((sum,r)=>sum+r.width,0);
+  }
+  function fits(el,avail){
+    return textWidth(el)<=avail+0.5;
   }
   function reset(el){
-    /* luon doc lai co chu goc tu CSS, bo qua gia tri inline da tu co truoc do,
-       neu khong thi chu se bi giu o kich thuoc nho sau khi sua lai noi dung */
+    /* doc lai co chu goc tu CSS, bo qua gia tri inline da tu co truoc do,
+       neu khong thi chu se bi kieu o kich thuoc nho sau khi sua lai noi dung */
     el.style.fontSize='';
     el.classList.remove('fit-wrapped');
-    bases.delete(el);
     const base=parseFloat(getComputedStyle(el).fontSize)||32;
     el.style.fontSize=base+'px';
     return base;
   }
-  function fits(el,avail){
-    return el.scrollWidth<=avail+1;
-  }
   function fitLine(el){
-    if(!el.isConnected) return;
+    if(!el.isConnected||!el.textContent.trim()) return;
     const parent=el.parentElement;
     if(!parent||!parent.clientWidth) return;
     const base=reset(el);
-    /* chu phai vua ca trong khong cha va con nam trong man hinh */
-    const view=document.documentElement.clientWidth;
+    const view=document.documentElement.clientWidth||window.innerWidth;
     const left=el.getBoundingClientRect().left;
-    const avail=Math.max(120,Math.min(parent.clientWidth,view-left-14));
+    const avail=Math.max(140,Math.min(parent.clientWidth,view-left-GUTTER));
     let size=base;
     let guard=0;
-    while(!fits(el,avail)&&size>MIN_PX&&guard<120){
+    while(!fits(el,avail)&&size>MIN_PX&&guard<160){
       size=Math.max(MIN_PX,size-1);
       el.style.fontSize=size+'px';
       guard++;
     }
     if(!fits(el,avail)&&/\s/.test(el.textContent||'')){
       el.classList.add('fit-wrapped');
+      const wrapped=parseFloat(getComputedStyle(el).fontSize)||MIN_PX;
+      /* xuong dong roi van tran? lam nho hon nua mot nhay */
+      let guard2=0;
+      while(!fits(el,avail)&&wrapped>MIN_PX&&guard2<160){
+        el.style.fontSize=(wrapped-1)+'px';
+        guard2++;
+      }
     }
   }
   function targets(){
@@ -58,24 +66,25 @@
     return list.filter(el=>!list.some(other=>other!==el&&other.contains(el)));
   }
   function fitAll(){
-    bases=new WeakMap();
     targets().forEach(fitLine);
   }
   let frame=0;
   let fallback=0;
   let settle=[];
   function schedule(){
-    /* chay lai them vai lan de bat truong hop font hay noi dung CMS vua gan xong */
+    /* chay lai them vai lan: font web, anh, va noi dung CMS thuong vien xong sau */
     settle.forEach(clearTimeout);
-    settle=[setTimeout(fitAll,120),setTimeout(fitAll,420),setTimeout(fitAll,1200)];
+    settle=[setTimeout(fitAll,120),setTimeout(fitAll,450),setTimeout(fitAll,1200),setTimeout(fitAll,2600)];
     if(frame||fallback) return;
     frame=requestAnimationFrame(()=>{frame=0;fitAll();});
     /* tab phu co the khong chay requestAnimationFrame, nen co them timer du phong */
     fallback=setTimeout(()=>{fallback=0;if(frame){cancelAnimationFrame(frame);frame=0;}fitAll();},80);
   }
   window.addEventListener('resize',schedule,{passive:true});
+  window.addEventListener('orientationchange',schedule,{passive:true});
   window.addEventListener('unite:content-updated',schedule);
   window.addEventListener('unite:resize-chrome',schedule);
+  window.addEventListener('load',schedule,{once:true});
   if(document.fonts?.ready) document.fonts.ready.then(schedule).catch(()=>{});
   if('ResizeObserver' in window){
     let first=true;
