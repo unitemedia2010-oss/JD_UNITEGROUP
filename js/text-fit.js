@@ -30,26 +30,27 @@
     el.style.fontSize=base+'px';
     return base;
   }
-  function fits(el){
-    return el.scrollWidth<=el.clientWidth+1;
+  function fits(el,avail){
+    return el.scrollWidth<=avail+1;
   }
   function fitLine(el){
     if(!el.isConnected) return;
     const parent=el.parentElement;
-    if(!parent) return;
+    if(!parent||!parent.clientWidth) return;
     const base=reset(el);
-    const available=parent.clientWidth;
-    if(!available) return;
+    /* chu phai vua ca trong khong cha va con nam trong man hinh */
+    const view=document.documentElement.clientWidth;
+    const left=el.getBoundingClientRect().left;
+    const avail=Math.max(120,Math.min(parent.clientWidth,view-left-14));
     let size=base;
     let guard=0;
-    while(!fits(el)&&size>MIN_PX&&guard<80){
+    while(!fits(el,avail)&&size>MIN_PX&&guard<120){
       size=Math.max(MIN_PX,size-1);
       el.style.fontSize=size+'px';
       guard++;
     }
-    if(!fits(el)&&/\s/.test(el.textContent||'')){
+    if(!fits(el,avail)&&/\s/.test(el.textContent||'')){
       el.classList.add('fit-wrapped');
-      bases.delete(el);
     }
   }
   function targets(){
@@ -62,12 +63,11 @@
   }
   let frame=0;
   let fallback=0;
-  function runNow(){
-    if(frame){cancelAnimationFrame(frame);frame=0;}
-    if(fallback){clearTimeout(fallback);fallback=0;}
-    fitAll();
-  }
+  let settle=[];
   function schedule(){
+    /* chay lai them vai lan de bat truong hop font hay noi dung CMS vua gan xong */
+    settle.forEach(clearTimeout);
+    settle=[setTimeout(fitAll,120),setTimeout(fitAll,420),setTimeout(fitAll,1200)];
     if(frame||fallback) return;
     frame=requestAnimationFrame(()=>{frame=0;fitAll();});
     /* tab phu co the khong chay requestAnimationFrame, nen co them timer du phong */
