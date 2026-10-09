@@ -1345,6 +1345,19 @@ html[data-theme='dark']{
   color:var(--hero-title-soft) !important;
 }
 
+/* Tu chon co chu khi CMS gan noi dung dai: xuong dong thay vi cat chu */
+.hero-title-color-match .title-line,
+.hero-title .title-line{
+  max-width:100% !important;
+}
+.title-line.fit-wrapped,
+[data-fit-text].fit-wrapped{
+  white-space:normal !important;
+  line-height:1.06 !important;
+  letter-spacing:-.045em !important;
+  text-wrap:balance;
+}
+
 html[data-theme='dark'] .hero-title-color-match .title-gold{
   text-shadow:0 0 26px rgba(255,224,51,.08);
 }

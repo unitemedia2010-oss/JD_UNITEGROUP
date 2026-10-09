@@ -943,6 +943,7 @@ async function loadCMSData() {
       }
     });
     window.UNITE_BLOCKS?.applySaved(document, APP_STATE.cms);
+    window.dispatchEvent(new Event('unite:content-updated'));
   } catch(e) {
     console.error('CMS Error', e);
   }
