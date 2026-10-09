@@ -3160,3 +3160,9 @@ body.tpa-page {
 
 /* Repeatable CMS content */
 .journey-track.cms-flexible{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))!important;align-items:stretch!important;padding-bottom:1rem!important}.journey-track.cms-flexible .journey-arrow{display:none}.journey-track.cms-flexible .journey-step{transform:none!important}.hero-facts:has(>div:nth-child(5)),.hero-metrics:has(>div:nth-child(4)){grid-template-columns:repeat(auto-fit,minmax(130px,1fr))!important}
+
+/* Text khong bao gio bi cat: do dong dai nhat, cho du duoi va ben phai */
+@media (max-width:600px){
+  .hero-highlights{grid-template-columns:1fr !important}
+}
+.hero-highlights span{min-width:0;overflow-wrap:anywhere}
