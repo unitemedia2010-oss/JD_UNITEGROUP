@@ -1314,7 +1314,7 @@ html[data-theme='dark']{
   flex-direction:column !important;
   gap:.02em !important;
   max-width:min(1080px, 94vw) !important;
-  line-height:.92 !important;
+  line-height:1 !important;
 }
 
 /* Reset old global h1 span gradient */
@@ -1351,6 +1351,10 @@ html[data-theme='dark']{
   max-width:100% !important;
   overflow:visible !important;
 }
+.hero-title .title-line{
+  line-height:1;
+}
+
 /* cho du mot chut cho phan chu cham xuong duoi, tranh chu bi cat duoi dong */
 .hero-title .title-line{
   padding-bottom:.08em;

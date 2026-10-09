@@ -17,11 +17,10 @@
 
   function textWidth(el){
     range.selectNodeContents(el);
-    const box=range.getBoundingClientRect();
-    /* bo qua dong trong (Range gop ca \n) */
-    const rects=[...range.getClientRects()].filter(r=>r.height>1);
-    if(!rects.length) return box.width;
-    return rects.reduce((sum,r)=>sum+r.width,0);
+    const rects=[...range.getClientRects()].filter(r=>r.height>1&&r.width>0);
+    /* thay vi cong don tat ca dong se lam chu bi co qua nho,
+lay do rong cua dong dai nhat - do la thu co quyet dinh */
+    return rects.reduce((max,r)=>Math.max(max,r.width),0);
   }
   function fits(el,avail){
     return textWidth(el)<=avail+0.5;
@@ -43,20 +42,21 @@
     const view=document.documentElement.clientWidth||window.innerWidth;
     const left=el.getBoundingClientRect().left;
     const avail=Math.max(140,Math.min(parent.clientWidth,view-left-GUTTER));
+    /* giu o co chu de doc duoc, khong co xuong qua nho; thua se xuong dong thay vi cat */
+    const floor=Math.max(MIN_PX,Math.round(base*0.55));
     let size=base;
     let guard=0;
-    while(!fits(el,avail)&&size>MIN_PX&&guard<160){
-      size=Math.max(MIN_PX,size-1);
+    while(!fits(el,avail)&&size>floor&&guard<160){
+      size=Math.max(floor,size-1);
       el.style.fontSize=size+'px';
       guard++;
     }
     if(!fits(el,avail)&&/\s/.test(el.textContent||'')){
       el.classList.add('fit-wrapped');
-      const wrapped=parseFloat(getComputedStyle(el).fontSize)||MIN_PX;
-      /* xuong dong roi van tran? lam nho hon nua mot nhay */
       let guard2=0;
-      while(!fits(el,avail)&&wrapped>MIN_PX&&guard2<160){
-        el.style.fontSize=(wrapped-1)+'px';
+      while(!fits(el,avail)&&size>MIN_PX&&guard2<160){
+        size=Math.max(MIN_PX,size-1);
+        el.style.fontSize=size+'px';
         guard2++;
       }
     }
