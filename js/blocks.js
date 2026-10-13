@@ -16,6 +16,9 @@
     {key:'req1',label:'Yêu cầu 01 - Kinh nghiệm',selector:'[data-cms-blocks="req1"]',item:':scope > li',fields:[['text','Nội dung','']]},
     {key:'req2',label:'Yêu cầu 02 - Tư duy nội dung',selector:'[data-cms-blocks="req2"]',item:':scope > li',fields:[['text','Nội dung','']]},
     {key:'req3',label:'Yêu cầu 03 - Kỹ năng bổ trợ',selector:'[data-cms-blocks="req3"]',item:':scope > li',fields:[['text','Nội dung','']]},
+    {key:'testfacts',label:'Bài test - Thông tin đề bài',selector:'[data-cms-blocks="testfacts"]',item:':scope > li',fields:[['text','Nội dung','']]},
+    {key:'testreqs',label:'Bài test - Yêu cầu',selector:'[data-cms-blocks="testreqs"]',item:':scope > li',fields:[['text','Nội dung','']]},
+    {key:'testsubmit',label:'Bài test - Cách nộp bài',selector:'[data-cms-blocks="testsubmit"]',item:':scope > li',fields:[['text','Nội dung','']]},
     {key:'areas',label:'Lựa chọn khu vực',selector:'select[name="area"]',item:':scope > option',fields:[['text','Khu vực','']]},
     {key:'types',label:'Lựa chọn hình thức',selector:'select[name="type"]',item:':scope > option',fields:[['text','Hình thức','']]}
   ];
@@ -74,6 +77,10 @@
     }else if(key==='office'){
       el=child(doc,'span',row.text);
     }else if(key==='channel1'||key==='channel2'||key==='req1'||key==='req2'||key==='req3'){
+      el=child(doc,'li',row.text);
+    }else if(key==='testfacts'||key==='testreqs'){
+      el=child(doc,'li',row.text);
+    }else if(key==='testsubmit'){
       el=child(doc,'li',row.text);
     }else if(key==='areas'||key==='types'){
       el=child(doc,'option',row.text);

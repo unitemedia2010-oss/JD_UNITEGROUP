@@ -473,9 +473,11 @@ function readFileAsBase64(file){
 
 
 function initFileUpload(){
-  document.querySelectorAll('#cvFile').forEach(input=>{
+  // Bat ky o upload nao trong form deu duoc gan su kien doi ten tep.
+  document.querySelectorAll('#applyForm input[type=file], .file-upload-card input[type=file]').forEach(input=>{
     const card=input.closest('.file-upload-card');
-    const fileName=card?.querySelector('#cvFileName');
+    const fileName=card?.querySelector('.file-upload-name, #cvFileName');
+    const emptyText=fileName?.dataset.empty || 'Chưa chọn tệp';
 
     const update=()=>{
       const file=input.files?.[0];
@@ -484,7 +486,7 @@ function initFileUpload(){
         if(fileName) fileName.textContent=`Đã chọn: ${file.name}`;
       }else{
         card?.classList.remove('has-file');
-        if(fileName) fileName.textContent='Chưa chọn tệp';
+        if(fileName) fileName.textContent=emptyText;
       }
     };
 
@@ -544,6 +546,23 @@ function initApplyForm(){
     const fileInput = $('#cvFile', form);
     const selectedFile = fileInput?.files?.[0];
 
+    /* Bai test bat buoc: chi can mot trong hai -
+       danh link bai test HOAC dinh kem file bai test.
+       Trang nao co #testFile moi kiem tra, trang khac giu nguyen hien trang. */
+    const testInput = $('#testFile', form);
+    if(testInput){
+      const testLink = String(data.testLink||'').trim();
+      const testFile = testInput.files?.[0];
+      if(!testLink && !testFile){
+        if(submitBtn) submitBtn.disabled = false;
+        note.textContent = 'Bạn chưa nộp bài test. Dán link bài test hoặc đính kèm file, hoặc gửi bài test qua email/Zalo kèm hồ sơ.';
+        showSubmitToast('loading','Thiếu bài test năng lực',note.textContent);
+        hideSubmitToast(2800);
+        note.scrollIntoView({behavior:'smooth',block:'center'});
+        return;
+      }
+    }
+
     const msg=[
       `Vị trí: ${data.position}`,
       `Họ tên: ${data.name||''}`,
@@ -552,7 +571,9 @@ function initApplyForm(){
       `Khu vực: ${data.area||''}`,
       `Hình thức: ${data.type||''}`,
       `Link Facebook/Portfolio: ${data.profile||''}`,
-      `CV: ${selectedFile ? selectedFile.name : 'Không đính kèm'}`
+      `Link bài test: ${data.testLink||''}`,
+      `CV: ${selectedFile ? selectedFile.name : 'Không đính kèm'}`,
+      `Bài test: ${testInput?.files?.[0]?.name || 'Không đính kèm'}`
     ].join('\n');
 
     const url=window.UNITE_CONFIG?.APPS_SCRIPT_URL;
@@ -568,6 +589,14 @@ function initApplyForm(){
       try{
         const cvFile = await readFileAsBase64(selectedFile);
         if(cvFile) data.cvFile = cvFile;
+
+        /* Gui kem cac file dinh kem khac (bai test) theo ten input */
+        const otherFiles = $$('input[type=file]', form)
+          .filter(input=>input.id!=='cvFile' && input.files?.[0]);
+        for(const input of otherFiles){
+          const encoded = await readFileAsBase64(input.files[0]);
+          if(encoded) data[input.name||input.id] = encoded;
+        }
 
         await fetch(url,{
           method:'POST',

@@ -36,8 +36,11 @@ const UNG_VIEN_HEADERS = [
   "Khu vực mong muốn",
   "Hình thức làm việc",
   "Link Facebook/Portfolio",
+  "Link bài test năng lực",
   "Tên file CV",
   "Link file CV",
+  "Tên file bài test",
+  "Link file bài test",
   "Nguồn ứng tuyển",
   "Thiết bị/Trình duyệt"
 ];
@@ -86,7 +89,7 @@ function setupCareerSheetsV29() {
 
   return traJson_({
     ok: true,
-    version: "V34_KOKO_LINH",
+    version: "V35_BAITEST",
     message: "Đã tạo 3 sheet riêng: Ứng viên Căn hộ, Ứng viên UCR và Ứng viên Koko Linh.",
     sheets: [TEN_SHEET.ungVienCanHo, TEN_SHEET.ungVienUcr, TEN_SHEET.ungVienKoko],
     maxCvMb: MAX_CV_MB
@@ -119,7 +122,7 @@ function doGet(e) {
     return traJson_({
       ok: true,
       message: "Career JD Apps Script đang hoạt động.",
-      version: "V34_KOKO_LINH",
+      version: "V35_BAITEST",
       cmsReady: (PropertiesService.getScriptProperties().getProperty("CMS_ADMIN_PASSWORD") || "").length >= 12,
       trainingReady: true,
       sheets: {
@@ -280,6 +283,8 @@ function luuUngVien_(data) {
 
   let cvName = "";
   let cvUrl = "";
+  let testName = "";
+  let testUrl = "";
 
   if (data.cvFile && data.cvFile.data) {
     const saved = luuFileCvLenDrive_(
@@ -289,6 +294,17 @@ function luuUngVien_(data) {
     );
     cvName = saved.name;
     cvUrl = saved.url;
+  }
+
+  // Bai test nang luc: ung vien co the gui link hoac dinh kem file
+  if (data.testFile && data.testFile.data) {
+    const savedTest = luuFileCvLenDrive_(
+      data.testFile,
+      (data.name || "Ung vien") + "_BAITEST",
+      channel.cvFolderName
+    );
+    testName = savedTest.name;
+    testUrl = savedTest.url;
   }
 
   const rowObject = {
@@ -301,8 +317,11 @@ function luuUngVien_(data) {
     "Khu vực mong muốn": data.area || "",
     "Hình thức làm việc": data.type || "",
     "Link Facebook/Portfolio": data.profile || "",
+    "Link bài test năng lực": data.testLink || "",
     "Tên file CV": cvName,
     "Link file CV": cvUrl,
+    "Tên file bài test": testName,
+    "Link file bài test": testUrl,
     "Nguồn ứng tuyển": data.source || "",
     "Thiết bị/Trình duyệt": data.userAgent || ""
   };
@@ -319,16 +338,21 @@ function luuUngVien_(data) {
     sheet.appendRow(row);
 
     const lastRow = sheet.getLastRow();
-    if (cvUrl) {
-      const cvUrlCol = headers.indexOf("Link file CV") + 1;
-      if (cvUrlCol > 0) {
-        const richText = SpreadsheetApp.newRichTextValue()
-          .setText("Mở CV")
-          .setLinkUrl(cvUrl)
-          .build();
-        sheet.getRange(lastRow, cvUrlCol).setRichTextValue(richText);
+
+    const ganLink_ = (tenCot, text, url) => {
+      const col = headers.indexOf(tenCot) + 1;
+      if (col > 0 && url) {
+        sheet.getRange(lastRow, col).setRichTextValue(
+          SpreadsheetApp.newRichTextValue()
+            .setText(text)
+            .setLinkUrl(url)
+            .build()
+        );
       }
-    }
+    };
+
+    ganLink_("Link file CV", "Mở CV", cvUrl);
+    ganLink_("Link file bài test", "Mở bài test", testUrl);
   } finally {
     lock.releaseLock();
   }
@@ -339,7 +363,9 @@ function luuUngVien_(data) {
     sheetName: channel.sheetName,
     brand: channel.brand,
     cvName,
-    cvUrl
+    cvUrl,
+    testName,
+    testUrl
   };
 }
 
@@ -489,7 +515,7 @@ function chuanHoaSheetUngVienV34() {
   } catch (err) {
     return traJson_({
       ok: false,
-      version: "V34_KOKO_LINH",
+      version: "V35_BAITEST",
       message: "Khong mo duoc Spreadsheet: " + err.message,
       sheets: {}
     });
@@ -552,6 +578,9 @@ function chuanHoaSheetUngVienV34() {
       DO_RONG["Link file CV"] = 110;
       DO_RONG["Nguồn ứng tuyển"] = 190;
       DO_RONG["Thiết bị/Trình duyệt"] = 240;
+      DO_RONG["Link bài test năng lực"] = 230;
+      DO_RONG["Tên file bài test"] = 200;
+      DO_RONG["Link file bài test"] = 120;
 
       headers.forEach(function (header, index) {
         const doRong = DO_RONG[header];
@@ -574,7 +603,7 @@ function chuanHoaSheetUngVienV34() {
 
   return traJson_({
     ok: true,
-    version: "V34_KOKO_LINH",
+    version: "V35_BAITEST",
     message: "Da chuan hoa dinh dang 3 sheet ung vien.",
     sheets: ketQua
   });
