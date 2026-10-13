@@ -688,14 +688,15 @@ function initScrollReveal(){
     '.hero-card',
     '.channel-grid',
     '.salary-grid',
-    '.req-grid'
+    '.req-grid',
+    '.tiktok-grid'
   ].join(',');
 
   document.querySelectorAll(selector).forEach(el=>{
     el.classList.add('reveal-item');
   });
 
-  document.querySelectorAll('.value-grid,.timeline,.gallery,.branch-list,.faq-list,.journey-track,.role-picks-grid,.quiz-options,.channel-grid,.salary-grid,.req-grid').forEach(el=>{
+  document.querySelectorAll('.value-grid,.timeline,.gallery,.branch-list,.faq-list,.journey-track,.role-picks-grid,.quiz-options,.channel-grid,.salary-grid,.req-grid,.tiktok-grid').forEach(el=>{
     el.classList.add('reveal-stagger');
   });
 
