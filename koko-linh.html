@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Koko Linh Career | Content Writer &amp; Creator (Part-time)</title>
+  <meta name="description" content="Tuyển Content Writer & Creator Part-time cho kênh Linh Trương Koko và Linh Địa Ốc Sài Gòn. Làm việc hybrid, có team Media hỗ trợ A-Z." />
+  <link rel="stylesheet" href="css/style.css?v=12" />
+</head>
+<body class="is-loading koko-page">
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <div class="page-intro" id="pageIntro" aria-hidden="true">
+    <div class="intro-mark">
+      <span></span>
+      <strong>KOKO LINH</strong>
+      <small>Career JD</small>
+    </div>
+  </div>
+
+  <div class="submit-toast" id="submitToast" aria-live="polite" aria-hidden="true">
+    <div class="toast-card" role="status">
+      <div class="toast-loader" id="toastLoader"></div>
+      <div class="toast-success" id="toastSuccess">
+        <div class="success-badge" aria-hidden="true"><span>✓</span></div>
+      </div>
+      <div class="toast-copy">
+        <strong id="toastTitle">Đang gửi hồ sơ</strong>
+        <p id="toastMessage">Hệ thống đang chuyển thông tin đến bộ phận tuyển dụng.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="global-watermark" aria-hidden="true">
+    <img id="bgWatermark" alt="" />
+  </div>
+
+  <header class="site-header">
+    <a href="#top" class="brand" aria-label="Koko Linh Career">
+      <img id="brandLogo" alt="Koko Linh logo" />
+      <span>
+        <strong data-cms="text_001">KOKO LINH</strong>
+        <small data-cms="text_002">Content Creator</small>
+      </span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Điều hướng chính">
+      <a href="#channels" data-cms="text_003">Hai kênh</a>
+      <a href="#job" data-cms="text_004">Công việc</a>
+      <a href="#salary" data-cms="text_005">Thu nhập</a>
+      <a href="#requirements" data-cms="text_006">Yêu cầu</a>
+      <a href="#apply" data-cms="text_007">Ứng tuyển</a>
+    </nav>
+
+    <a class="header-apply-cta" href="#apply" data-cms="text_008">Ứng tuyển ngay</a>
+
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Đổi chế độ giao diện">
+      <span id="themeIcon">◐</span>
+      <b id="themeLabel">Auto</b>
+    </button>
+  </header>
+
+  <main id="top">
+    <section class="hero section">
+      <div class="hero-bg">
+        <div class="gold-shader-layer" id="goldShader" aria-hidden="true"></div>
+        <div class="gold-orb orb-one"></div>
+        <div class="gold-orb orb-two"></div>
+        <div class="grid-glow"></div>
+      </div>
+
+      <div class="hero-content">
+        <p class="eyebrow" data-cms="hero_eyebrow">Koko Linh Career</p>
+
+        <nav class="career-product-switch" aria-label="Chọn kênh nội dung">
+          <a class="active" href="#channels" data-cms="text_009">Koko Linh</a>
+          <a href="#channels" data-cms="text_010">Linh Địa Ốc</a>
+        </nav>
+
+        <h1 class="hero-title hero-title-color-match koko-hero-title">
+          <span class="title-line title-main" data-cms="hero_title">Content Writer</span>
+          <span class="title-line title-gold" data-cms="hero_subtitle">&amp; Creator <span class="title-soft">(Part-time)</span></span>
+        </h1>
+        <p class="hero-lead" data-cms="hero_lead">
+          Sáng tạo kịch bản video ngắn cho 2 kênh chiến lược song song: xây dựng thương hiệu cá nhân
+          và tạo doanh thu từ bất động sản — có team Media lo trọn khâu quay dựng.
+        </p>
+
+        <div class="hero-highlights" aria-label="Điểm nổi bật" data-cms="blocks_highlights" data-cms-blocks="highlights">
+          <span data-cms="text_011" data-cms-target="text"><i aria-hidden="true">✓</i>3 ngày/tuần · 24 giờ</span>
+          <span data-cms="text_012" data-cms-target="text"><i aria-hidden="true">✓</i>Làm việc Hybrid</span>
+          <span data-cms="text_013" data-cms-target="text"><i aria-hidden="true">✓</i>Team Media hỗ trợ A-Z</span>
+          <span data-cms="text_014" data-cms-target="text"><i aria-hidden="true">✓</i>Lương cứng + 2 KPI thưởng</span>
+        </div>
+
+        <div class="hero-actions hero-actions-clean">
+          <a class="btn primary" href="#apply" data-cms="text_015">Ứng tuyển ngay</a>
+          <a class="hero-secondary-link" href="#channels" data-cms="text_016" data-cms-target="text">Xem 2 kênh nội dung<span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
+      <aside class="hero-card glass">
+        <div class="status-pill" data-cms="text_017">Đang tuyển</div>
+
+        <div class="role-picks role-summary">
+          <div class="role-summary-head">
+            <p class="tiny-label" data-cms="text_018">Vị trí tuyển dụng</p>
+            <span data-cms="text_019">01 vị trí</span>
+          </div>
+          <div class="role-list" aria-label="Các vị trí đang tuyển" data-cms="blocks_roles" data-cms-blocks="roles">
+            <span class="active" data-cms="text_020" data-cms-target="text"><i></i>Content Writer &amp; Creator</span>
+          </div>
+        </div>
+
+        <div class="hero-facts" aria-label="Thông tin nhanh về vị trí" data-cms="blocks_facts" data-cms-blocks="facts">
+          <div><span data-cms="text_021">Địa điểm</span><strong data-cms="text_022">TP.HCM + Online</strong></div>
+          <div><span data-cms="text_023">Hình thức</span><strong data-cms="text_024">Part-time 3 ngày</strong></div>
+          <div><span data-cms="text_025">Lương cứng</span><strong data-cms="text_026">5 – 7 triệu/tháng</strong></div>
+          <div><span data-cms="text_027">Hạn ứng tuyển</span><strong data-cms="text_028">20/10/2026</strong></div>
+        </div>
+        <div class="hero-metrics" data-cms="blocks_metrics" data-cms-blocks="metrics">
+          <div><b data-cms="text_029">24h</b><span data-cms="text_030">Khối lượng/tuần</span></div>
+          <div><b data-cms="text_031">2 kênh</b><span data-cms="text_032">Branding + Sale</span></div>
+          <div><b data-cms="text_033">Hybrid</b><span data-cms="text_034">Linh hoạt theo tuần</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section intro">
+      <div class="section-title">
+        <p class="eyebrow" data-cms="why_eyebrow">Why</p>
+        <h2 data-cms="why_title">Vì sao nên gia nhập hệ thống nội dung của Koko Linh?</h2>
+      </div>
+      <div class="value-grid value-grid-four" data-cms="blocks_values" data-cms-blocks="values">
+        <article class="value-card"><span data-cms="text_035">01</span><h3 data-cms="text_036">Hai kênh, hai mục tiêu</h3><p data-cms="text_037">Vừa xây dựng thương hiệu cá nhân cho Host, vừa tạo nguồn khách thuê nhà và chốt deal bất động sản.</p></article>
+        <article class="value-card"><span data-cms="text_038">02</span><h3 data-cms="text_039">Bạn sáng tạo, Media lo phần còn lại</h3><p data-cms="text_040">Team Media xịn xò hỗ trợ trọn khâu quay, dựng, chỉnh màu — bạn tập trung vào ý tưởng và câu chữ.</p></article>
+        <article class="value-card"><span data-cms="text_041">03</span><h3 data-cms="text_042">Học trực tiếp từ Host</h3><p data-cms="text_043">Làm việc sát chị Linh, nắm chất giọng, cá tính và nhịp nội dung để viết lời thoại “đúng người”.</p></article>
+        <article class="value-card"><span data-cms="text_044">04</span><h3 data-cms="text_045">Thu nhập minh bạch, thưởng tách mảng</h3><p data-cms="text_046">Lương cứng 5–7 triệu cộng thưởng KPI Branding và KPI Sale riêng biệt, gắn với kết quả thật.</p></article>
+      </div>
+    </section>
+
+    <section class="section channel-section" id="channels">
+      <div class="section-title">
+        <p class="eyebrow" data-cms="channels_eyebrow">Two Channels</p>
+        <h2 data-cms="channels_title">Bạn sẽ phục vụ 2 mục tiêu chiến lược song song</h2>
+        <p data-cms="channels_desc">Mỗi kênh có một tone riêng, một cách đo lường riêng. Việc của bạn là chuyển đổi tone linh hoạt giữa hai thế giới đó.</p>
+      </div>
+
+      <div class="channel-grid">
+        <article class="channel-card channel-brand">
+          <span class="channel-tag">Kênh 1 · Xây dựng nhân hiệu</span>
+          <h3 data-cms="text_047">Linh Trương Koko</h3>
+          <p class="channel-goal" data-cms="text_048">Đưa hình ảnh Host đến gần công chúng, tăng độ phủ và sự yêu thích.</p>
+          <ul class="channel-list" data-cms="blocks_channel1" data-cms-blocks="channel1">
+            <li>Vlog trải nghiệm các bộ môn thể thao bất ngờ</li>
+            <li>Sở thích, lối sống năng động của một người trẻ Sài Gòn</li>
+            <li>Những điều mới lạ, thú vị chỉ có ở TP.HCM</li>
+          </ul>
+          <div class="channel-kpi"><span data-cms="text_049">KPI thưởng</span><strong data-cms="text_050">Video lên xu hướng · đạt mốc view/follower</strong></div>
+        </article>
+
+        <article class="channel-card channel-sale">
+          <span class="channel-tag">Kênh 2 · Tạo chuyển đổi</span>
+          <h3 data-cms="text_051">Linh Địa Ốc Sài Gòn</h3>
+          <p class="channel-goal" data-cms="text_052">Thu hút khách thuê, tìm kiếm chủ nhà, ra số và chốt deal.</p>
+          <ul class="channel-list" data-cms="blocks_channel2" data-cms-blocks="channel2">
+            <li>Review chân thực không gian sống, căn hộ cho thuê</li>
+            <li>Thông tin thị trường ngách bất động sản dưới góc nhìn chuyên nghiệp</li>
+            <li>Vạch đúng điểm chạm của khách: giá cả, tiện ích, vị trí</li>
+          </ul>
+          <div class="channel-kpi"><span data-cms="text_053">KPI thưởng</span><strong data-cms="text_054">Khách hàng chuyển đổi thành công từ nguồn content</strong></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section fit-section" id="fit">
+      <div class="section-title narrow">
+        <p class="eyebrow" data-cms="quiz_eyebrow">Quick Match</p>
+        <h2 data-cms="quiz_title">Bạn có hợp với vị trí này không?</h2>
+        <p data-cms="quiz_desc">Chọn những điều đúng với bạn để xem mức độ phù hợp với công việc Content Writer.</p>
+      </div>
+
+      <div class="quiz-card glass">
+        <div class="quiz-options" id="quizOptions" data-cms="blocks_quiz" data-cms-blocks="quiz">
+          <button type="button" data-cms="text_055">Tôi từng viết kịch bản hoặc lời thoại video</button>
+          <button type="button" data-cms="text_056">Tôi hiểu cách làm Hook giữ chân người xem 3–5 giây đầu</button>
+          <button type="button" data-cms="text_057">Tôi theo dõi trend TikTok và biết tìm âm thanh đang hot</button>
+          <button type="button" data-cms="text_058">Tôi có portfolio, kênh cá nhân hoặc bài viết đã xuất bản</button>
+          <button type="button" data-cms="text_059">Tôi thoải mái đổi tone giữa vui vẻ và chuyên nghiệp</button>
+        </div>
+        <div class="quiz-result" id="quizResult">
+          <b data-cms="quiz_low_title">Chọn ít nhất 3 mục để xem mức độ phù hợp.</b>
+          <span data-cms="quiz_low_desc">Dù chưa từng làm Content, bạn vẫn có thể bắt đầu nếu có portfolio kể lại những gì bạn từng viết hoặc dựng.</span>
+        </div>
+        <div hidden aria-hidden="true"><span data-cms="quiz_mid_title">Bạn khá phù hợp.</span><span data-cms="quiz_mid_desc">Bạn đã có nền tảng về nội dung và cảm nhận được sự khác biệt giữa hai kênh. Điều còn thiếu thường là kinh nghiệm bám trend và tối ưu SEO.</span><span data-cms="quiz_high_title">Bạn rất phù hợp với vị trí này.</span><span data-cms="quiz_high_desc">Bạn chạm đúng những điểm mà vai trò này cần: khả năng viết lời thoại, nhạy với trend, biết chuyển tone linh hoạt và đã có portfolio thực tế.</span></div>
+      </div>
+    </section>
+
+    <section class="section job-section" id="job">
+      <div class="section-title">
+        <p class="eyebrow" data-cms="tasks_eyebrow">What you will do</p>
+        <h2 data-cms="tasks_title">Bạn sẽ làm gì ở Koko Linh?</h2>
+      </div>
+      <div class="timeline" data-cms="blocks_tasks" data-cms-blocks="tasks">
+        <article><time data-cms="text_060">01</time><div><h3 data-cms="text_061">Viết kịch bản đa phong cách cho TikTok</h3><p data-cms="text_062">Kênh Koko Linh: lời thoại cởi mở, trending, giải trí và truyền cảm hứng. Kênh Linh Địa Ốc: lời thoại thuyết phục, xoáy sâu điểm chạm của khách thuê mà không bị khô khan.</p></div></article>
+        <article><time data-cms="text_063">02</time><div><h3 data-cms="text_064">Phát triển nội dung Website chuẩn SEO</h3><p data-cms="text_065">Bài viết chuyên sâu chia sẻ kinh nghiệm thuê/cho thuê nhà, review các khu vực sống tại TP.HCM, tìm từ khóa và tối ưu bố cục.</p></div></article>
+        <article><time data-cms="text_066">03</time><div><h3 data-cms="text_067">Quản trị đa nền tảng &amp; lên lịch đăng</h3><p data-cms="text_068">Viết caption cho Fanpage/Instagram, tái chế nội dung từ source của team Media và sắp xếp lịch đăng bài xuyên suốt.</p></div></article>
+        <article><time data-cms="text_069">04</time><div><h3 data-cms="text_070">Phối hợp cùng Host và team Media</h3><p data-cms="text_071">Thống nhất ý tưởng với chị Linh, theo sát các buổi đi thực tế để kịch bản truyền tải đúng vibe và cá tính của Host.</p></div></article>
+        <article><time data-cms="text_072">05</time><div><h3 data-cms="text_073">Nhạy bén với trend và brief chuẩn xác</h3><p data-cms="text_074">Theo dõi nhạc, template, cách edit đang thịnh hành để brief ý tưởng rõ ràng, dễ làm cho team Media.</p></div></article>
+      </div>
+    </section>
+
+    <section class="section salary-section" id="salary">
+      <div class="section-title">
+        <p class="eyebrow" data-cms="salary_eyebrow">Compensation</p>
+        <h2 data-cms="salary_title">Lương cứng và hai mảng thưởng riêng</h2>
+        <p data-cms="salary_desc">Mức lương cứng thỏa thuận trực tiếp lúc phỏng vấn dựa trên Portfolio. Phần thưởng tách riêng cho từng mảng nên bạn biết rõ mình đang kiếm được từ đâu.</p>
+      </div>
+      <div class="salary-grid">
+        <article class="salary-card">
+          <span data-cms="text_075">Lương cứng</span>
+          <strong data-cms="text_076">5 – 7.000.000đ</strong>
+          <p data-cms="text_077">Mỗi tháng, thỏa thuận trực tiếp lúc phỏng vấn dựa trên Portfolio của bạn.</p>
+        </article>
+        <article class="salary-card">
+          <span data-cms="text_078">Thưởng KPI Branding</span>
+          <strong data-cms="text_079">Kênh Koko Linh</strong>
+          <p data-cms="text_080">Thưởng khi video lên xu hướng hoặc chạm các mốc view / follower đã đặt ra.</p>
+        </article>
+        <article class="salary-card">
+          <span data-cms="text_081">Thưởng KPI Sale</span>
+          <strong data-cms="text_082">Kênh Linh Địa Ốc</strong>
+          <p data-cms="text_083">Thưởng khi có khách hàng chuyển đổi thành công trực tiếp từ nguồn content bạn tạo ra.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section requirements-section" id="requirements">
+      <div class="section-title">
+        <p class="eyebrow" data-cms="req_eyebrow">Requirements</p>
+        <h2 data-cms="req_title">Chúng tôi đang tìm một người như bạn</h2>
+        <p data-cms="req_desc">Đây là những tiêu chí chúng tôi quan tâm khi đọc hồ sơ và portfolio của bạn.</p>
+      </div>
+
+      <div class="req-grid">
+        <article class="req-card">
+          <span class="req-index">01</span>
+          <h3>Kinh nghiệm thực chiến</h3>
+          <ul data-cms="blocks_req1" data-cms-blocks="req1">
+            <li>Từ 6 tháng – 1 năm làm Content Writer / Creator</li>
+            <li><b>Lợi thế lớn:</b> từng tự xây kênh hoặc tham gia xây dựng kênh TikTok/Reels cho Creator, KOL hoặc personal brand</li>
+            <li>Có nền tảng viết bài chuẩn SEO: biết tìm từ khóa và tối ưu bố cục bài viết</li>
+          </ul>
+        </article>
+
+        <article class="req-card">
+          <span class="req-index">02</span>
+          <h3>Tư duy nội dung</h3>
+          <ul data-cms="blocks_req2" data-cms-blocks="req2">
+            <li>Storytelling sắc bén, biết tạo Hook giữ chân người xem ngay trong 3–5 giây đầu tiên</li>
+            <li>Khả năng “nhập vai” xuất sắc để lời thoại khớp chất giọng và phong cách của Host</li>
+            <li>Linh hoạt chuyển tone: năng động trẻ trung ở kênh Koko, đáng tin cậy ở kênh bất động sản</li>
+          </ul>
+        </article>
+
+        <article class="req-card">
+          <span class="req-index">03</span>
+          <h3>Kỹ năng bổ trợ &amp; thái độ</h3>
+          <ul data-cms="blocks_req3" data-cms-blocks="req3">
+            <li>Nhạy bén với trend âm nhạc, template và cách edit đang thịnh hành để brief chuẩn xác</li>
+            <li>Chủ động, kỷ luật và cam kết chặt chẽ với deadline — yếu tố bắt buộc khi làm việc Hybrid/Remote</li>
+            <li>Sẵn sàng đi thực tế cùng Host để nắm bối cảnh nội dung</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section growth-section" id="growth">
+      <div class="section-title">
+        <p class="eyebrow" data-cms="path_eyebrow">Career Path</p>
+        <h2 data-cms="path_title">Lộ trình đi lên từ vai trò Content Writer</h2>
+        <p data-cms="path_desc">Vị trí này là điểm khởi đầu, không phải điểm dừng. Khi đã thành thạo một kênh, bạn có thể mở rộng sang kênh còn lại và các vai trò cao hơn.</p>
+      </div>
+
+      <div class="career-journey glass">
+        <div class="journey-head">
+          <h3 data-cms="text_084">Định hướng phát triển</h3>
+          <span data-cms="text_085">Từ kịch bản đến chiến lược nội dung</span>
+        </div>
+
+        <div class="journey-track has-5-steps" data-cms="blocks_journey" data-cms-blocks="journey">
+          <div class="journey-step level-1">
+            <em data-cms="text_086">01</em>
+            <strong data-cms="text_087">Content Writer (Part-time)</strong>
+          </div>
+          <div class="journey-arrow" aria-hidden="true">↗</div>
+
+          <div class="journey-step level-2">
+            <em data-cms="text_088">02</em>
+            <strong data-cms="text_089">Content Writer (Full-time)</strong>
+          </div>
+          <div class="journey-arrow" aria-hidden="true">↗</div>
+
+          <div class="journey-step level-3">
+            <em data-cms="text_090">03</em>
+            <strong data-cms="text_091">Senior Content Creator</strong>
+          </div>
+          <div class="journey-arrow" aria-hidden="true">↗</div>
+
+          <div class="journey-step level-4">
+            <em data-cms="text_092">04</em>
+            <strong data-cms="text_093">Trưởng nhóm nội dung</strong>
+          </div>
+          <div class="journey-arrow" aria-hidden="true">↗</div>
+
+          <div class="journey-step level-5">
+            <em data-cms="text_094">05</em>
+            <strong data-cms="text_095">Content / Brand Lead</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section culture-section" id="culture">
+      <div class="section-title"><p class="eyebrow" data-cms="gallery_eyebrow">Behind The Scenes</p><h2 data-cms="gallery_title">Bạn ngồi sáng tạo, đội ngũ lo phần còn lại</h2><p data-cms="gallery_desc">Trong vai trò này bạn đi cùng Host tới các buổi quay thực tế, nắm bối cảnh để viết lời thoại chân thực, còn team Media thì lo phần kỹ thuật.</p></div>
+      <div class="gallery" id="cultureGallery"></div>
+    </section>
+
+    <section class="section faq-section" id="faq">
+      <div class="section-title narrow"><p class="eyebrow" data-cms="faq_eyebrow">FAQ</p><h2 data-cms="faq_title">Những điều ứng viên hay hỏi</h2></div>
+      <div class="faq-list" data-cms="blocks_faq" data-cms-blocks="faq">
+        <details><summary data-cms="text_096">Công việc này khác gì một vị trí content bất động sản thông thường?</summary><p data-cms="text_097">Bạn phục vụ đồng thời hai mục tiêu: xây thương hiệu cá nhân cho Host và tạo doanh thu từ bất động sản. Vì vậy bạn cần chuyển tone linh hoạt giữa “reviewer trải nghiệm trẻ trung” và “chuyên gia BĐS đáng tin cậy”.</p></details>
+        <details><summary data-cms="text_098">Part-time 3 ngày/tuần cụ thể làm việc thế nào?</summary><p data-cms="text_099">Tương đương khoảng 24 giờ/tuần. Hình thức Hybrid: bạn có thể lên văn phòng hoặc đi quay thực tế tại các dự án ở TP.HCM, và cũng có thể làm việc online/remote. Lịch chủ động đăng ký theo tuần.</p></details>
+        <details><summary data-cms="text_100">Mình chưa từng làm TikTok có ứng tuyển được không?</summary><p data-cms="text_101">Ứng tuyển được, miễn bạn có Portfolio thể chứng minh năng lực viết. Portfolio có thể là kênh TikTok, trang Facebook/Instagram, blog cá nhân, hoặc tập hồ sơ các kịch bản/bài viết bạn từng làm.</p></details>
+        <details><summary data-cms="text_102">Mình có phải tự quay, tự dựng video không?</summary><p data-cms="text_103">Không. Toàn bộ khâu quay, dựng, chỉnh màu và hiệu ứng do team Media chuyên nghiệp hỗ trợ tận răng từ A-Z. Bạn tập trung vào ý tưởng, kịch bản và caption.</p></details>
+        <details><summary data-cms="text_104">Mức lương được quyết định như thế nào?</summary><p data-cms="text_105">Lương cứng trong khoảng 5 – 7.000.000đ/tháng, thỏa thuận trực tiếp lúc phỏng vấn dựa trên Portfolio. Ngoài ra có hai mảng thưởng KPI riêng biệt cho Branding và Sale.</p></details>
+        <details><summary data-cms="text_106">Nộp hồ sơ bằng cách nào?</summary><p data-cms="text_107">Điền form dưới cùng trang kèm CV và Portfolio, hoặc gửi trực tiếp qua email / Zalo theo thông tin ở phần cuối trang. Hạn chót nhận hồ sơ là 20/10/2026.</p></details>
+      </div>
+    </section>
+
+    <section class="section apply-section" id="apply">
+      <div class="apply-card glass">
+        <div><p class="eyebrow" data-cms="apply_eyebrow">Apply Now</p><h2 data-cms="apply_title">Sẵn sàng viết nội dung cùng Koko Linh?</h2><p data-cms="apply_desc">Điền thông tin bên dưới kèm CV và Portfolio. Bạn có thể gửi file Portfolio dưới dạng link (Google Drive / Notion / trang cá nhân) hoặc tải file trực tiếp tại đây.</p>
+        <div class="apply-contact">
+          <a class="contact-btn" data-cms="contact_email" href="mailto:nguyenphitruong1807@gmail.com?subject=%E1%BB%A9ng%20tuy%E1%BB%83n%20Content%20Writer%20Part-time&amp;body=Ch%C3%A0o%20b%E1%BA%A1n%2C%0A%0AT%C3%B4i%20t%C3%AAn%3A%20%0AEmail%3A%20%0AS%C4%90T%2FZalo%3A%20%0ALink%20Portfolio%3A%20%0A%0AT%C3%B4i%20%C4%91%C3%ADnh%20k%C3%A8m%20CV%20v%C3%A0%20Portfolio%20trong%20email%20n%C3%A0y.%0A%0AC%E1%BA%A3m%20%C6%A1n%20b%E1%BA%A1n!">
+            <span class="contact-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="m3.5 7.5 8.5 6 8.5-6"/></svg>
+            </span>
+            <span class="contact-txt"><b data-cms="contact_email_label">Gửi hồ sơ qua Email</b><small data-cms="contact_email">nguyenphitruong1807@gmail.com</small></span>
+          </a>
+
+          <a class="contact-btn contact-zalo" data-cms="contact_zalo_link" href="https://zalo.me/0782800780" target="_blank" rel="noopener">
+            <span class="contact-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img"><path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 10v4M8.5 10h0M12 10v4M12 10h0M15.5 10v4"/></svg>
+            </span>
+            <span class="contact-txt"><b data-cms="contact_zalo_label">Nhắn Zalo trực tiếp</b><small data-cms="contact_zalo">0782800780 (Trường)</small></span>
+          </a>
+
+          <p class="contact-deadline" data-cms="contact_deadline">Hạn nhận hồ sơ: 20/10/2026</p>
+        </div></div>
+        <form id="applyForm">
+          <div class="form-grid">
+            <label data-cms="text_108" data-cms-target="text">Họ và tên<input name="name" type="text" placeholder="Nguyễn Văn A" required  data-cms="text_109" data-cms-target="placeholder"/></label>
+            <label data-cms="text_110" data-cms-target="text">Số điện thoại / Zalo<input name="phone" type="tel" placeholder="09xx xxx xxx" required  data-cms="text_111" data-cms-target="placeholder"/></label>
+            <label data-cms="text_112" data-cms-target="text">Email<input name="email" type="email" placeholder="ban@example.com" required  data-cms="text_113" data-cms-target="placeholder"/></label>
+            <label data-cms="text_114" data-cms-target="text">Năm sinh<input name="birthyear" type="number" placeholder="2001" min="1985" max="2010"  data-cms="text_115" data-cms-target="placeholder"/></label>
+            <label data-cms="text_116" data-cms-target="text">Kênh bạn muốn làm<select name="area" data-cms="blocks_areas" data-cms-blocks="areas"><option data-cms="text_117">Cả hai kênh</option><option data-cms="text_118">Koko Linh – Branding</option><option data-cms="text_119">Linh Địa Ốc – Bất động sản</option></select></label>
+            <label data-cms="text_120" data-cms-target="text">Kinh nghiệm<select name="type" data-cms="blocks_types" data-cms-blocks="types"><option data-cms="text_121">Dưới 6 tháng</option><option data-cms="text_122">6 tháng – 1 năm</option><option data-cms="text_123">Trên 1 năm</option><option data-cms="text_124">Đang tự học, chưa làm thực tế</option></select></label>
+            <label class="span-2" data-cms="text_125" data-cms-target="text">Link Portfolio / kênh cá nhân của bạn<input name="profile" type="url" placeholder="https://..." required  data-cms="text_126" data-cms-target="placeholder"/></label>
+            <label class="file-upload-card" for="cvFile">
+              <input name="cvFile" id="cvFile" type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" />
+              <span class="file-upload-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" role="img">
+                  <path d="M12 16V4m0 0-4.5 4.5M12 4l4.5 4.5M5 14.5V18a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3.5"/>
+                </svg>
+              </span>
+              <span class="file-upload-copy">
+                <strong data-cms="text_127">Đính kèm CV</strong>
+                <small data-cms="text_128">PDF, DOCX, JPG hoặc PNG · tối đa 10MB</small>
+                <em id="cvFileName">Chưa chọn tệp</em>
+              </span>
+              <span class="file-upload-action" data-cms="text_129">Chọn tệp</span>
+            </label>
+          </div>
+          <button class="btn primary full" type="submit" data-cms="text_130">Gửi hồ sơ ứng tuyển</button>
+          <p class="form-note" id="formNote" data-cms="form_note_initial">Thông tin của bạn sẽ được gửi đến bộ phận tuyển dụng Koko Linh.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><strong data-cms="text_131">KOKO LINH CAREER</strong><span data-cms="text_132">Linh Địa Ốc Sài Gòn · Xây dựng thương hiệu &amp; Bất động sản</span><a href="mailto:nguyenphitruong1807@gmail.com" data-cms="text_133">Gửi hồ sơ qua Email</a><a href="https://zalo.me/0782800780" target="_blank" rel="noopener">Nhắn Zalo 0782800780</a><a href="#top" data-cms="text_134">Lên đầu trang ↑</a></footer>
+
+  <nav class="desktop-floating-menu" aria-label="Menu nhanh trên màn hình">
+    <a href="#channels" data-cms="text_135">Hai kênh</a>
+    <a href="#job" data-cms="text_136">Công việc</a>
+    <a href="#salary" data-cms="text_137">Thu nhập</a>
+    <a href="#requirements" data-cms="text_138">Yêu cầu</a>
+    <a class="dock-apply" href="#apply" data-cms="text_139">Ứng tuyển ngay</a>
+  </nav>
+
+  <div class="mobile-cta"><a class="btn primary" href="#apply" data-cms="text_140">Ứng tuyển ngay</a></div>
+
+  <script src="data/config-koko.js?v=1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script src="js/blocks.js?v=1"></script>
+  <script src="js/app.js?v=19"></script>
+<script src="js/text-fit.js?v=6"></script>
+</body>
+</html>

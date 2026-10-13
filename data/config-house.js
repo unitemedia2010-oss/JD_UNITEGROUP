@@ -2,6 +2,7 @@ window.UNITE_CONFIG = {
   APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbzbm0aD-0IIyX2wbcs0O2wMQzpxo32nWuNMFPujWulZhmVLlHiFJDrHjEFBYSu-ZTcLZg/exec",
   LOGO_URL: "https://techbytruong.wordpress.com/wp-content/uploads/2026/06/ucr.png",
   MARKER_URL: "https://techbytruong.wordpress.com/wp-content/uploads/2026/06/ucr.png",
+  BRAND_NAME: "Unite Central Real",
   THEME_MODE: "system",
   PREFER_LOCAL_GALLERY: true,
   DEFAULT_SOURCE: "career-jd-nha-nguyen-can",

@@ -13,6 +13,7 @@ const MAX_CV_MB = 10;
 const TEN_SHEET = {
   ungVienCanHo: "Ứng viên Căn hộ",
   ungVienUcr: "Ứng viên UCR",
+  ungVienKoko: "Ứng viên Koko Linh",
   ungVienCu: "Ứng viên",
   chiNhanh: "Chi nhánh",
   hinhAnh: "Hình ảnh văn hóa",
@@ -21,7 +22,8 @@ const TEN_SHEET = {
 
 const TEN_THU_MUC_CV = {
   canHo: "Unite Group - CV Căn hộ",
-  ucr: "Unite Central Real - CV ứng viên"
+  ucr: "Unite Central Real - CV ứng viên",
+  koko: "Koko Linh - CV ứng viên"
 };
 
 const UNG_VIEN_HEADERS = [
@@ -29,6 +31,7 @@ const UNG_VIEN_HEADERS = [
   "Vị trí ứng tuyển",
   "Họ và tên",
   "Số điện thoại/Zalo",
+  "Email",
   "Năm sinh",
   "Khu vực mong muốn",
   "Hình thức làm việc",
@@ -60,6 +63,7 @@ function setupCareerSheetsV29() {
 
   taoHoacLaySheet_(ss, TEN_SHEET.ungVienCanHo, UNG_VIEN_HEADERS);
   taoHoacLaySheet_(ss, TEN_SHEET.ungVienUcr, UNG_VIEN_HEADERS);
+  taoHoacLaySheet_(ss, TEN_SHEET.ungVienKoko, UNG_VIEN_HEADERS);
 
   const sheetChiNhanh = taoHoacLaySheet_(ss, TEN_SHEET.chiNhanh, CHI_NHANH_HEADERS);
 
@@ -78,12 +82,13 @@ function setupCareerSheetsV29() {
   themDuLieuChiNhanhMau_(sheetChiNhanh);
   dinhDangSheetUngVien_(ss.getSheetByName(TEN_SHEET.ungVienCanHo));
   dinhDangSheetUngVien_(ss.getSheetByName(TEN_SHEET.ungVienUcr));
+  dinhDangSheetUngVien_(ss.getSheetByName(TEN_SHEET.ungVienKoko));
 
   return traJson_({
     ok: true,
-    version: "V30_INTEGRATED_CMS",
-    message: "Đã tạo 2 sheet riêng: Ứng viên Căn hộ và Ứng viên UCR.",
-    sheets: [TEN_SHEET.ungVienCanHo, TEN_SHEET.ungVienUcr],
+    version: "V34_KOKO_LINH",
+    message: "Đã tạo 3 sheet riêng: Ứng viên Căn hộ, Ứng viên UCR và Ứng viên Koko Linh.",
+    sheets: [TEN_SHEET.ungVienCanHo, TEN_SHEET.ungVienUcr, TEN_SHEET.ungVienKoko],
     maxCvMb: MAX_CV_MB
   });
 }
@@ -99,6 +104,14 @@ function taoBangMau() {
   return setupCareerSheetsV29();
 }
 
+function sheetTonTai_(tenSheet) {
+  try {
+    return !!SpreadsheetApp.openById(SHEET_ID).getSheetByName(tenSheet);
+  } catch (err) {
+    return false;
+  }
+}
+
 function doGet(e) {
   const action = String((e && e.parameter && e.parameter.action) || "").toLowerCase();
 
@@ -106,12 +119,18 @@ function doGet(e) {
     return traJson_({
       ok: true,
       message: "Career JD Apps Script đang hoạt động.",
-      version: "V33_CMS_TRAINING_ADMIN",
+      version: "V34_KOKO_LINH",
       cmsReady: (PropertiesService.getScriptProperties().getProperty("CMS_ADMIN_PASSWORD") || "").length >= 12,
       trainingReady: true,
       sheets: {
         canHo: TEN_SHEET.ungVienCanHo,
-        ucr: TEN_SHEET.ungVienUcr
+        ucr: TEN_SHEET.ungVienUcr,
+        koko: TEN_SHEET.ungVienKoko
+      },
+      sheetsReady: {
+        canHo: sheetTonTai_(TEN_SHEET.ungVienCanHo),
+        ucr: sheetTonTai_(TEN_SHEET.ungVienUcr),
+        koko: sheetTonTai_(TEN_SHEET.ungVienKoko)
       },
       maxCvMb: MAX_CV_MB
     });
@@ -213,6 +232,20 @@ function xacDinhKenhTuyenDung_(data) {
   const source = String(data.source || "").trim().toLowerCase();
   const position = String(data.position || "").trim().toLowerCase();
 
+  const isKoko =
+    source === "career-jd-koko-linh" ||
+    source.includes("koko-linh") ||
+    position.includes("content writer") ||
+    position.includes("koko");
+
+  if (isKoko) {
+    return {
+      brand: "Koko Linh",
+      sheetName: TEN_SHEET.ungVienKoko,
+      cvFolderName: TEN_THU_MUC_CV.koko
+    };
+  }
+
   const isUcr =
     source === "career-jd-nha-nguyen-can" ||
     source === "career-jd-ucr" ||
@@ -263,6 +296,7 @@ function luuUngVien_(data) {
     "Vị trí ứng tuyển": data.position || "",
     "Họ và tên": data.name || "",
     "Số điện thoại/Zalo": data.phone || "",
+    "Email": data.email || "",
     "Năm sinh": data.birthyear || "",
     "Khu vực mong muốn": data.area || "",
     "Hình thức làm việc": data.type || "",
@@ -398,7 +432,7 @@ function chuyenDuLieuUngVienCuV29() {
 
 function suaLoiHyperlinkCu() {
   const ss = SpreadsheetApp.openById(SHEET_ID);
-  const sheetsToFix = [TEN_SHEET.ungVienCanHo, TEN_SHEET.ungVienUcr];
+  const sheetsToFix = [TEN_SHEET.ungVienCanHo, TEN_SHEET.ungVienUcr, TEN_SHEET.ungVienKoko];
 
   sheetsToFix.forEach(sheetName => {
     const sheet = ss.getSheetByName(sheetName);
@@ -440,6 +474,112 @@ function anSheetUngVienCuV29() {
   return traJson_({ ok: true, message: 'Đã ẩn sheet "Ứng viên" cũ.' });
 }
 
+/**
+ * Chuan hoa lai dinh dang cho ca 3 sheet ung vien.
+ * Moi buoc boc try-catch rieng de 1 sheet loi khong chan sheet con lai,
+ * va ham luon tra ve ket qua de biet sheet nao that bai.
+ * Dung khi header bi trang, cot bi hep hoac vua them sheet moi.
+ */
+function chuanHoaSheetUngVienV34() {
+  const ketQua = {};
+  let ss = null;
+
+  try {
+    ss = SpreadsheetApp.openById(SHEET_ID);
+  } catch (err) {
+    return traJson_({
+      ok: false,
+      version: "V34_KOKO_LINH",
+      message: "Khong mo duoc Spreadsheet: " + err.message,
+      sheets: {}
+    });
+  }
+
+  [
+    TEN_SHEET.ungVienCanHo,
+    TEN_SHEET.ungVienUcr,
+    TEN_SHEET.ungVienKoko
+  ].forEach(function (ten) {
+    const sheet = ss.getSheetByName(ten);
+    if (!sheet) {
+      ketQua[ten] = "khong ton tai";
+      return;
+    }
+
+    // Dam bao du header truoc khi dinh dang.
+    // taoHoacLaySheet_ da boc try-catch nen se khong lam hong phan con lai.
+    taoHoacLaySheet_(ss, ten, UNG_VIEN_HEADERS);
+
+    let headers = [];
+    try {
+      headers = layHeaders_(sheet);
+    } catch (err) {
+      ketQua[ten] = "khong doc duoc header: " + err.message;
+      return;
+    }
+
+    const soCot = headers.length;
+    ketQua[ten] = soCot + " cot";
+
+    // Header: nen xanh, chu trang, can giua
+    try {
+      sheet
+        .getRange(1, 1, 1, soCot)
+        .setFontWeight("bold")
+        .setFontColor("#FFFFFF")
+        .setBackground("#356B58")
+        .setHorizontalAlignment("center")
+        .setVerticalAlignment("middle")
+        .setWrap(true);
+    } catch (err) {
+      ketQua[ten] += " | LOI header: " + err.message;
+      return;
+    }
+
+    try { sheet.setFrozenRows(1); } catch (err) {}
+    try { sheet.setRowHeight(1, 34); } catch (err) {}
+
+    // Do rong cot theo noi dung
+    try {
+      const DO_RONG = {};
+      DO_RONG["Thời gian gửi"] = 130;
+      DO_RONG["Họ và tên"] = 160;
+      DO_RONG["Số điện thoại/Zalo"] = 140;
+      DO_RONG["Email"] = 220;
+      DO_RONG["Vị trí ứng tuyển"] = 200;
+      DO_RONG["Link Facebook/Portfolio"] = 220;
+      DO_RONG["Tên file CV"] = 170;
+      DO_RONG["Link file CV"] = 110;
+      DO_RONG["Nguồn ứng tuyển"] = 190;
+      DO_RONG["Thiết bị/Trình duyệt"] = 240;
+
+      headers.forEach(function (header, index) {
+        const doRong = DO_RONG[header];
+        if (doRong) sheet.setColumnWidth(index + 1, doRong);
+      });
+    } catch (err) {
+      ketQua[ten] += " | LOI do rong cot: " + err.message;
+    }
+
+    // Dinh dang ngay cho cot thoi gian
+    try {
+      const timeCol = headers.indexOf("Thời gian gửi") + 1;
+      if (timeCol > 0 && sheet.getMaxRows() > 1) {
+        sheet.getRange(2, timeCol, sheet.getMaxRows() - 1, 1).setNumberFormat("dd/MM/yyyy HH:mm");
+      }
+    } catch (err) {
+      ketQua[ten] += " | BO QUA dinh dang thoi gian: " + err.message;
+    }
+  });
+
+  return traJson_({
+    ok: true,
+    version: "V34_KOKO_LINH",
+    message: "Da chuan hoa dinh dang 3 sheet ung vien.",
+    sheets: ketQua
+  });
+}
+
 function dinhDangSheetUngVien_(sheet) {
   if (!sheet) return;
 
@@ -471,23 +611,41 @@ function dinhDangSheetUngVien_(sheet) {
   } catch(e) {}
 }
 
+/**
+ * Tao hoac lay sheet va dam bao du header.
+ * KHONG bao gio nem loi: ham nay duoc goi trong luuUngVien_,
+ * neu no loi thi moi ho so gui deu that bai.
+ */
 function taoHoacLaySheet_(ss, tenSheet, headers) {
   let sheet = ss.getSheetByName(tenSheet);
   if (!sheet) sheet = ss.insertSheet(tenSheet);
 
-  const lastCol = Math.max(sheet.getLastColumn(), headers.length);
-  const currentHeaders = sheet.getRange(1, 1, 1, lastCol).getValues()[0].map(String);
-  const isEmpty = currentHeaders.every(cell => cell === "");
+  try {
+    const maxCols = sheet.getMaxColumns();
+    const safeHeaders = headers.slice(0, maxCols);
+    const lastCol = Math.min(maxCols, Math.max(1, sheet.getLastColumn(), safeHeaders.length));
 
-  if (isEmpty) {
-    sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
-  } else {
-    headers.forEach(header => {
-      if (!currentHeaders.includes(header)) {
-        sheet.getRange(1, sheet.getLastColumn() + 1).setValue(header);
-      }
-    });
+    const currentHeaders = sheet
+      .getRange(1, 1, 1, lastCol)
+      .getValues()[0]
+      .map(function (cell) { return String(cell || ""); });
+
+    const isEmpty = currentHeaders.every(function (cell) { return cell === ""; });
+
+    if (isEmpty) {
+      sheet.getRange(1, 1, 1, safeHeaders.length).setValues([safeHeaders]);
+    } else {
+      safeHeaders.forEach(function (header) {
+        if (currentHeaders.indexOf(header) === -1) {
+          const col = sheet.getLastColumn() + 1;
+          if (col <= maxCols) sheet.getRange(1, col).setValue(header);
+        }
+      });
+    }
+  } catch (err) {
+    console.warn("Khong chuan hoa duoc header cho sheet " + tenSheet + ": " + err);
   }
+
   return sheet;
 }
 
@@ -581,6 +739,8 @@ function onOpen() {
   try { ensureTrainingSheet_(SpreadsheetApp.openById(SHEET_ID)); } catch (err) { console.warn(err); }
   var ui = SpreadsheetApp.getUi();
   ui.createMenu('🌟 HỆ THỐNG UNITE')
+    .addItem('Tạo/Tái tạo sheet ứng viên', 'taoBangMau')
+    .addItem('Chuẩn hoá định dạng 3 sheet ứng viên', 'chuanHoaSheetUngVienV34')
     .addItem('Khôi phục/Tạo mới Lịch Training', 'setupTrainingSheet')
     .addItem('Tạo Bảng Nội Dung Web (CMS)', 'setupCMS')
     .addToUi();

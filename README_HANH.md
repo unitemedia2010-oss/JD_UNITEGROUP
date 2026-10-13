@@ -303,3 +303,17 @@ Xem hướng dẫn tại `HUONG_DAN_SHEET_TIENg_VIET.md`.
 - Đã bỏ lớp phủ vàng trên ảnh gallery để ảnh hiển thị đúng màu gốc.
 - Giữ watermark nền blur nhưng tăng độ rõ nhẹ để nổi hơn.
 - Không thay đổi Apps Script.
+
+
+## Candidate V34 - Thêm trang JD Koko Linh (Content Writer & Creator)
+
+- Thêm `koko-linh.html` cho vị trí Content Writer & Creator Part-time của Koko Linh / Linh Địa Ốc Sài Gòn.
+- Trang dùng chung `css/style.css`, `js/app.js`, `js/blocks.js`, `js/text-fit.js` với các JD hiện có.
+- Thêm `data/config-koko.js` với logo riêng, `BRAND_NAME` và 4 ảnh placeholder trong `img/koko/`.
+- Section riêng của trang: `#channels` (2 kênh Branding/Sale), `#salary` (lương + 2 KPI), `#requirements` (3 nhóm yêu cầu).
+- Thêm block CMS mới trong `js/blocks.js`: `channel1`, `channel2`, `req1`, `req2`, `req3`.
+- `js/app.js`: thêm `BRAND_NAME` cho thông báo form, `pageText()` đọc fallback từ chính trang, nhận diện `koko-page` trong CMS.
+- `admin.html` + `js/admin.js`: thêm tab `Koko Linh` (101 vị trí chữ, 16 nhóm block).
+- Apps Script V34: tách sheet `Ứng viên Koko Linh` + thư mục Drive `Koko Linh - CV ứng viên`, thêm cột `Email`.
+- Thêm liên kết chéo ở footer của `index.html`, `nha-nguyen-can.html`, `tpa.html`.
+- Hướng dẫn chi tiết: `HUONG_DAN_JA_KOKO_LINH.md`.

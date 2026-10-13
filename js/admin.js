@@ -2,7 +2,7 @@
   'use strict';
   const sheetId='13syUfCyNPcvKcQI8xi5or_Uq-CbYoCbzfuiuPOwYs1o';
   const endpoint=window.UNITE_CONFIG?.APPS_SCRIPT_URL;
-  const pageFiles={index:'index.html','nha-nguyen-can':'nha-nguyen-can.html',tpa:'tpa.html'};
+  const pageFiles={index:'index.html','nha-nguyen-can':'nha-nguyen-can.html',tpa:'tpa.html','koko-linh':'koko-linh.html'};
   const frame=document.getElementById('preview');
   const status=document.getElementById('adminStatus');
   const password=document.getElementById('adminPassword');
@@ -307,7 +307,8 @@
     const logoUrls={
       index:window.UNITE_CONFIG?.LOGO_URL,
       'nha-nguyen-can':'https://techbytruong.wordpress.com/wp-content/uploads/2026/06/ucr.png',
-      tpa:'img/logo-tpa.png'
+      tpa:'img/logo-tpa.png',
+      'koko-linh':'img/koko/logo-koko.svg'
     };
     const logo=doc.getElementById('brandLogo');
     if(logo&&logoUrls[page]) logo.src=logoUrls[page];

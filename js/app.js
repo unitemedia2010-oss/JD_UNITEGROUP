@@ -1,6 +1,16 @@
 const $=(s,r=document)=>r.querySelector(s); const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const APP_STATE={themePref:localStorage.getItem('uniteThemePref')||(window.UNITE_CONFIG?.THEME_MODE||'system'),map:null,markers:new Map(),userLayer:null,branches:[],baseLayers:{light:null,dark:null},cms:{}};
 function cmsText(key,fallback){return APP_STATE.cms[key]||fallback;}
+/*Uu tien noi dung tu CMS, neu chua co thi lay mac dinh ngay tren trang hien tai,
+   nho vay moi trang co the tu dat fallback rieng ma khong can sua file JS. */
+function pageText(key){
+  if(APP_STATE.cms[key]) return APP_STATE.cms[key];
+  const el=document.querySelector(`[data-cms="${key}"]`);
+  if(!el) return '';
+  if(el.dataset.cmsTarget==='placeholder') return el.placeholder;
+  return el.textContent.trim();
+}
+function brandName(){return window.UNITE_CONFIG?.BRAND_NAME||'Unite Group';}
 function formatVND(v){return new Intl.NumberFormat('vi-VN',{style:'currency',currency:'VND',maximumFractionDigits:0}).format(v)}
 function escapeHtml(v){return String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;')}
 function parseCsvRows(text){
@@ -121,11 +131,11 @@ function initQuiz(){
     const buttons=$$('#quizOptions button');
     const score=buttons.filter(b=>b.classList.contains('active')).length;
     if(score>=4){
-      result.innerHTML=`<b>${escapeHtml(cmsText('quiz_high_title','Bạn rất phù hợp với vị trí này.'))}</b><span>${escapeHtml(cmsText('quiz_high_desc','Bạn có nhiều điểm phù hợp với môi trường tư vấn tại Unite Group: thích giao tiếp, có tinh thần chủ động, mong muốn tăng thu nhập và sẵn sàng học hỏi từ thực tế.'))}</span>`;
+      result.innerHTML=`<b>${escapeHtml(pageText('quiz_high_title')||'Bạn rất phù hợp với vị trí này.')}</b><span>${escapeHtml(pageText('quiz_high_desc')||'Bạn có nhiều điểm phù hợp với vị trí này.')}</span>`;
     }else if(score===3){
-      result.innerHTML=`<b>${escapeHtml(cmsText('quiz_mid_title','Bạn khá phù hợp.'))}</b><span>${escapeHtml(cmsText('quiz_mid_desc','Tại Unite Group, ứng viên sẽ được đào tạo bài bản từ nền tảng, từng bước làm quen với công việc và phát triển kỹ năng thực tế.'))}</span>`;
+      result.innerHTML=`<b>${escapeHtml(pageText('quiz_mid_title')||'Bạn khá phù hợp.')}</b><span>${escapeHtml(pageText('quiz_mid_desc')||'Bạn đã có nền tảng khá tốt cho công việc này.')}</span>`;
     }else{
-      result.innerHTML=`<b>${escapeHtml(cmsText('quiz_low_title','Chọn ít nhất 3 mục để xem mức độ phù hợp.'))}</b><span>${escapeHtml(cmsText('quiz_low_desc','Tại Unite Group, ứng viên sẽ được đào tạo bài bản từ nền tảng, từng bước làm quen với công việc và phát triển kỹ năng thực tế.'))}</span>`;
+      result.innerHTML=`<b>${escapeHtml(pageText('quiz_low_title')||'Chọn ít nhất 3 mục để xem mức độ phù hợp.')}</b><span>${escapeHtml(pageText('quiz_low_desc')||'')}</span>`;
     }
   });
 }
@@ -317,7 +327,7 @@ function renderTraining(data){
   });
 }
 
-function renderGallery(items){const gallery=$('#cultureGallery'); if(!gallery) return; const data=(items&&items.length?items:window.UNITE_CONFIG?.LOCAL_GALLERY||[]).filter(Boolean); gallery.innerHTML=data.map((item,idx)=>`<article><div class="gallery-photo" style="${item.image?`background-image:url('${escapeHtml(item.image)}')`:''}"></div><div class="gallery-body"><h3>${escapeHtml(item.title||`Hình ảnh ${idx+1}`)}</h3><p>${escapeHtml(item.caption||'Khoảnh khắc văn hóa Unite Group.')}</p></div></article>`).join('')}
+function renderGallery(items){const gallery=$('#cultureGallery'); if(!gallery) return; const data=(items&&items.length?items:window.UNITE_CONFIG?.LOCAL_GALLERY||[]).filter(Boolean); gallery.innerHTML=data.map((item,idx)=>`<article><div class="gallery-photo" style="${item.image?`background-image:url('${escapeHtml(item.image)}')`:''}"></div><div class="gallery-body"><h3>${escapeHtml(item.title||`Hình ảnh ${idx+1}`)}</h3><p>${escapeHtml(item.caption||'Khoảnh khắc làm việc tại đội ngũ.')}</p></div></article>`).join('')}
 async function loadTrainingDataFromCSV() {
   const sheetId = '13syUfCyNPcvKcQI8xi5or_Uq-CbYoCbzfuiuPOwYs1o';
   const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=Training`;
@@ -385,7 +395,7 @@ async function loadSheetData(){
 
 
 
-function showSubmitToast(type='loading', title='Đang gửi hồ sơ', message='Hệ thống đang chuyển thông tin đến bộ phận tuyển dụng Unite Group.'){
+function showSubmitToast(type='loading', title='Đang gửi hồ sơ', message='Hệ thống đang chuyển thông tin đến bộ phận tuyển dụng.'){
   const toast=document.getElementById('submitToast');
   const titleEl=document.getElementById('toastTitle');
   const msgEl=document.getElementById('toastMessage');
@@ -552,7 +562,7 @@ function initApplyForm(){
       showSubmitToast(
         'loading',
         selectedFile ? 'Đang tải CV' : 'Đang gửi hồ sơ',
-        selectedFile ? 'File CV đang được gửi đến bộ phận tuyển dụng Unite Group.' : 'Hệ thống đang chuyển thông tin đến bộ phận tuyển dụng Unite Group.'
+        selectedFile ? `File CV đang được gửi đến bộ phận tuyển dụng ${brandName()}.` : `Hệ thống đang chuyển thông tin đến bộ phận tuyển dụng ${brandName()}.`
       );
 
       try{
@@ -578,8 +588,8 @@ function initApplyForm(){
           throw new Error('Apps Script báo chưa lưu được hồ sơ. Vui lòng kiểm tra lại hoặc liên hệ HR.');
         }
 
-        note.textContent='Đã gửi hồ sơ. Bộ phận tuyển dụng Unite Group sẽ liên hệ bạn sớm nhất.';
-        showSubmitToast('success','Đã gửi thông tin thành công','Cảm ơn bạn đã ứng tuyển. Unite Group sẽ liên hệ trong thời gian sớm nhất.');
+        note.textContent=`Đã gửi hồ sơ. Bộ phận tuyển dụng ${brandName()} sẽ liên hệ bạn sớm nhất.`;
+        showSubmitToast('success','Đã gửi thông tin thành công',`Cảm ơn bạn đã ứng tuyển. ${brandName()} sẽ liên hệ trong thời gian sớm nhất.`);
         hideSubmitToast(1650);
 
         safeStoreCandidate('uniteCandidateLastSubmit', data);
@@ -593,8 +603,8 @@ function initApplyForm(){
         hideSubmitToast(1900);
       }
     }else{
-      note.textContent='Hệ thống ứng tuyển chưa được kích hoạt. Vui lòng liên hệ bộ phận tuyển dụng Unite Group.';
-      showSubmitToast('loading','Chưa kích hoạt hệ thống','Vui lòng liên hệ bộ phận tuyển dụng Unite Group.');
+      note.textContent=`Hệ thống ứng tuyển chưa được kích hoạt. Vui lòng liên hệ bộ phận tuyển dụng ${brandName()}.`;
+      showSubmitToast('loading','Chưa kích hoạt hệ thống',`Vui lòng liên hệ bộ phận tuyển dụng ${brandName()}.`);
       hideSubmitToast(1600);
     }
 
@@ -675,14 +685,17 @@ function initScrollReveal(){
     '.map-shell',
     '.faq-list',
     '.apply-card',
-    '.hero-card'
+    '.hero-card',
+    '.channel-grid',
+    '.salary-grid',
+    '.req-grid'
   ].join(',');
 
   document.querySelectorAll(selector).forEach(el=>{
     el.classList.add('reveal-item');
   });
 
-  document.querySelectorAll('.value-grid,.timeline,.gallery,.branch-list,.faq-list,.journey-track,.role-picks-grid,.quiz-options').forEach(el=>{
+  document.querySelectorAll('.value-grid,.timeline,.gallery,.branch-list,.faq-list,.journey-track,.role-picks-grid,.quiz-options,.channel-grid,.salary-grid,.req-grid').forEach(el=>{
     el.classList.add('reveal-stagger');
   });
 
@@ -917,7 +930,8 @@ async function loadCMSData() {
       }
     }
     
-    const currentPage = document.body.className.includes('tpa-page') ? 'tpa' : 
+    const currentPage = document.body.className.includes('tpa-page') ? 'tpa' :
+                        document.body.className.includes('koko-page') ? 'koko-linh' :
                         document.body.className.includes('house-page') ? 'nha-nguyen-can' : 'index';
     APP_STATE.cms = {...cms.global, ...cms[currentPage]};
                         

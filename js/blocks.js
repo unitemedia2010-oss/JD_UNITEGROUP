@@ -11,6 +11,11 @@
     {key:'journey',label:'Các nấc lộ trình',selector:'.journey-track',item:':scope > .journey-step',fields:[['number','Số thứ tự','em'],['title','Tên vai trò','strong']]},
     {key:'faq',label:'Câu hỏi thường gặp',selector:'.faq-list',item:':scope > details',fields:[['question','Câu hỏi','summary'],['answer','Câu trả lời','p']]},
     {key:'office',label:'Điểm nổi bật văn phòng',selector:'.office-highlights',item:':scope > span',fields:[['text','Nội dung','']]},
+    {key:'channel1',label:'Danh sách nội dung kênh 1',selector:'[data-cms-blocks="channel1"]',item:':scope > li',fields:[['text','Nội dung','']]},
+    {key:'channel2',label:'Danh sách nội dung kênh 2',selector:'[data-cms-blocks="channel2"]',item:':scope > li',fields:[['text','Nội dung','']]},
+    {key:'req1',label:'Yêu cầu 01 - Kinh nghiệm',selector:'[data-cms-blocks="req1"]',item:':scope > li',fields:[['text','Nội dung','']]},
+    {key:'req2',label:'Yêu cầu 02 - Tư duy nội dung',selector:'[data-cms-blocks="req2"]',item:':scope > li',fields:[['text','Nội dung','']]},
+    {key:'req3',label:'Yêu cầu 03 - Kỹ năng bổ trợ',selector:'[data-cms-blocks="req3"]',item:':scope > li',fields:[['text','Nội dung','']]},
     {key:'areas',label:'Lựa chọn khu vực',selector:'select[name="area"]',item:':scope > option',fields:[['text','Khu vực','']]},
     {key:'types',label:'Lựa chọn hình thức',selector:'select[name="type"]',item:':scope > option',fields:[['text','Hình thức','']]}
   ];
@@ -68,6 +73,8 @@
       el=doc.createElement('details');add(el,'summary',row.question);add(el,'p',row.answer);
     }else if(key==='office'){
       el=child(doc,'span',row.text);
+    }else if(key==='channel1'||key==='channel2'||key==='req1'||key==='req2'||key==='req3'){
+      el=child(doc,'li',row.text);
     }else if(key==='areas'||key==='types'){
       el=child(doc,'option',row.text);
     }
