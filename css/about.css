@@ -1,0 +1,423 @@
+/* ==========================================================================
+   Trang "Giới thiệu doanh nghiệp"
+   Dùng chung token của style.css (--gold, --page, --glass...). Mọi class mới
+   đều có tiền tố "about-" để không đụng vào các trang JD.
+   ========================================================================== */
+
+/* ---------- Hero ---------- */
+
+.about-hero {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 60px);
+  align-items: center;
+  min-height: min(78vh, 720px);
+  padding: clamp(56px, 8vw, 110px) clamp(16px, 5vw, 86px) clamp(40px, 6vw, 80px);
+}
+
+.about-hero h1 {
+  margin-bottom: 1.1rem;
+  max-width: 720px;
+  letter-spacing: -0.05em;
+}
+
+.about-hero .about-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0 0 1.4rem;
+  color: var(--gold-deep);
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.76rem;
+}
+
+html[data-theme='dark'] .about-hero .about-kicker {
+  color: var(--gold);
+}
+
+/* Vòng tròn mờ trang trí, nằm sau nội dung */
+.about-hero::before {
+  content: '';
+  position: absolute;
+  width: 46vw;
+  height: 46vw;
+  max-width: 640px;
+  max-height: 640px;
+  right: -8%;
+  top: -12%;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.24), transparent 66%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+/* ---------- Ảnh hòa vào nền, không khung ---------- */
+
+.about-blend {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  /* Mềm cả 4 cạnh bằng mask, không dùng viền/khung cứng */
+  -webkit-mask-image: radial-gradient(115% 100% at 50% 45%, #000 58%, rgba(0, 0, 0, 0.35) 82%, transparent 97%);
+  mask-image: radial-gradient(115% 100% at 50% 45%, #000 58%, rgba(0, 0, 0, 0.35) 82%, transparent 97%);
+}
+
+.about-blend img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-blend--wide {
+  aspect-ratio: 4 / 3;
+}
+
+.about-blend--tall {
+  aspect-ratio: 3 / 4;
+}
+
+/* ---------- Dải số liệu ---------- */
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 2vw, 20px);
+  margin-top: clamp(24px, 3vw, 38px);
+}
+
+.about-stats > div {
+  padding: 1.1rem 0.5rem;
+  text-align: center;
+  border-radius: 22px;
+  background: rgba(255, 215, 0, 0.08);
+  border: 1px solid var(--line);
+}
+
+.about-stats b {
+  display: block;
+  font-size: clamp(1.5rem, 3.4vw, 2.3rem);
+  font-weight: 900;
+  color: var(--gold-deep);
+  letter-spacing: -0.03em;
+}
+
+html[data-theme='dark'] .about-stats b {
+  color: var(--gold);
+}
+
+.about-stats span {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* ---------- Khối giới thiệu: ảnh + timeline ---------- */
+
+.about-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+}
+
+/* Timeline dọc, dùng lại cảm hứng từ .timeline của trang JD */
+.about-timeline {
+  position: relative;
+  display: grid;
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-timeline::before {
+  content: '';
+  position: absolute;
+  left: 27px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(var(--gold), transparent);
+}
+
+.about-timeline li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.about-timeline time {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--gold), #fff2a0);
+  color: #111;
+  font-weight: 900;
+  font-size: 0.8rem;
+  box-shadow: 0 8px 22px rgba(255, 215, 0, 0.28);
+}
+
+.about-timeline div {
+  padding: 1rem 1.1rem;
+  border-radius: 22px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.about-timeline h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+}
+
+.about-timeline p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+/* ---------- Sứ mạnh: ô đánh số ---------- */
+
+.about-strengths {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1rem;
+}
+
+.about-strengths article {
+  position: relative;
+  padding: 1.6rem 1.4rem 1.5rem;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.about-strengths article:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+/* Số lớn mờ nằm góc trên bên phải */
+.about-strengths article::after {
+  content: attr(data-no);
+  position: absolute;
+  right: 0.7rem;
+  top: 0.2rem;
+  font-size: 4.2rem;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--gold);
+  opacity: 0.14;
+}
+
+.about-strengths h3 {
+  position: relative;
+  margin: 0 0 0.45rem;
+  font-size: 1.1rem;
+}
+
+.about-strengths p {
+  position: relative;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* ---------- Ảnh + số liệu ---------- */
+
+.about-media-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.8rem;
+  margin-top: 1.6rem;
+}
+
+.about-media-stats div {
+  padding: 1rem 0.6rem;
+  border-radius: 20px;
+  text-align: center;
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+
+.about-media-stats b {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--gold-deep);
+}
+
+html[data-theme='dark'] .about-media-stats b {
+  color: var(--gold);
+}
+
+.about-media-stats span {
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+
+/* ---------- Ảnh ghép lưới ---------- */
+
+.about-collage {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 2vw, 18px);
+  align-items: center;
+}
+
+.about-collage figure {
+  margin: 0;
+}
+
+.about-collage figcaption {
+  margin-top: 0.7rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ---------- Dải CTA ---------- */
+
+.about-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  padding: clamp(1.6rem, 3vw, 2.4rem);
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.16), rgba(255, 255, 255, 0));
+  border: 1px solid var(--line);
+}
+
+.about-cta h2 {
+  margin: 0 0 0.4rem;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  letter-spacing: -0.03em;
+}
+
+.about-cta p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.about-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+/* ---------- Fade-up khi cuộn ---------- */
+
+.about-reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Thu hẹp thanh menu khi cuộn, giống trang JD ---------- */
+
+.about-nav {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem clamp(16px, 5vw, 86px);
+  background: color-mix(in srgb, var(--page) 82%, transparent);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(14px);
+}
+
+.about-nav-links {
+  display: flex;
+  gap: 1.1rem;
+}
+
+.about-nav-links a {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.about-nav-links a:hover {
+  color: var(--gold-deep);
+}
+
+html[data-theme='dark'] .about-nav-links a:hover {
+  color: var(--gold);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 980px) {
+  .about-hero,
+  .about-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .about-hero {
+    min-height: 0;
+  }
+
+  .about-collage {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .about-nav-links {
+    display: none;
+  }
+
+  .about-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .about-stats span {
+    font-size: 0.7rem;
+  }
+
+  .about-collage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .about-cta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Tôn trọng tùy chọn giảm chuyển động của hệ điều hành */
+@media (prefers-reduced-motion: reduce) {
+  .about-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .about-strengths article {
+    transition: none;
+  }
+}

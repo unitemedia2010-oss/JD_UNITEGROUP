@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Về chúng tôi | Unite Group</title>
+  <meta name="description" content="Giới thiệu doanh nghiệp Unite Group - hành trình phát triển, sứ mạnh và văn hóa làm việc." />
+  <link rel="stylesheet" href="css/style.css?v=14" />
+  <link rel="stylesheet" href="css/about.css?v=1" />
+  <script>
+    // Gán theme trước khi vẽ để không bị nháy trắng khi load
+    (function () {
+      try {
+        var m = localStorage.getItem('unite-theme') || 'Auto';
+        var dark = m === 'Tối' || (m === 'Auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+
+  <nav class="about-nav" aria-label="Điều hướng trang giới thiệu">
+    <a class="brand" href="index.html" aria-label="Về trang chủ Unite Group">
+      <img id="brandLogo" alt="Unite Group logo" />
+      <span>
+        <strong>UNITE GROUP</strong>
+        <small>Về chúng tôi</small>
+      </span>
+    </a>
+
+    <div class="about-nav-links">
+      <a href="#han-trinh">Hành trình</a>
+      <a href="#suc-manh">Sức mạnh</a>
+      <a href="#doi-ngu">Đội ngũ</a>
+      <a href="#lien-he">Liên hệ</a>
+    </div>
+
+    <a class="btn primary compact" href="index.html#apply">Ứng tuyển ngay</a>
+  </nav>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section class="about-hero">
+      <div>
+        <p class="about-kicker">Về chúng tôi</p>
+        <h1>
+          Kiến tạo giá trị<br />
+          <span>thật sự bền vững</span>
+        </h1>
+        <p class="hero-lead">
+          Unite Group hoạt động trong lĩnh vực môi giới và phân phối bất động sản tại TP.HCM,
+          đồng hành cùng khách hàng trong từng bước tìm kiếm một không gian sống phù hợp.
+        </p>
+
+        <div class="about-stats">
+          <div><b>8</b><span>Văn phòng tại TP.HCM</span></div>
+          <div><b>5</b><span>Bậc thang phát triển</span></div>
+          <div><b>4</b><span>Nhóm sản phẩm chính</span></div>
+        </div>
+      </div>
+
+      <div class="about-blend about-blend--tall">
+        <img src="img/02.JPG" alt="Không gian làm việc tại Unite Group" loading="eager" />
+      </div>
+    </section>
+
+    <!-- ================= HÀNH TRÌNH ================= -->
+    <section class="section" id="han-trinh">
+      <div class="section-title">
+        <p class="eyebrow">Hành trình</p>
+        <h2>Chặng đường đã đi qua</h2>
+        <p>Từ một đội ngũ nhỏ đến hệ thống văn phòng trải rộng, mỗi cột mốc đều gắn với một cách làm mới.</p>
+      </div>
+
+      <div class="about-split">
+        <div class="about-blend about-blend--wide">
+          <img src="img/01.JPG" alt="Đào tạo tại Unite Group" loading="lazy" />
+        </div>
+
+        <ul class="about-timeline">
+          <li>
+            <time>01</time>
+            <div>
+              <h3>Khởi đầu</h3>
+              <p>Thành lập với mô hình môi giới tập trung vào tư vấn minh bạch, ưu tiên lợi ích khách hàng.</p>
+            </div>
+          </li>
+          <li>
+            <time>02</time>
+            <div>
+              <h3>Mở rộng mạng lưới</h3>
+              <p>Phát triển danh mốc chi nhánh, phủ các khu vực trọng điểm và phân vùng thị trường.</p>
+            </div>
+          </li>
+          <li>
+            <time>03</time>
+            <div>
+              <h3>Chuẩn hóa dịch vụ</h3>
+              <p>Xây dựng quy trình tư vấn, hồ sơ và chăm sóc sau bán hàng theo cùng một tiêu chuẩn.</p>
+            </div>
+          </li>
+          <li>
+            <time>04</time>
+            <div>
+              <h3>Đầu tư vào con người</h3>
+              <p>Đào tạo thực chiến, lộ trình rõ ràng để mỗi nhân sự đều có thể đi lên.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= SỨC MẠNH ================= -->
+    <section class="section" id="suc-manh">
+      <div class="section-title">
+        <p class="eyebrow">Sức mạnh</p>
+        <h2>Điều làm nên khác biệt</h2>
+      </div>
+
+      <div class="about-strengths">
+        <article data-no="01">
+          <h3>Sản phẩm đa dạng</h3>
+          <p>Hệ thống sản phẩm trải rộng trên địa bàn TP.HCM, nhiều dạng phòng và nhiều tầm giá khác nhau.</p>
+        </article>
+        <article data-no="02">
+          <h3>Môi trường trẻ, năng động</h3>
+          <p>Văn hóa cởi mở, tôn trọng cá tính và luôn ưu tiên phát triển bản thân cho từng thành viên.</p>
+        </article>
+        <article data-no="03">
+          <h3>Đội ngũ giàu kinh nghiệm</h3>
+          <p>Leader đồng hành cùng người mới trong quá trình làm việc, không bỏ ai phải tự học một mình.</p>
+        </article>
+        <article data-no="04">
+          <h3>Cam kết bền vững</h3>
+          <p>Hướng đến giá trị lâu dài cho khách hàng, đối tác và cộng đồng nơi doanh nghiệp hiện diện.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= ĐỘI NGŨ ================= -->
+    <section class="section" id="doi-ngu">
+      <div class="section-title">
+        <p class="eyebrow">Đội ngũ</p>
+        <h2>Nơi bạn sẽ làm việc và phát triển</h2>
+      </div>
+
+      <div class="about-collage">
+        <figure>
+          <div class="about-blend about-blend--wide">
+            <img src="img/01.JPG" alt="Training thực chiến" loading="lazy" />
+          </div>
+          <figcaption>Training thực chiến</figcaption>
+        </figure>
+        <figure>
+          <div class="about-blend about-blend--wide">
+            <img src="img/03.JPG" alt="Vinh danh kết quả" loading="lazy" />
+          </div>
+          <figcaption>Vinh danh kết quả</figcaption>
+        </figure>
+        <figure>
+          <div class="about-blend about-blend--wide">
+            <img src="img/04.JPG" alt="Hoạt động nội bộ" loading="lazy" />
+          </div>
+          <figcaption>Hoạt động nội bộ</figcaption>
+        </figure>
+      </div>
+
+      <div class="about-media-stats">
+        <div><b>8</b><span>Văn phòng làm việc</span></div>
+        <div><b>1 : 1</b><span>Leader đồng hành</span></div>
+        <div><b>Full / Part</b><span>Linh hoạt thời gian</span></div>
+        <div><b>5 bậc</b><span>Lộ trình đi lên</span></div>
+      </div>
+    </section>
+
+    <!-- ================= CTA ================= -->
+    <section class="section" id="lien-he">
+      <div class="about-cta">
+        <div>
+          <h2>Bạn muốn gia nhập Unite Group?</h2>
+          <p>Xem các vị trí đang tuyển và ứng tuyển ngay trong vài phút.</p>
+        </div>
+        <div class="about-cta-actions">
+          <a class="btn primary" href="index.html">JD Chuyên viên tư vấn</a>
+          <a class="btn ghost" href="nha-nguyen-can.html">JD Nhà nguyên căn</a>
+          <a class="btn ghost" href="koko-linh.html">JD Koko Linh</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <strong>UNITE GROUP</strong>
+    <span>Build your career from real action.</span>
+    <a href="index.html">Trang tuyển dụng</a>
+    <a href="#top">Lên đầu trang ↑</a>
+  </footer>
+
+  <script src="data/config.js"></script>
+  <script>
+    /* ---------- Logo lấy từ config chung ---------- */
+    (function () {
+      var el = document.getElementById('brandLogo');
+      if (el && window.UNITE_CONFIG && window.UNITE_CONFIG.LOGO_URL) {
+        el.src = window.UNITE_CONFIG.LOGO_URL;
+        el.onerror = function () { el.removeAttribute('src'); };
+      }
+    })();
+
+    /* ---------- Chuyển nền sáng / tối / tự động ---------- */
+    (function () {
+      var KEY = 'unite-theme';
+      var modes = ['Auto', 'Sáng', 'Tối'];
+      var m = modes.indexOf(localStorage.getItem(KEY)) > -1 ? localStorage.getItem(KEY) : 'Auto';
+
+      var nav = document.querySelector('.about-nav');
+      if (!nav) return;
+
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'theme-toggle';
+      btn.setAttribute('aria-label', 'Đổi chế độ giao diện');
+
+      function paint() {
+        var dark = m === 'Tối' || (m === 'Auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+        btn.innerHTML = '<span>' + (m === 'Auto' ? '◐' : m === 'Sáng' ? '☀' : '☾') + '</span><b>' + m + '</b>';
+      }
+
+      btn.addEventListener('click', function () {
+        m = modes[(modes.indexOf(m) + 1) % modes.length];
+        localStorage.setItem(KEY, m);
+        paint();
+      });
+
+      nav.appendChild(btn);
+      paint();
+    })();
+
+    /* ---------- Fade-up khi cuộn tới ---------- */
+    (function () {
+      var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var items = document.querySelectorAll('.section > *');
+      if (reduce || typeof IntersectionObserver === 'undefined') return;
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e, i) {
+          if (e.isIntersecting) {
+            setTimeout(function () { e.target.classList.add('is-in'); }, i * 70);
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+
+      items.forEach(function (el) {
+        el.classList.add('about-reveal');
+        io.observe(el);
+      });
+    })();
+  </script>
+
+</body>
+</html>
