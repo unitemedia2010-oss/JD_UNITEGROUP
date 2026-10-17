@@ -157,6 +157,64 @@ function toMauCanhBao(sh, cot, soDong) {
   }
 }
 
+/** Tim dong trong tiep theo, bo qua cac dong chi co cong thuc. */
+function dongTiepTheoTheoCot(sh, cot) {
+  var last = sh.getLastRow();
+  if (last < 2) return 2;
+  var vals = sh.getRange(2, cot, last - 1, 1).getValues();
+  for (var i = vals.length - 1; i >= 0; i--) {
+    if (vals[i][0] !== '' && vals[i][0] !== null) return i + 3;
+  }
+  return 2;
+}
+
+/** Dat cong thuc cho mot doan dong Lich dang. */
+function apDungCongThucLichDang(sh, dongDau, soDong) {
+  if (soDong <= 0) return;
+  var cHinh = "'" + NHAN.CAU_HINH + "'!R";
+  sh.getRange(dongDau, 6, soDong, 1).setFormulaR1C1(
+    '=IF(RC[-1]="","",TEXT(RC[-1],"dddd"))');
+  sh.getRange(dongDau, 11, soDong, 1).setFormulaR1C1(
+    '=IF(RC[-6]="","",RC[-6]-' + cHinh + CF.leKB + 'C2)');
+  sh.getRange(dongDau, 14, soDong, 1).setFormulaR1C1(
+    '=IF(RC[-9]="","",RC[-9]-' + cHinh + CF.leQuay + 'C2)');
+  sh.getRange(dongDau, 17, soDong, 1).setFormulaR1C1(
+    '=IF(RC[-12]="","",RC[-12]-' + cHinh + CF.leDung + 'C2)');
+  sh.getRange(dongDau, 31, soDong, 1).setFormulaR1C1(
+    '=IF(RC[-26]="","",RC[-26]-TODAY())');
+  sh.getRange(dongDau, 32, soDong, 1).setFormulaR1C1(
+    '=IF(RC[-27]="","",' +
+    'IF(AND(RC[-22]<>"Đã duyệt",RC[-21]<TODAY()),"Trễ kịch bản",' +
+    'IF(AND(RC[-19]<>"Đã quay",RC[-18]<TODAY()),"Trễ quay",' +
+    'IF(AND(RC[-16]<>"Đã dựng",RC[-15]<TODAY()),"Trễ dựng",' +
+    'IF(AND(RC[-12]<>"Đã đăng",RC[-27]<TODAY()),"Chưa đăng","OK")))))');
+  sh.getRange(dongDau, 33, soDong, 1).setFormulaR1C1(
+    '=IF(RC[-1]="","",' +
+    'IF(RC[-1]="Trễ kịch bản","Kịch bản",' +
+    'IF(RC[-1]="Trễ quay","Hẹn lịch + Media",' +
+    'IF(RC[-1]="Trễ dựng","Media",' +
+    'IF(RC[-1]="Chưa đăng","Creator Main","—")))))');
+  sh.getRange(dongDau, 2, soDong, 1).setNumberFormat('dd/MM/yyyy');
+  sh.getRange(dongDau, 5, soDong, 1).setNumberFormat('dd/MM/yyyy');
+  [11, 14, 17].forEach(function (c) {
+    sh.getRange(dongDau, c, soDong, 1).setNumberFormat('dd/MM');
+  });
+}
+
+/** Dat cong thuc cho mot doan dong Lich quay. */
+function apDungCongThucLichQuay(sh, dongDau, soDong) {
+  if (soDong <= 0) return;
+  sh.getRange(dongDau, 6, soDong, 1).setFormulaR1C1(
+    '=IF(RC[-1]="","",TEXT(RC[-1],"dddd"))');
+  sh.getRange(dongDau, 18, soDong, 1).setFormulaR1C1(
+    '=IF(RC[-13]="","",' +
+    'IF(AND(RC[-13]<TODAY(),RC[-4]<>"Hoàn thành",RC[-4]<>"Hủy",RC[-4]<>"Đang quay"),"Trễ buổi quay",' +
+    'IF(RC[-4]="Hoàn thành","OK","Đang kế hoạch")))');
+  sh.getRange(dongDau, 2, soDong, 1).setNumberFormat('dd/MM/yyyy');
+  sh.getRange(dongDau, 5, soDong, 1).setNumberFormat('dd/MM/yyyy');
+  sh.getRange(dongDau, 15, soDong, 1).setNumberFormat('dd/MM/yyyy');
+}
+
 /** Bỏ mọi định dạng có sẵn của tab */
 function donDep(sh) {
   // Luu y: clearDataValidations() la method cua Range, KHONG co o Sheet.
@@ -252,56 +310,17 @@ var C_DANG = [
 ];
 
 function taoLichDang(ss) {
+  var t0 = new Date().getTime();
   var sh = laySheet(ss, NHAN.LICH_DANG);
   sh.clear();
   donDep(sh);
   vietTieuDe(sh, C_DANG, '#C2185B');
 
   var soDong = 400;
-  var r = sh.getRange(2, 1, soDong, C_DANG.length);
 
-  // Cột B — tuần: mặc định tuần hiện tại
   sh.getRange(2, 2, soDong, 1).setNumberFormat('dd/MM/yyyy');
   sh.getRange(2, 5, soDong, 1).setNumberFormat('dd/MM/yyyy');
-
-  // F — Thứ
-  sh.getRange(2, 6, soDong, 1).setFormulaR1C1(
-    '=IF(RC[0]="","",TEXT(RC[-1],"dddd"))');
-
-  // K, N, Q — hạn chót tính ngược từ ngày đăng
-  var cHinh = "'" + NHAN.CAU_HINH + "'!$B$";
-  sh.getRange(2, 11, soDong, 1).setFormulaR1C1(
-    '=IF(RC[-6]="","",RC[-6]-' + cHinh + CF.leKB + ')');
-  sh.getRange(2, 14, soDong, 1).setFormulaR1C1(
-    '=IF(RC[-9]="","",RC[-9]-' + cHinh + CF.leQuay + ')');
-  sh.getRange(2, 17, soDong, 1).setFormulaR1C1(
-    '=IF(RC[-12]="","",RC[-12]-' + cHinh + CF.leDung + ')');
-  [11, 14, 17].forEach(function (c) {
-    sh.getRange(2, c, soDong, 1).setNumberFormat('dd/MM');
-  });
-
-  // AE(31) — còn bao nhiêu ngày. Cùng cột = RC[0], lùi 26 cột = cột E (Ngày đăng)
-  sh.getRange(2, 31, soDong, 1).setFormulaR1C1(
-    '=IF(RC[-26]="","",RC[-26]-TODAY())');
-
-  // AF(32) — cảnh báo. Tính lại offset từ cột 32:
-  //   J=10 (Kịch bản) RC[-22] | K=11 (Hạn KB) RC[-21]
-  //   M=13 (Quay)      RC[-19] | N=14 (Hạn quay) RC[-18]
-  //   P=16 (Dựng)     RC[-16] | Q=17 (Hạn dựng) RC[-15]
-  //   T=20 (Đăng)     RC[-12] | E=5  (Ngày đăng) RC[-27]
-  sh.getRange(2, 32, soDong, 1).setFormulaR1C1(
-    '=IF(RC[-27]="","",' +
-    'IF(AND(RC[-22]<>"Đã duyệt",RC[-21]<TODAY()),"Trễ kịch bản",' +
-    'IF(AND(RC[-19]<>"Đã quay",RC[-18]<TODAY()),"Trễ quay",' +
-    'IF(AND(RC[-16]<>"Đã dựng",RC[-15]<TODAY()),"Trễ dựng",' +
-    'IF(AND(RC[-12]<>"Đã đăng",RC[-27]<TODAY()),"Chưa đăng","OK")))))');
-
-  sh.getRange(2, 33, soDong, 1).setFormulaR1C1(
-    '=IF(RC[-1]="","",' +
-    'IF(RC[-1]="Trễ kịch bản","Kịch bản",' +
-    'IF(RC[-1]="Trễ quay","Hẹn lịch + Media",' +
-    'IF(RC[-1]="Trễ dựng","Media",' +
-    'IF(RC[-1]="Chưa đăng","Creator Main","—")))))');
+  apDungCongThucLichDang(sh, 2, soDong);
 
   // Dropdown
   var nhanSu = danhSachNhanSu(ss);
@@ -331,6 +350,7 @@ function taoLichDang(ss) {
   rong.forEach(function (w, i) { sh.setColumnWidth(i + 1, w); });
 
   sh.getRange('A1').setNote('Ngày đăng là dữ liệu gốc. Hạn Kịch bản / quay / dựng tự tính ngược — chỉ cần sửa ô Ngày đăng.');
+  console.log('  -> Lich dang xong sau ' + (new Date().getTime() - t0) + 'ms');
   return sh;
 }
 
@@ -357,13 +377,7 @@ function taoLichQuay(ss) {
   sh.getRange(2, 5, soDong, 1).setNumberFormat('dd/MM/yyyy');
   sh.getRange(2, 15, soDong, 1).setNumberFormat('dd/MM/yyyy');
 
-  sh.getRange(2, 6, soDong, 1).setFormulaR1C1(
-    '=IF(RC[-1]="","",TEXT(RC[-1],"dddd"))');
-
-  sh.getRange(2, 18, soDong, 1).setFormulaR1C1(
-    '=IF(RC[-13]="","",' +
-    'IF(AND(RC[-13]<TODAY(),RC[-4]<>"Hoàn thành",RC[-4]<>"Hủy",RC[-4]<>"Đang quay"),"Trễ buổi quay",' +
-    'IF(RC[-4]="Hoàn thành","OK","Đang kế hoạch")))');
+  apDungCongThucLichQuay(sh, 2, soDong);
 
   var nhanSu = danhSachNhanSu(ss);
   var ds = nhanSu.length ? nhanSu : ['(ghi tên ở Cấu hình E)'];
@@ -791,7 +805,6 @@ function taoHeThong() {
   var ss = laySS();
 
   // Bỏ sheet thừa
-  var gi = ss.getSheetByName('Sheet1');
   var ds = ss.getSheets();
   for (var i = ds.length - 1; i >= 0; i--) {
     if (ds[i].getName() === 'Sheet1' || ds[i].getName() === 'Trang tính1') {
@@ -800,30 +813,36 @@ function taoHeThong() {
     }
   }
 
+  console.log('[1/7] Tab Cau hinh...');
   taoCauHinh(ss);
+  console.log('[2/7] Tab Lich dang...');
   taoLichDang(ss);
+  console.log('[3/7] Tab Lich quay...');
   taoLichQuay(ss);
+  console.log('[4/7] Tab Kho clip...');
   taoKhoClip(ss);
+  console.log('[5/7] Dua du lieu cu sang...');
   taoLichSuCu(ss);
+  console.log('[6/7] Dashboard...');
   taoDashboard(ss);
 
-  // Xếp tab
+  // Xếp tab. moveActiveSheet() nhận vị trí BẮT ĐẦU TỪ 0.
   var thuTu = [NHAN.DASHBOARD, NHAN.LICH_DANG, NHAN.LICH_QUAY,
     NHAN.KHO_CLIP, NHAN.CAU_HINH, NHAN.LS_CU];
-  var viTri = {};
-  thuTu.forEach(function (n, i) { viTri[n] = i + 1; });
-  Object.keys(viTri).forEach(function (n) {
+  thuTu.forEach(function (n, i) {
     var sh = ss.getSheetByName(n);
-    if (sh && sh.getIndex() !== viTri[n] - 1) {
+    if (sh && sh.getIndex() !== i) {
       ss.setActiveSheet(sh);
-      ss.moveActiveSheet(viTri[n]);
+      ss.moveActiveSheet(i);
     }
   });
 
+  console.log('[7/7] Sinh tuan hien tai...');
   // Sinh sẵn tuần hiện tại (im lặng, không hiện popup)
   try { sinhTuanChoTuan(ss, thuHaiTrongTuan(new Date()), true); } catch (e) {
     console.warn('Sinh tuần hien tai bi bo qua: ' + e.message);
   }
+  console.log('Xong.');
 
   var ui = SpreadsheetApp.getUi();
   ui.createMenu('⚙️ HỆ THỐNG NỘI DUNG')
