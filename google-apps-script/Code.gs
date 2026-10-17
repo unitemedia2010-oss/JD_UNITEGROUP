@@ -59,52 +59,120 @@ const CHI_NHANH_HEADERS = [
 ];
 
 /**
- * Hàm Hạnh cần chạy đầu tiên.
+ * Tao / tai tao cac sheet ung vien va cac sheet ho tro.
+ * Moi buoc boc try-catch rieng: 1 sheet loi khong lam dung ca ham,
+ * va ham luon tra ve ket qua de biet buoc nao that bai.
  */
 function setupCareerSheetsV29() {
+  const buoc = {};
   const ss = SpreadsheetApp.openById(SHEET_ID);
 
-  taoHoacLaySheet_(ss, TEN_SHEET.ungVienCanHo, UNG_VIEN_HEADERS);
-  taoHoacLaySheet_(ss, TEN_SHEET.ungVienUcr, UNG_VIEN_HEADERS);
-  taoHoacLaySheet_(ss, TEN_SHEET.ungVienKoko, UNG_VIEN_HEADERS);
+  const buocTaoSheet = function (ten, headers) {
+    try {
+      const sheet = taoHoacLaySheet_(ss, ten, headers);
+      const cols = layHeaders_(sheet).length;
+      buoc[ten] = "OK (" + cols + " cot)";
+      return sheet;
+    } catch (err) {
+      buoc[ten] = "LOI: " + err.message;
+      return null;
+    }
+  };
 
-  const sheetChiNhanh = taoHoacLaySheet_(ss, TEN_SHEET.chiNhanh, CHI_NHANH_HEADERS);
+  const shCanHo = buocTaoSheet(TEN_SHEET.ungVienCanHo, UNG_VIEN_HEADERS);
+  const shUcr = buocTaoSheet(TEN_SHEET.ungVienUcr, UNG_VIEN_HEADERS);
+  const shKoko = buocTaoSheet(TEN_SHEET.ungVienKoko, UNG_VIEN_HEADERS);
 
-  taoHoacLaySheet_(ss, TEN_SHEET.hinhAnh, [
+  const shChiNhanh = buocTaoSheet(TEN_SHEET.chiNhanh, CHI_NHANH_HEADERS);
+
+  buocTaoSheet(TEN_SHEET.hinhAnh, [
     "Tiêu đề",
     "Mô tả ngắn",
     "Link hình ảnh",
     "Hiển thị"
   ]);
 
-  taoHoacLaySheet_(ss, TEN_SHEET.cauHinh, [
+  buocTaoSheet(TEN_SHEET.cauHinh, [
     "Mục cấu hình",
     "Giá trị"
   ]);
 
-  themDuLieuChiNhanhMau_(sheetChiNhanh);
-  dinhDangSheetUngVien_(ss.getSheetByName(TEN_SHEET.ungVienCanHo));
-  dinhDangSheetUngVien_(ss.getSheetByName(TEN_SHEET.ungVienUcr));
-  dinhDangSheetUngVien_(ss.getSheetByName(TEN_SHEET.ungVienKoko));
+  try { themDuLieuChiNhanhMau_(shChiNhanh); }
+  catch (err) { buoc["du lieu chi nhanh"] = "LOI: " + err.message; }
+
+  [shCanHo, shUcr, shKoko].forEach(function (sh) {
+    try { dinhDangSheetUngVien_(sh); } catch (err) {}
+  });
+
+  const coLoi = Object.keys(buoc).some(function (k) {
+    return String(buoc[k]).indexOf("LOI") === 0;
+  });
 
   return traJson_({
-    ok: true,
+    ok: !coLoi,
     version: "V35_BAITEST",
-    message: "Đã tạo 3 sheet riêng: Ứng viên Căn hộ, Ứng viên UCR và Ứng viên Koko Linh.",
-    sheets: [TEN_SHEET.ungVienCanHo, TEN_SHEET.ungVienUcr, TEN_SHEET.ungVienKoko],
+    message: coLoi
+      ? "Da chay xong nhung co buoc bi loi. Xem chi tiet ben duoi."
+      : "Da tao 3 sheet ung vien: Can ho, UCR va Koko Linh.",
+    buoc: buoc,
     maxCvMb: MAX_CV_MB
   });
 }
 
 /**
- * Giữ tương thích với tên hàm cũ.
+ * Giu tuong thap voi ten ham cu.
  */
 function setupSheets() {
   return setupCareerSheetsV29();
 }
 
+/**
+ * Ham nay chay tu menu cua Spreadsheet nen se hien hop thoai ket qua
+ * de biet tung sheet da tao duoc hay chua.
+ */
 function taoBangMau() {
-  return setupCareerSheetsV29();
+  const ketQua = setupCareerSheetsV29();
+  const duLieu = ketQua ? JSON.parse(ketQua.text || "{}") : {};
+
+  let dong = "";
+  const buoc = duLieu.buoc || {};
+  Object.keys(buoc).forEach(function (k) {
+    dong += "• " + k + ": " + buoc[k] + "\n";
+  });
+
+  try {
+    SpreadsheetApp.getUi().alert(
+      duLieu.ok === false ? "⚠️ Có bước bị lỗi" : "✅ Đã tạo xong",
+      (duLieu.message || "") + "\n\n" + (dong || "Không có chi tiết.")
+    );
+  } catch (err) {
+    // Chay ngoai UI (vd tu script khac) thi bo qua alert
+  }
+
+  return ketQua;
+}
+
+/**
+ * Chay tu menu: chi lam 3 sheet ung vien va bao cao tung buoc.
+ */
+function chuanHoaSheetUngVienV34() {
+  const ketQua = chuanHoaSheetUngVien();
+  const duLieu = ketQua ? JSON.parse(ketQua.text || "{}") : {};
+
+  let dong = "";
+  const sheets = duLieu.sheets || {};
+  Object.keys(sheets).forEach(function (k) {
+    dong += "• " + k + ": " + sheets[k] + "\n";
+  });
+
+  try {
+    SpreadsheetApp.getUi().alert(
+      "Đã chuẩn hoá 3 sheet ứng viên",
+      (duLieu.message || "") + "\n\n" + (dong || "Không có chi tiết.")
+    );
+  } catch (err) {}
+
+  return ketQua;
 }
 
 function sheetTonTai_(tenSheet) {
@@ -501,12 +569,13 @@ function anSheetUngVienCuV29() {
 }
 
 /**
- * Chuan hoa lai dinh dang cho ca 3 sheet ung vien.
+ * Phan loi chuan hoa dinh dang cho ca 3 sheet ung vien.
  * Moi buoc boc try-catch rieng de 1 sheet loi khong chan sheet con lai,
  * va ham luon tra ve ket qua de biet sheet nao that bai.
- * Dung khi header bi trang, cot bi hep hoac vua them sheet moi.
+ * Dung khi header bi trang, cot bi hep hoac vua them cot moi.
+ * Xem chuanHoaSheetUngVienV34() o tren - ban co hien hop thoai.
  */
-function chuanHoaSheetUngVienV34() {
+function chuanHoaSheetUngVien() {
   const ketQua = {};
   let ss = null;
 
