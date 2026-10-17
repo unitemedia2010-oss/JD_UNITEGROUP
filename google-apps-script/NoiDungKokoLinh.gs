@@ -148,8 +148,13 @@ function toMauCanhBao(sh, cot, soDong) {
 
 /** Bỏ mọi định dạng có sẵn của tab */
 function donDep(sh) {
+  // Luu y: clearDataValidations() la method cua Range, KHONG co o Sheet.
   sh.clearConditionalFormatRules();
-  sh.clearDataValidations();
+  try {
+    sh.getDataRange().clearDataValidations();
+  } catch (e) {
+    console.warn('Khong xoa duoc data validation cu: ' + e.message);
+  }
 }
 
 /* =====================================================================
