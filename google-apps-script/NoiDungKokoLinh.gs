@@ -128,22 +128,33 @@ function taoDropdown(sh, col, danhSach, soDong) {
   sh.getRange(2, col, soDong, 1).setDataValidation(rule);
 }
 
-/** Tô màu cảnh báo */
+/**
+ * Tô màu cảnh báo.
+ * API dung: SpreadsheetApp.newConditionalFormatRule() (khong co chu "ting")
+ * va .setFontColor() (khong co .setForeground()).
+ * Boc try-catch: mau chi la thuoc tinh hinh thuc,
+ * loi o day khong duoc lam hong viec tao he thong.
+ */
 function toMauCanhBao(sh, cot, soDong) {
-  var r = sh.getRange(2, cot, soDong, 1);
-  var quyTac = [
-    { text: 'Trễ', bg: '#F8CBCB', fg: '#8B0000' },
-    { text: 'Chưa đăng', bg: '#FFE0A3', fg: '#7A5200' },
-    { text: 'OK', bg: '#CDE8CF', fg: '#14532D' }
-  ];
-  quyTac.forEach(function (q) {
-    r.setConditionalFormattingRules([SpreadsheetApp.newConditionalFormattingRule()
-      .whenTextContains(q.text)
-      .setBackground(q.bg)
-      .setForeground(q.fg)
-      .setRanges([r])
-      .build()]);
-  });
+  try {
+    var r = sh.getRange(2, cot, soDong, 1);
+    var quyTac = [
+      { text: 'Trễ', bg: '#F8CBCB', fg: '#8B0000' },
+      { text: 'Chưa đăng', bg: '#FFE0A3', fg: '#7A5200' },
+      { text: 'OK', bg: '#CDE8CF', fg: '#14532D' }
+    ];
+    var rules = quyTac.map(function (q) {
+      return SpreadsheetApp.newConditionalFormatRule()
+        .whenTextContains(q.text)
+        .setBackground(q.bg)
+        .setFontColor(q.fg)
+        .setRanges([r])
+        .build();
+    });
+    r.setConditionalFormattingRules(rules);
+  } catch (e) {
+    console.warn('Khong to duoc mau canh bao: ' + e.message);
+  }
 }
 
 /** Bỏ mọi định dạng có sẵn của tab */
