@@ -670,7 +670,9 @@ function taoLichSuCu(ss) {
 
 function sinhTuanMoi() {
   var ss = laySS();
-  var hienThi = SpreadsheetApp.getUi().prompt(
+  // Phai khai bao ui: ben duoi co dung ui.prompt, ui.ButtonSet, ui.Button.
+  var ui = SpreadsheetApp.getUi();
+  var hienThi = ui.prompt(
     'Sinh tuần mới',
     'Nhập ngày thứ Hai của tuần (dd/mm/yyyy), ví dụ 19/10/2026.\nĐể trống = tuần kế tiếp so với dòng cuối cùng.',
     ui.ButtonSet.OK_CANCEL);
@@ -864,10 +866,13 @@ function taoHeThong() {
     .addItem('♻️ Tạo lại toàn bộ hệ thống', 'taoHeThong')
     .addToUi();
 
-  ui.alert(    '6 tab mới: Dashboard, Lịch đăng, Lịch quay, Kho clip, Cấu hình, Lịch sử cũ.\n\n' +
-    'Bước tiên: mở tab "Cấu hình" cột E, ghi tên nhân sự (mỗi người 1 dòng).\n' +
-    'Sau đó dùng menu "⚙️ HỆ THỐNG NỘI DUNG" để sinh tuần mới.',
-    ui.ButtonSet.OK, '✅ Đã tạo xong hệ thống.');
+  // Chi dung ui.alert(String) - 1 tham so.
+  // Cac dang (String,ButtonSet) va (String,ButtonSet,String)
+  // bi Apps Script bao loi "khong khop chu ky".
+  ui.alert('✅ ĐÃ TẠO XONG HỆ THỐNG\n\n' +
+    '6 tab mới: Dashboard, Lịch đăng, Lịch quay, Kho clip, Cấu hình, Lịch sử cũ.\n\n' +
+    'Bước tiếp theo — mở tab "Cấu hình" cột E, ghi tên nhân sự (mỗi người 1 dòng).\n' +
+    'Sau đó dùng menu "⚙️ HỆ THỐNG NỘI DUNG" để sinh tuần mới.');
 }
 
 function taoDashboardChayLai() {
@@ -886,8 +891,8 @@ function xemDanhSachTuan() {
   vals.forEach(function (r) {
     if (r[0] instanceof Date) ds[ngay(r[0])] = 1;
   });
-  SpreadsheetApp.getUi().alert('Các tuần đang có trong Lịch đăng:',
-    Object.keys(ds).join('\n') || '(chưa có)');
+  SpreadsheetApp.getUi().alert('📋 CÁC TUẦN ĐANG CÓ TRONG LỊCH ĐĂNG\n\n' +
+    (Object.keys(ds).join('\n') || '(chưa có)'));
 }
 
 function onOpen() {
