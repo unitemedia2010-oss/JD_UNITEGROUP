@@ -129,11 +129,9 @@ function taoDropdown(sh, col, danhSach, soDong) {
 }
 
 /**
- * Tô màu cảnh báo.
- * API dung: SpreadsheetApp.newConditionalFormatRule() (khong co chu "ting")
- * va .setFontColor() (khong co .setForeground()).
- * Boc try-catch: mau chi la thuoc tinh hinh thuc,
- * loi o day khong duoc lam hong viec tao he thong.
+ * To mau canh bao.
+ * Luu y: setConditionalFormatRules() la method cua SHEET.
+ * Range KHONG co method nay.
  */
 function toMauCanhBao(sh, cot, soDong) {
   try {
@@ -151,7 +149,7 @@ function toMauCanhBao(sh, cot, soDong) {
         .setRanges([r])
         .build();
     });
-    r.setConditionalFormattingRules(rules);
+    sh.setConditionalFormatRules(rules);
   } catch (e) {
     console.warn('Khong to duoc mau canh bao: ' + e.message);
   }
@@ -756,10 +754,23 @@ function sinhTuanChoTuan(ss, thuHai, imLang) {
   }
 
   var dongDau = ld.getLastRow() + 1;
+  // Dung new Array(C_DANG.length) de luon khop so cot.
   var rows = mau.map(function (m, i) {
-    return [dongDau + i, thuHai, m[1], m[2], m[3], '', m[4], '', m[5], m[6],
-      'Chưa viết', '', '', 'Chưa quay', '', '', 'Chưa dựng', '',
-      'Chưa duyệt', '', 'Chưa đăng', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
+    var row = new Array(C_DANG.length).fill('');
+    row[0] = dongDau + i;
+    row[1] = thuHai;
+    row[2] = m[1];
+    row[3] = m[2];
+    row[4] = m[3];
+    row[6] = m[4];
+    row[7] = m[5];
+    row[8] = m[6];
+    row[9] = 'Chưa viết';
+    row[12] = 'Chưa quay';
+    row[15] = 'Chưa dựng';
+    row[17] = 'Chưa duyệt';
+    row[19] = 'Chưa đăng';
+    return row;
   });
   ld.getRange(dongDau, 1, rows.length, C_DANG.length).setValues(rows);
   ld.getRange(dongDau, 5, rows.length, 1).setNumberFormat('dd/MM/yyyy');
@@ -853,10 +864,10 @@ function taoHeThong() {
     .addItem('♻️ Tạo lại toàn bộ hệ thống', 'taoHeThong')
     .addToUi();
 
-  ui.alert('✅ Đã tạo xong hệ thống.',
-    '6 tab mới: Dashboard, Lịch đăng, Lịch quay, Kho clip, Cấu hình, Lịch sử cũ.\n\n' +
+  ui.alert(    '6 tab mới: Dashboard, Lịch đăng, Lịch quay, Kho clip, Cấu hình, Lịch sử cũ.\n\n' +
     'Bước tiên: mở tab "Cấu hình" cột E, ghi tên nhân sự (mỗi người 1 dòng).\n' +
-    'Sau đó dùng menu "⚙️ HỆ THỐNG NỘI DUNG" để sinh tuần mới.');
+    'Sau đó dùng menu "⚙️ HỆ THỐNG NỘI DUNG" để sinh tuần mới.',
+    ui.ButtonSet.OK, '✅ Đã tạo xong hệ thống.');
 }
 
 function taoDashboardChayLai() {
